@@ -1,0 +1,8 @@
+{
+  "name": "flowai-revenue-engine",
+  "description": "Diagnostica gargalos de receita e estrutura comercial para clínicas e imobiliárias.",
+  "version": "1.0.0",
+  "author": {
+    "name": "FlowAI"
+  }
+}
