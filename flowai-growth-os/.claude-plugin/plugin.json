@@ -1,0 +1,10 @@
+{
+  "name": "flowai-growth-os",
+  "description": "Sistema operacional de crescimento da FlowAI. Cria site, criativos, posts, blog, propostas, campanhas, sequências de atendimento e tudo que a empresa precisa para vender mais.",
+  "version": "1.0.0",
+  "author": {
+    "name": "FlowAI",
+    "email": "flowaidigital@gmail.com",
+    "url": "https://flowaidigital.site"
+  }
+}
