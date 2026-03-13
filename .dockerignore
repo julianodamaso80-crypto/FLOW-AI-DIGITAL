@@ -1,0 +1,8 @@
+flowai-revenue-engine/
+flowai-growth-os/
+sales/
+productivity/
+*.zip
+logoflow.png
+.git/
+node_modules/
