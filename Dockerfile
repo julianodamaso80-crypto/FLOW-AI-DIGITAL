@@ -4,7 +4,7 @@ FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy site files
-COPY flowai-site-v2.html /usr/share/nginx/html/index.html
+COPY flowai-site-v3.html /usr/share/nginx/html/index.html
 COPY logoflow-web.png /usr/share/nginx/html/logoflow-web.png
 
 # Custom nginx config for SPA and performance
