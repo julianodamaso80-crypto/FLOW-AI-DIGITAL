@@ -2024,3 +2024,35 @@ footer {
   .fc-split { grid-template-columns: 1fr; }
   .fc-split::before { display: none; }
 }
+
+/* ── GLOBAL CENTERING OVERRIDE ───────────────────────────────── */
+.section-title,
+.section-sub,
+.eyebrow {
+  text-align: center !important;
+}
+.section-sub {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+.container > *,
+.container .reveal > * {
+  text-align: center;
+}
+.container .reveal > p,
+.container > p {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 640px;
+}
+/* Preserve left-align for specific components */
+.faq__q,
+.comp__table th,
+.comp__table td,
+.sol__diff-text,
+.footer__col,
+.nav__links,
+.nav__mobile {
+  text-align: left !important;
+}
