@@ -285,6 +285,58 @@
   });
 })();
 
+/* ── FLOWCHART STAGGERED ANIMATION ────────────────────────────── */
+(function initFlowchartAnim() {
+  const flowchart = document.querySelector('.flowchart');
+  if (!flowchart) return;
+
+  const children = Array.from(flowchart.children).filter(function(el) {
+    return el.classList.contains('fc-node') ||
+           el.classList.contains('fc-arrow') ||
+           el.classList.contains('fc-split');
+  });
+
+  if (!children.length) return;
+
+  var triggered = false;
+  var STAGGER = 220;
+
+  function animateFlowchart() {
+    if (triggered) return;
+    triggered = true;
+
+    children.forEach(function(el, i) {
+      setTimeout(function() {
+        el.classList.add('fc-in');
+      }, i * STAGGER);
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries) {
+      for (var k = 0; k < entries.length; k++) {
+        if (entries[k].isIntersecting) {
+          animateFlowchart();
+          io.disconnect();
+          break;
+        }
+      }
+    }, { threshold: 0.05, rootMargin: '0px 0px 50px 0px' });
+
+    io.observe(flowchart);
+  } else {
+    function checkScroll() {
+      var rect = flowchart.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.9) {
+        animateFlowchart();
+        window.removeEventListener('scroll', checkScroll);
+      }
+    }
+    window.addEventListener('scroll', checkScroll, { passive: true });
+    checkScroll();
+  }
+})();
+
 /* ── BRANCH CARD HIGHLIGHT CYCLE ─────────────────────────────── */
 (function initBranchHighlight() {
   const cards = document.querySelectorAll('.branch-card');
