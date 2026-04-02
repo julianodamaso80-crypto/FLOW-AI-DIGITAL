@@ -111,12 +111,16 @@ ul { list-style: none; }
   letter-spacing: -0.03em;
   color: var(--text);
   margin-bottom: 16px;
+  text-align: center;
 }
 .section-sub {
   font-size: 1.05rem;
   line-height: 1.72;
   color: var(--text-2);
   max-width: 560px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ── BUTTONS ──────────────────────────────────────────────────── */
@@ -599,6 +603,7 @@ ul { list-style: none; }
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   padding: 28px 26px;
+  text-align: center;
   transition: border-color 0.25s, transform 0.25s;
 }
 .prob__card:hover {
@@ -655,6 +660,8 @@ ul { list-style: none; }
 /* ── SOLUÇÃO ──────────────────────────────────────────────────── */
 .sol__header-wrap {
   max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
 }
 .sol__diff {
   background: var(--bg-card);
@@ -807,6 +814,7 @@ ul { list-style: none; }
   background: var(--green-dim);
   border: 1px solid var(--green-border);
   border-radius: var(--r-lg);
+  text-align: center;
   padding: 22px 28px;
   text-align: center;
   font-size: 0.95rem;
@@ -859,15 +867,19 @@ ul { list-style: none; }
 }
 
 /* Section header inside content column */
-.agents__content .eyebrow { display: block; margin-bottom: 12px; }
+.agents__content .eyebrow { display: block; margin-bottom: 12px; text-align: center; }
 .agents__content .section-title {
   font-size: clamp(2rem, 3.2vw, 2.9rem);
   margin-bottom: 16px;
+  text-align: center;
 }
 .agents__content .section-sub {
   font-size: 1rem;
   max-width: 480px;
   margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 /* Cards grid */
@@ -882,6 +894,7 @@ ul { list-style: none; }
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   padding: 22px 18px;
+  text-align: center;
   position: relative;
   overflow: hidden;
   transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
@@ -1141,6 +1154,7 @@ ul { list-style: none; }
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   padding: 28px 26px;
+  text-align: center;
   transition: border-color 0.25s;
 }
 .gain__card:hover { border-color: var(--green-border); }

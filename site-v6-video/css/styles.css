@@ -78,6 +78,7 @@ ul { list-style: none; }
   max-width: 1180px;
   margin: 0 auto;
   padding: 0 24px;
+  text-align: center;
 }
 .section { padding: 96px 0; }
 .section--alt { background: var(--bg-2); }
@@ -110,12 +111,16 @@ ul { list-style: none; }
   letter-spacing: -0.03em;
   color: var(--text);
   margin-bottom: 16px;
+  text-align: center;
 }
 .section-sub {
   font-size: 1.05rem;
   line-height: 1.72;
   color: var(--text-2);
   max-width: 560px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ── BUTTONS ──────────────────────────────────────────────────── */
@@ -598,6 +603,7 @@ ul { list-style: none; }
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   padding: 28px 26px;
+  text-align: center;
   transition: border-color 0.25s, transform 0.25s;
 }
 .prob__card:hover {
@@ -615,7 +621,7 @@ ul { list-style: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
+  margin: 0 auto 16px;
 }
 .prob__card h3 {
   font-family: var(--font-d);
@@ -654,6 +660,8 @@ ul { list-style: none; }
 /* ── SOLUÇÃO ──────────────────────────────────────────────────── */
 .sol__header-wrap {
   max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
 }
 .sol__diff {
   background: var(--bg-card);
@@ -806,6 +814,7 @@ ul { list-style: none; }
   background: var(--green-dim);
   border: 1px solid var(--green-border);
   border-radius: var(--r-lg);
+  text-align: center;
   padding: 22px 28px;
   text-align: center;
   font-size: 0.95rem;
@@ -858,15 +867,19 @@ ul { list-style: none; }
 }
 
 /* Section header inside content column */
-.agents__content .eyebrow { display: block; margin-bottom: 12px; }
+.agents__content .eyebrow { display: block; margin-bottom: 12px; text-align: center; }
 .agents__content .section-title {
   font-size: clamp(2rem, 3.2vw, 2.9rem);
   margin-bottom: 16px;
+  text-align: center;
 }
 .agents__content .section-sub {
   font-size: 1rem;
   max-width: 480px;
   margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 /* Cards grid */
@@ -881,6 +894,7 @@ ul { list-style: none; }
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   padding: 22px 18px;
+  text-align: center;
   position: relative;
   overflow: hidden;
   transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
@@ -909,7 +923,7 @@ ul { list-style: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 14px;
+  margin: 0 auto 14px;
 }
 .agent__card h3 {
   font-family: var(--font-d);
@@ -1028,12 +1042,14 @@ ul { list-style: none; }
 }
 .forwhom__item {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  padding: 18px 20px;
+  padding: 22px 20px;
   transition: border-color 0.25s;
 }
 .forwhom__item:hover { border-color: var(--border-md); }
@@ -1138,6 +1154,7 @@ ul { list-style: none; }
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   padding: 28px 26px;
+  text-align: center;
   transition: border-color 0.25s;
 }
 .gain__card:hover { border-color: var(--green-border); }
@@ -1735,6 +1752,7 @@ footer {
   padding: 14px 22px;
   text-align: center;
   position: relative;
+  overflow: hidden;
   transition: border-color 0.3s;
 }
 .fc-node:hover { border-color: var(--border-md); }
@@ -1848,6 +1866,157 @@ footer {
 }
 .fc-branch-label--yes { background: var(--green-dim); color: var(--green); border: 1px solid var(--green-border); }
 .fc-branch-label--no  { background: rgba(246,166,35,0.1); color: var(--amber); border: 1px solid rgba(246,166,35,0.2); }
+
+/* ── FLOWCHART ANIMATIONS ──────────────────────────────────── */
+
+@keyframes fc-slide-up {
+  from { opacity: 0; transform: translateY(40px) scale(0.92); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+@keyframes fc-grow-arrow {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+@keyframes fc-arrow-tip {
+  from { opacity: 0; transform: translateX(-50%) scale(0); }
+  to   { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+@keyframes fc-glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,229,160,0), 0 0 0 0 rgba(0,229,160,0); }
+  50%      { box-shadow: 0 0 28px 6px rgba(0,229,160,0.22), 0 0 60px 12px rgba(0,229,160,0.08); }
+}
+@keyframes fc-border-glow {
+  0%, 100% { border-color: var(--border); }
+  50%      { border-color: var(--green-border); }
+}
+@keyframes fc-arrow-flow {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 48px; }
+}
+@keyframes fc-split-expand {
+  from { opacity: 0; transform: scale(0.85); filter: blur(4px); }
+  to   { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+@keyframes fc-label-pop {
+  0%   { opacity: 0; transform: scale(0.5) translateY(8px); }
+  60%  { transform: scale(1.15) translateY(-2px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes fc-shimmer {
+  0%   { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* Initial hidden state */
+.flowchart .fc-node,
+.flowchart .fc-arrow,
+.flowchart .fc-split {
+  opacity: 0;
+}
+.fc-split-branch .fc-node,
+.fc-split-branch .fc-arrow,
+.fc-branch-label {
+  opacity: 0;
+}
+
+/* Node appear */
+.flowchart .fc-node.fc-in {
+  animation: fc-slide-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Arrow grow */
+.flowchart .fc-arrow.fc-in {
+  opacity: 1;
+  transform-origin: top;
+  animation: fc-grow-arrow 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.flowchart .fc-arrow.fc-in::after {
+  animation: fc-arrow-tip 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+}
+
+/* Green arrows: flowing energy */
+.flowchart .fc-arrow--green.fc-in {
+  background: linear-gradient(to bottom, transparent, var(--green), transparent);
+  background-size: 2px 48px;
+  animation: fc-grow-arrow 0.4s cubic-bezier(0.16, 1, 0.3, 1) both,
+             fc-arrow-flow 1.2s linear 0.5s infinite;
+}
+.flowchart .fc-arrow--green.fc-in::after {
+  border-top-color: var(--green);
+}
+
+/* Split (decision) appear */
+.flowchart .fc-split.fc-in {
+  animation: fc-split-expand 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Branch labels bounce in */
+.fc-split.fc-in .fc-branch-label {
+  animation: fc-label-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+
+/* Inner split nodes/arrows */
+.fc-split.fc-in .fc-split-branch .fc-node {
+  animation: fc-slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+}
+.fc-split.fc-in .fc-split-branch .fc-arrow {
+  opacity: 1;
+  transform-origin: top;
+  animation: fc-grow-arrow 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+}
+
+/* Accent nodes: persistent glow pulse */
+.flowchart .fc-node--accent.fc-in,
+.flowchart .fc-node--result.fc-in {
+  animation: fc-slide-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both,
+             fc-glow-pulse 2.5s ease-in-out 1s infinite;
+}
+
+/* Regular nodes: subtle breathing border */
+.flowchart .fc-node.fc-in:not(.fc-node--accent):not(.fc-node--result) {
+  animation: fc-slide-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both,
+             fc-border-glow 4s ease-in-out 1.5s infinite;
+}
+
+/* Shimmer overlay on accent nodes */
+.flowchart .fc-node--accent.fc-in::before,
+.flowchart .fc-node--result.fc-in::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: -100%;
+  width: 60%;
+  background: linear-gradient(90deg, transparent, rgba(0,229,160,0.08), transparent);
+  animation: fc-shimmer 3s ease-in-out 1.5s infinite;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Hover effects */
+.flowchart .fc-node.fc-in:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.4), 0 0 20px rgba(0,229,160,0.12);
+  border-color: var(--green-border);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s, border-color 0.3s;
+}
+.flowchart .fc-node--accent.fc-in:hover {
+  box-shadow: 0 12px 32px rgba(0,0,0,0.4), 0 0 32px rgba(0,229,160,0.25);
+}
+
+/* Connector line glow */
+.flowchart {
+  position: relative;
+}
+.flowchart::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(0,229,160,0.06) 10%, rgba(0,229,160,0.06) 90%, transparent);
+  pointer-events: none;
+  z-index: -1;
+}
 
 @media (max-width: 768px) {
   .fc-decision { border-left-width: 50px; border-right-width: 50px; }
