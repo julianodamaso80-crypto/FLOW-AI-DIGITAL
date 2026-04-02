@@ -1291,9 +1291,20 @@ ul { list-style: none; }
 }
 .cta-section__form {
   display: flex;
+  flex-direction: column;
   gap: 10px;
-  max-width: 440px;
+  max-width: 480px;
   margin: 0 auto 12px;
+}
+.cta-section__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+.cta-section__submit {
+  width: 100%;
+  justify-content: center;
 }
 .cta-section__input {
   flex: 1;

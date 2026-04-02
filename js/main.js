@@ -124,40 +124,49 @@
 
 /* ── CTA FORM → WHATSAPP ─────────────────────────────────────── */
 (function initCTAForm() {
-  const form  = document.getElementById('ctaForm');
-  const input = document.getElementById('ctaPhone');
-  if (!form || !input) return;
+  const form   = document.getElementById('ctaForm');
+  const fName  = document.getElementById('ctaName');
+  const fPhone = document.getElementById('ctaPhone');
+  const fEmail = document.getElementById('ctaEmail');
+  const fCo    = document.getElementById('ctaCompany');
+  const fSite  = document.getElementById('ctaSite');
+  if (!form || !fName || !fPhone) return;
 
-  const WA_NUMBER = '5521999999999'; // TODO: replace with real number
+  const WA_NUMBER = '552198024882';
 
-  function formatPhone(raw) {
-    return raw.replace(/\D/g, '');
+  function markError(el) {
+    el.style.borderColor = 'var(--red, #f56565)';
+    el.style.boxShadow   = '0 0 0 3px rgba(245,101,101,0.15)';
+    setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 2000);
   }
+
+  [fName, fPhone, fEmail, fCo, fSite].forEach(el => {
+    if (el) el.addEventListener('input', () => { el.style.borderColor = ''; el.style.boxShadow = ''; });
+  });
 
   form.addEventListener('submit', e => {
     e.preventDefault();
-    const digits = formatPhone(input.value);
-    if (digits.length < 10) {
-      input.focus();
-      input.style.borderColor = 'var(--red)';
-      input.style.boxShadow   = '0 0 0 3px rgba(245,101,101,0.15)';
-      setTimeout(() => {
-        input.style.borderColor = '';
-        input.style.boxShadow   = '';
-      }, 1800);
-      return;
-    }
 
-    const msg = encodeURIComponent(
-      `Olá! Vi o site da FlowAI e quero agendar meu Diagnóstico de Receita. Meu WhatsApp: ${input.value}`
-    );
-    window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank', 'noopener');
-  });
+    const nome    = fName.value.trim();
+    const phone   = fPhone.value.trim();
+    const digits  = phone.replace(/\D/g, '');
+    const email   = fEmail ? fEmail.value.trim() : '';
+    const empresa = fCo    ? fCo.value.trim()    : '';
+    const site    = fSite  ? fSite.value.trim()  : '';
 
-  // Live format feedback
-  input.addEventListener('input', () => {
-    input.style.borderColor = '';
-    input.style.boxShadow   = '';
+    let valid = true;
+    if (!nome)             { markError(fName);  fName.focus();  valid = false; }
+    if (digits.length < 10){ markError(fPhone); if (valid) fPhone.focus(); valid = false; }
+    if (!valid) return;
+
+    let msg = `Olá! Vim pelo site da FlowAI e quero agendar meu Diagnóstico de Receita.\n\n`;
+    msg += `Nome: ${nome}\n`;
+    msg += `WhatsApp: ${phone}\n`;
+    if (email)   msg += `E-mail: ${email}\n`;
+    if (empresa) msg += `Empresa: ${empresa}\n`;
+    if (site)    msg += `Site: ${site}\n`;
+
+    window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
   });
 })();
 

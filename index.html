@@ -1166,20 +1166,61 @@
         Mapeamos os pontos de vazamento no seu processo comercial. Você recebe um diagnóstico real — mesmo que não feche com a FlowAI.
       </p>
 
-      <form class="cta-section__form" id="ctaForm" novalidate aria-label="Formulário de agendamento">
-        <input
-          type="tel"
-          class="cta-section__input"
-          id="ctaPhone"
-          name="phone"
-          placeholder="Seu WhatsApp (ex: 21 99999-9999)"
-          autocomplete="tel"
-          inputmode="tel"
-          aria-label="Número de WhatsApp"
-          required
-        >
-        <button type="submit" class="btn btn--primary btn-lg">
-          Agendar
+      <form class="cta-section__form cta-section__form--full" id="ctaForm" novalidate aria-label="Formulário de agendamento">
+        <div class="cta-section__fields">
+          <input
+            type="text"
+            class="cta-section__input"
+            id="ctaName"
+            name="name"
+            placeholder="Seu nome *"
+            autocomplete="name"
+            aria-label="Nome"
+            required
+          >
+          <input
+            type="tel"
+            class="cta-section__input"
+            id="ctaPhone"
+            name="phone"
+            placeholder="Seu WhatsApp (ex: 21 98024-8820) *"
+            autocomplete="tel"
+            inputmode="tel"
+            aria-label="Número de WhatsApp"
+            required
+          >
+          <input
+            type="email"
+            class="cta-section__input"
+            id="ctaEmail"
+            name="email"
+            placeholder="Seu e-mail"
+            autocomplete="email"
+            inputmode="email"
+            aria-label="E-mail"
+          >
+          <input
+            type="text"
+            class="cta-section__input"
+            id="ctaCompany"
+            name="company"
+            placeholder="Nome da empresa"
+            autocomplete="organization"
+            aria-label="Nome da empresa"
+          >
+          <input
+            type="text"
+            class="cta-section__input"
+            id="ctaSite"
+            name="site"
+            placeholder="Site da empresa (opcional)"
+            autocomplete="url"
+            inputmode="url"
+            aria-label="Site da empresa"
+          >
+        </div>
+        <button type="submit" class="btn btn--primary btn-lg cta-section__submit">
+          Agendar meu Diagnóstico de Receita
           <svg class="btn-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -1202,7 +1243,7 @@
           </svg>
           @flowaidigital
         </a>
-        <a href="https://wa.me/5521999999999" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp FlowAI Digital">
+        <a href="https://wa.me/552198024882" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp FlowAI Digital">
           <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M8 2C4.7 2 2 4.7 2 8c0 1.2.3 2.4.9 3.4L2 14l2.7-.9C5.7 13.7 6.8 14 8 14c3.3 0 6-2.7 6-6s-2.7-6-6-6z" stroke="currentColor" stroke-width="1.3"/>
           </svg>
@@ -1233,7 +1274,7 @@
 
 <!-- ── WHATSAPP FLOAT ── -->
 <a
-  href="https://wa.me/5521999999999?text=Ol%C3%A1!%20Quero%20agendar%20meu%20Diagn%C3%B3stico%20de%20Receita."
+  href="https://wa.me/552198024882?text=Ol%C3%A1!%20Quero%20agendar%20meu%20Diagn%C3%B3stico%20de%20Receita."
   class="wa-float"
   target="_blank"
   rel="noopener noreferrer"
