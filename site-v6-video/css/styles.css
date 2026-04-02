@@ -292,34 +292,26 @@ ul { list-style: none; }
 .ticker-wrap {
   width: 100%;
   overflow: hidden;
-  background: var(--bg-2);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 0;
+  background: rgba(6,10,16,0.98);
+  border-top: 1px solid rgba(0,229,160,0.22);
+  border-bottom: 1px solid rgba(0,229,160,0.22);
   position: relative;
   z-index: 10;
-  /* fade edges */
   -webkit-mask-image: linear-gradient(to right,
-    transparent 0%,
-    black 6%,
-    black 94%,
-    transparent 100%);
+    transparent 0%, black 5%, black 95%, transparent 100%);
   mask-image: linear-gradient(to right,
-    transparent 0%,
-    black 6%,
-    black 94%,
-    transparent 100%);
+    transparent 0%, black 5%, black 95%, transparent 100%);
 }
 .ticker {
   display: flex;
   width: max-content;
-  animation: ticker-scroll 55s linear infinite;
+  animation: ticker-scroll 70s linear infinite;
 }
 .ticker:hover { animation-play-state: paused; }
 .ticker__track {
   display: flex;
   align-items: center;
-  padding: 18px 0;
+  padding: 0;
   flex-shrink: 0;
 }
 @keyframes ticker-scroll {
@@ -328,33 +320,39 @@ ul { list-style: none; }
 }
 .ticker__item {
   display: inline-flex;
-  align-items: baseline;
-  gap: 8px;
+  align-items: center;
+  gap: 14px;
   white-space: nowrap;
-  padding: 0 8px;
+  padding: 26px 0;
+  position: relative;
 }
+/* subtle hover highlight */
+.ticker__item:hover .ticker__label { color: var(--green); }
 .ticker__icon {
-  font-size: 0.95rem;
+  font-size: 1.5rem;
   flex-shrink: 0;
+  line-height: 1;
 }
 .ticker__label {
   font-family: var(--font-d);
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--text);
-  letter-spacing: -0.01em;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #e8edf5;
+  letter-spacing: -0.02em;
   white-space: nowrap;
+  transition: color 0.2s;
 }
 .ticker__desc {
-  font-size: 0.75rem;
-  color: var(--text-3);
+  font-size: 0.9rem;
+  color: rgba(138,155,181,0.9);
   white-space: nowrap;
+  font-weight: 400;
 }
 .ticker__sep {
   color: var(--green);
-  font-size: 0.45rem;
-  opacity: 0.5;
-  padding: 0 20px;
+  font-size: 0.65rem;
+  opacity: 0.8;
+  padding: 0 36px;
   flex-shrink: 0;
 }
 
