@@ -59,7 +59,7 @@ function footer() {
 // ══════════════════════════════════════════════════════════════
 // PAGE TEMPLATE
 // ══════════════════════════════════════════════════════════════
-function pageHTML({ title, metaDesc, canonical, schema, breadcrumbs, body, currentPage }) {
+function pageHTML({ title, metaDesc, canonical, schema, breadcrumbs, body, currentPage, ogImage }) {
   const bc = breadcrumbs.map((b, i) => i < breadcrumbs.length - 1
     ? `<a href="${b.url}">${b.name}</a><span class="breadcrumb__sep">›</span>`
     : `<span>${b.name}</span>`
@@ -89,10 +89,10 @@ function pageHTML({ title, metaDesc, canonical, schema, breadcrumbs, body, curre
   <meta property="og:title" content="${title}">
   <meta property="og:description" content="${metaDesc}">
   <meta property="og:url" content="${DOMAIN}${canonical}">
-  <meta property="og:locale" content="pt_BR">
+  <meta property="og:locale" content="pt_BR">${ogImage ? `\n  <meta property="og:image" content="${ogImage}">` : ''}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${title}">
-  <meta name="twitter:description" content="${metaDesc}">
+  <meta name="twitter:description" content="${metaDesc}">${ogImage ? `\n  <meta name="twitter:image" content="${ogImage}">` : ''}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -124,6 +124,76 @@ const CLUSTERS = {
   imobiliaria: { label: 'Imobiliárias', css: 'imobiliaria', color: '#fbbf24' },
   'engenharia-vendas': { label: 'Engenharia de Vendas', css: 'engenharia', color: '#60a5fa' },
   'ia-automacao': { label: 'IA & Automação', css: 'ia', color: '#f472b6' }
+};
+
+// ══════════════════════════════════════════════════════════════
+// IMAGE BANK — unique Unsplash images per post (no repeats)
+// ══════════════════════════════════════════════════════════════
+const IMAGES = {
+  // ── ODONTO (15) ──
+  'processo-comercial-clinica-odontologica': 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1200&h=630&fit=crop&q=80',
+  'como-converter-leads-em-pacientes': 'https://images.unsplash.com/photo-1606811842243-af7e16970c1f?w=1200&h=630&fit=crop&q=80',
+  'funil-de-vendas-clinica-odontologica': 'https://images.unsplash.com/photo-1542744095-0d53267d353e?w=1200&h=630&fit=crop&q=80',
+  'como-reduzir-no-show-clinica-odontologica': 'https://images.unsplash.com/photo-1591174425156-fd472f354be4?w=1200&h=630&fit=crop&q=80',
+  'remarketing-para-clinicas-odontologicas': 'https://images.unsplash.com/photo-1581521911838-451ec295edf3?w=1200&h=630&fit=crop&q=80',
+  'crm-para-clinica-odontologica': 'https://images.unsplash.com/photo-1643660526741-094639fbe53a?w=1200&h=630&fit=crop&q=80',
+  'captacao-de-pacientes-odontologia': 'https://images.unsplash.com/photo-1560181275-a65519fd0ec1?w=1200&h=630&fit=crop&q=80',
+  'como-aumentar-faturamento-clinica-odontologica': 'https://images.unsplash.com/photo-1728342057908-7f6c4a3262f8?w=1200&h=630&fit=crop&q=80',
+  'scripts-de-vendas-clinica-odontologica': 'https://images.unsplash.com/photo-1556741533-6e6a62bd8b49?w=1200&h=630&fit=crop&q=80',
+  'follow-up-automatico-clinica-odontologica': 'https://images.unsplash.com/photo-1653566031535-bcf33e1c2893?w=1200&h=630&fit=crop&q=80',
+  'taxa-de-conversao-clinica-odontologica': 'https://images.unsplash.com/photo-1606811811225-10635e4c9a39?w=1200&h=630&fit=crop&q=80',
+  'marketing-digital-clinica-odontologica-que-funciona': 'https://images.unsplash.com/photo-1633675254245-efd890d087b8?w=1200&h=630&fit=crop&q=80',
+  'por-que-clinica-odontologica-perde-pacientes': 'https://images.unsplash.com/photo-1588398071967-cca88cd3240b?w=1200&h=630&fit=crop&q=80',
+  'quanto-custa-captar-paciente-clinica-odontologica': 'https://images.unsplash.com/photo-1619691249147-c5689d88016b?w=1200&h=630&fit=crop&q=80',
+  'whatsapp-para-clinica-odontologica': 'https://images.unsplash.com/photo-1611746872915-64382b5c76da?w=1200&h=630&fit=crop&q=80',
+  'agente-ia-clinica-odontologica': 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=630&fit=crop&q=80',
+  // ── ESTÉTICA (10) ──
+  'processo-comercial-clinica-estetica': 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1200&h=630&fit=crop&q=80',
+  'como-vender-procedimentos-esteticos': 'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=1200&h=630&fit=crop&q=80',
+  'captacao-pacientes-clinica-estetica': 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=1200&h=630&fit=crop&q=80',
+  'crm-para-clinica-estetica': 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&h=630&fit=crop&q=80',
+  'remarketing-clinica-estetica': 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=1200&h=630&fit=crop&q=80',
+  'funil-de-vendas-estetica': 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1200&h=630&fit=crop&q=80',
+  'como-reduzir-cancelamentos-clinica-estetica': 'https://images.unsplash.com/photo-1629909615032-72afb4e5610c?w=1200&h=630&fit=crop&q=80',
+  'scripts-vendas-procedimentos-esteticos': 'https://images.unsplash.com/photo-1519824145371-296894a0daa9?w=1200&h=630&fit=crop&q=80',
+  'taxa-conversao-clinica-estetica': 'https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=1200&h=630&fit=crop&q=80',
+  'follow-up-clinica-estetica': 'https://images.unsplash.com/photo-1540555700478-4be289fbec6d?w=1200&h=630&fit=crop&q=80',
+  // ── IMOBILIÁRIA (10) ──
+  'processo-comercial-imobiliaria': 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=630&fit=crop&q=80',
+  'como-converter-leads-imobiliarios': 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&h=630&fit=crop&q=80',
+  'crm-para-imobiliarias': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&fit=crop&q=80',
+  'funil-de-vendas-imobiliaria': 'https://images.unsplash.com/photo-1582407947092-740aaa0bfbda?w=1200&h=630&fit=crop&q=80',
+  'follow-up-automatico-imobiliaria': 'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=1200&h=630&fit=crop&q=80',
+  'como-qualificar-leads-imobiliarios': 'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1200&h=630&fit=crop&q=80',
+  'remarketing-para-imobiliarias': 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&h=630&fit=crop&q=80',
+  'scripts-vendas-corretores': 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&h=630&fit=crop&q=80',
+  'taxa-conversao-imobiliaria': 'https://images.unsplash.com/photo-1460317442991-0ec209397118?w=1200&h=630&fit=crop&q=80',
+  'automacao-vendas-imobiliaria': 'https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=1200&h=630&fit=crop&q=80',
+  // ── ENGENHARIA DE VENDAS (10) ──
+  'o-que-e-engenharia-de-vendas': 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=630&fit=crop&q=80',
+  'engenharia-de-receita-o-que-e': 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop&q=80',
+  'como-montar-processo-comercial-do-zero': 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=630&fit=crop&q=80',
+  'diferenca-marketing-engenharia-vendas': 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=1200&h=630&fit=crop&q=80',
+  'por-que-sua-empresa-perde-leads': 'https://images.unsplash.com/photo-1590402494587-44b71d7772f6?w=1200&h=630&fit=crop&q=80',
+  'como-medir-roi-processo-comercial': 'https://images.unsplash.com/photo-1543286386-713bdd548da4?w=1200&h=630&fit=crop&q=80',
+  'funil-vendas-b2c-guia-completo': 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop&q=80',
+  'como-criar-scripts-vendas-eficientes': 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&h=630&fit=crop&q=80',
+  'follow-up-automatico-guia-completo': 'https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=1200&h=630&fit=crop&q=80',
+  'como-aumentar-taxa-de-conversao': 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=1200&h=630&fit=crop&q=80',
+  // ── IA E AUTOMAÇÃO (5) ──
+  'agentes-ia-para-vendas': 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&h=630&fit=crop&q=80',
+  'automacao-comercial-inteligencia-artificial': 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1200&h=630&fit=crop&q=80',
+  'chatbot-vs-agente-ia-diferenca': 'https://images.unsplash.com/photo-1531746790095-6c46f1dee3c6?w=1200&h=630&fit=crop&q=80',
+  'como-ia-melhora-processo-comercial': 'https://images.unsplash.com/photo-1555255707-c07966088b7b?w=1200&h=630&fit=crop&q=80',
+  'futuro-automacao-vendas-ia': 'https://images.unsplash.com/photo-1636690513351-0af1763f6237?w=1200&h=630&fit=crop&q=80',
+  // ── INTERNAL PAGES ──
+  'page-clinicas-odontologicas': 'https://images.unsplash.com/photo-1629909615184-74f495363b67?w=1200&h=630&fit=crop&q=80',
+  'page-clinicas-esteticas': 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1200&h=630&fit=crop&q=80',
+  'page-imobiliarias': 'https://images.unsplash.com/photo-1449844908441-8829872d2607?w=1200&h=630&fit=crop&q=80',
+  'page-sobre': 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=630&fit=crop&q=80',
+  'page-diagnostico': 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&h=630&fit=crop&q=80',
+  'page-casos': 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop&q=80',
+  'page-blog': 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1200&h=630&fit=crop&q=80',
 };
 
 // ══════════════════════════════════════════════════════════════
@@ -295,7 +365,9 @@ const BLOG_POSTS = [
 function generateBlogIndex() {
   const cards = BLOG_POSTS.map(p => {
     const cl = CLUSTERS[p.cluster];
+    const img = IMAGES[p.slug] || '';
     return `      <a href="/blog/${p.slug}/" class="blog-card">
+        ${img ? `<img src="${img.replace('w=1200&h=630', 'w=600&h=340')}" alt="${p.title}" class="blog-card__img" loading="lazy">` : ''}
         <span class="blog-card__cluster blog-card__cluster--${cl.css}">${cl.label}</span>
         <h3 class="blog-card__title">${p.title}</h3>
         <p class="blog-card__desc">${p.metaDesc}</p>
@@ -375,6 +447,7 @@ document.querySelectorAll('.blog-filter').forEach(btn => {
 // ══════════════════════════════════════════════════════════════
 function generateBlogPost(post) {
   const cl = CLUSTERS[post.cluster];
+  const img = IMAGES[post.slug] || '';
 
   // Find 3 related posts from same cluster
   const related = BLOG_POSTS
@@ -383,7 +456,9 @@ function generateBlogPost(post) {
 
   const relatedHTML = related.map(r => {
     const rcl = CLUSTERS[r.cluster];
+    const rimg = IMAGES[r.slug] || '';
     return `<a href="/blog/${r.slug}/" class="blog-card">
+        ${rimg ? `<img src="${rimg}" alt="${r.title}" class="blog-card__img" loading="lazy">` : ''}
         <span class="blog-card__cluster blog-card__cluster--${rcl.css}">${rcl.label}</span>
         <h3 class="blog-card__title">${r.title}</h3>
         <span class="blog-card__link">Ler artigo →</span>
@@ -402,6 +477,7 @@ function generateBlogPost(post) {
       </div>
     </div>
   </section>
+  ${img ? `<div class="article-hero-img container"><img src="${img}" alt="${post.title}" loading="eager" style="width:100%;max-width:780px;margin:0 auto 0;display:block;border-radius:16px;border:1px solid var(--border)"></div>` : ''}
   <article class="page-content">
     ${post.content}
 
@@ -428,7 +504,8 @@ function generateBlogPost(post) {
     "datePublished": "2026-04-01",
     "author": { "@type": "Organization", "name": "FlowAI Digital" },
     "publisher": { "@type": "Organization", "name": "FlowAI Digital" },
-    "mainEntityOfPage": `${DOMAIN}/blog/${post.slug}/`
+    "mainEntityOfPage": `${DOMAIN}/blog/${post.slug}/`,
+    "image": img || undefined
   };
 
   return pageHTML({
@@ -436,6 +513,7 @@ function generateBlogPost(post) {
     metaDesc: post.metaDesc,
     canonical: `/blog/${post.slug}/`,
     schema,
+    ogImage: img,
     breadcrumbs: [
       { name: "Home", url: "/" },
       { name: "Blog", url: "/blog/" },
@@ -507,6 +585,7 @@ const INTERNAL_PAGES = [
 ];
 
 function generateInternalPage(page) {
+  const img = IMAGES['page-' + page.dir.replace('diagnostico-de-receita','diagnostico')] || '';
   const body = `
   <section class="page-hero">
     <div class="container">
@@ -515,6 +594,7 @@ function generateInternalPage(page) {
       <p class="page-hero__sub">${page.sub}</p>
     </div>
   </section>
+  ${img ? `<div class="container" style="margin-bottom:48px"><img src="${img}" alt="${page.eyebrow}" loading="eager" style="width:100%;max-width:900px;margin:0 auto;display:block;border-radius:20px;border:1px solid var(--border)"></div>` : ''}
   <div class="page-content">
     ${page.content}
     ${page.dir !== 'diagnostico-de-receita' ? `
@@ -531,6 +611,7 @@ function generateInternalPage(page) {
     "name": page.title,
     "description": page.metaDesc,
     "url": `${DOMAIN}/${page.dir}/`,
+    "image": img || undefined,
     "publisher": { "@type": "Organization", "name": "FlowAI Digital" }
   };
 
@@ -539,6 +620,7 @@ function generateInternalPage(page) {
     metaDesc: page.metaDesc,
     canonical: `/${page.dir}/`,
     schema,
+    ogImage: img,
     breadcrumbs: [
       { name: "Home", url: "/" },
       { name: page.eyebrow }
