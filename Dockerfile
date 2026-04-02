@@ -1,15 +1,19 @@
-FROM nginx:alpine
+FROM nginx:1.27-alpine
 
-# Remove default nginx page
-RUN rm -rf /usr/share/nginx/html/*
+# Remove default nginx config
+RUN rm /etc/nginx/conf.d/default.conf
 
-# Copy site files
-COPY flowai-site-v3.html /usr/share/nginx/html/index.html
-COPY logoflow-web.png /usr/share/nginx/html/logoflow-web.png
+# Copy site-v6-video files
+COPY site-v6-video/ /usr/share/nginx/html/
 
-# Custom nginx config for SPA and performance
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy nginx config
+COPY site-v6-video/nginx.conf /etc/nginx/conf.d/flowai.conf
 
+# Expose port
 EXPOSE 80
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
+  CMD wget -qO- http://localhost/ || exit 1
 
 CMD ["nginx", "-g", "daemon off;"]
