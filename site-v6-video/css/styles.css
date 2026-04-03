@@ -2186,37 +2186,38 @@ html, body { overflow-x: hidden; max-width: 100vw; }
   .agents__layout { grid-template-columns: 1fr; gap: 32px; }
   .agents__orbital {
     position: static;
-    max-width: 100%;
+    width: 100%;
     margin: 0 auto;
     order: -1;
-    overflow: hidden;
-    padding: 20px 0;
+    /* Critical: contain the orbital within a fixed-size box */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 260px;
+    max-height: 300px;
   }
   /* Kill the glow halo that overflows */
   .agents__orbital::before { display: none; }
-  /* Orbital diagram: contained within padding */
+  /* Kill the radial gradient background that extends beyond bounds */
   .agents__orbital .orbit-diagram {
-    max-width: min(280px, 75vw);
+    max-width: 240px;
     margin: 0 auto;
+    overflow: hidden;
+    /* The diagram is aspect-ratio:1, so this clips the outer ring and node text */
   }
   .agents__orbital .orbit-diagram__svg { overflow: hidden; }
-  /* Orbit nodes: prevent text overflow */
-  .orbit-node__text {
-    font-size: 0.42rem !important;
-    white-space: normal !important;
-    max-width: 60px;
-    text-align: center;
-    line-height: 1.3;
-    word-break: break-word;
-  }
-  .orbit-node__icon { width: 28px; height: 28px; font-size: 0.65rem; margin-bottom: 3px; }
+  /* Hide the outer dashed ring that gets clipped ugly */
+  .agents__orbital .orbit-diagram__svg circle:first-child { display: none; }
+  /* Orbit nodes: hide text labels on mobile — only show icons */
+  .orbit-node__text { display: none; }
+  .orbit-node__icon { width: 28px; height: 28px; font-size: 0.7rem; margin-bottom: 0; }
   .orbit-core {
-    width: clamp(60px, 18vw, 80px);
-    height: clamp(60px, 18vw, 80px);
+    width: 68px;
+    height: 68px;
   }
-  .orbit-core::before { inset: -10px; } /* reduce glow spread */
-  .orbit-core__label { font-size: clamp(0.6rem, 2vw, 0.8rem); }
-  .orbit-core__sub { font-size: 0.4rem; margin-top: 3px; }
+  .orbit-core::before { inset: -8px; }
+  .orbit-core__label { font-size: 0.7rem; }
+  .orbit-core__sub { font-size: 0.38rem; margin-top: 2px; }
 
   .agents__content .section-title { font-size: clamp(1.5rem, 6vw, 2rem) !important; }
   .agents__content .section-sub { max-width: 100%; }
@@ -2331,11 +2332,11 @@ html, body { overflow-x: hidden; max-width: 100vw; }
   .fc-split::before { display: none; }
 
   /* Orbital: very small screens */
-  .agents__orbital .orbit-diagram { max-width: min(240px, 65vw); }
-  .orbit-node__text { display: none; }
-  .orbit-node__icon { width: 24px; height: 24px; font-size: 0.55rem; margin-bottom: 0; }
-  .orbit-core { width: 56px; height: 56px; }
+  .agents__orbital { min-height: 220px; max-height: 250px; }
+  .agents__orbital .orbit-diagram { max-width: 200px; }
+  .orbit-node__icon { width: 22px; height: 22px; font-size: 0.55rem; }
+  .orbit-core { width: 52px; height: 52px; }
   .orbit-core__label { font-size: 0.55rem; }
-  .orbit-core__sub { font-size: 0.35rem; }
-  .orbit-core::before { inset: -6px; }
+  .orbit-core__sub { font-size: 0.32rem; }
+  .orbit-core::before { inset: -5px; }
 }
