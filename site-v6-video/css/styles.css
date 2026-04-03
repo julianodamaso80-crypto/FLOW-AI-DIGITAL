@@ -2062,12 +2062,14 @@ footer {
    Preserves desktop layout, adapts for touch screens
    ================================================================ */
 
+/* ── GLOBAL: prevent ANY horizontal overflow ── */
+html, body { overflow-x: hidden; max-width: 100vw; }
+.section, .section--alt, .cta-section, footer, .ticker-wrap { overflow-x: hidden; }
+
 /* ── SMALL TABLETS (≤ 1024px) ─────────────────────────────────── */
 @media (max-width: 1024px) {
   .hero__centered { max-width: 100%; }
   .hero__visual { margin-top: 32px; }
-
-  /* Ticker: smaller text on tablets */
   .ticker__label { font-size: 0.9rem; }
   .ticker__desc { font-size: 0.78rem; }
   .ticker__sep { padding: 0 24px; }
@@ -2076,16 +2078,24 @@ footer {
 /* ── MOBILE (≤ 768px) ─────────────────────────────────────────── */
 @media (max-width: 768px) {
 
-  /* ── Global spacing ── */
-  .container { padding: 0 18px; }
-  .section { padding: 56px 0; }
+  /* ── CRITICAL: kill horizontal scroll at root ── */
+  html { overflow-x: hidden; }
+  body { overflow-x: hidden; position: relative; width: 100%; }
+  .container { padding: 0 18px; max-width: 100%; overflow-x: hidden; }
+  .section { padding: 56px 0; overflow: hidden; }
+  .section--alt { overflow: hidden; }
 
   /* ── Hero ── */
-  .hero { min-height: auto; padding: 100px 0 48px; }
+  .hero { min-height: auto; padding: 100px 0 48px; overflow: hidden; }
+  .hero::after { display: none; } /* kill green glow that overflows left */
+  .hero__video::after {
+    background: rgba(8,12,18,0.92) !important; /* solid overlay on mobile */
+  }
   .hero__h1 {
     font-size: clamp(1.8rem, 8vw, 2.6rem);
     letter-spacing: -0.03em;
     line-height: 1.1;
+    word-break: break-word;
   }
   .hero__sub {
     font-size: 0.95rem;
@@ -2112,23 +2122,9 @@ footer {
   .hero__metric { text-align: center; }
   .hero__metric-value { font-size: 1.3rem; }
 
-  /* ── Hero video overlay — full cover on mobile ── */
-  .hero__video + .hero__video-overlay {
-    background: linear-gradient(to bottom,
-      rgba(8,12,18,0.95) 0%,
-      rgba(8,12,18,0.88) 50%,
-      rgba(8,12,18,0.75) 100%
-    ) !important;
-  }
-
-  /* ── Hero visual / orbit diagram — smaller on mobile ── */
-  .hero__visual {
-    margin-top: 24px;
-  }
-  .flow-diagram {
-    padding: 20px;
-    border-radius: var(--r-lg);
-  }
+  /* ── Hero visual / flow diagram ── */
+  .hero__visual { margin-top: 24px; overflow: hidden; }
+  .flow-diagram { padding: 20px; border-radius: var(--r-lg); }
   .flow-nodes { grid-template-columns: 1fr; gap: 8px; }
   .flow-node { padding: 12px 14px; }
   .flow-node__label { font-size: 0.78rem; }
@@ -2146,6 +2142,7 @@ footer {
   .section-title {
     font-size: clamp(1.5rem, 6vw, 2rem) !important;
     line-height: 1.15;
+    word-break: break-word;
   }
   .section-sub {
     font-size: 0.92rem;
@@ -2171,7 +2168,7 @@ footer {
   }
   .sol__diff-bar { width: 100%; height: 2px; min-height: auto; }
   .sol__diff-text { font-size: 0.88rem; }
-  .sol__cycle { padding: 24px 16px; margin: 32px 0; }
+  .sol__cycle { padding: 24px 16px; margin: 32px 0; overflow: hidden; }
   .sol__cycle-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .sol__step-num { width: 30px; height: 30px; font-size: 0.6rem; }
   .sol__step-label { font-size: 0.75rem; }
@@ -2184,29 +2181,55 @@ footer {
   .how__step p { font-size: 0.78rem; }
   .how__gift { padding: 18px 20px; font-size: 0.88rem; }
 
-  /* ── Agents section ── */
-  .agents__layout { grid-template-columns: 1fr; gap: 24px; }
+  /* ══ AGENTS SECTION — orbital diagram fix ══ */
+  .section--agents { overflow: hidden; }
+  .agents__layout { grid-template-columns: 1fr; gap: 32px; }
   .agents__orbital {
     position: static;
-    max-width: 280px;
+    max-width: 100%;
     margin: 0 auto;
     order: -1;
+    overflow: hidden;
+    padding: 20px 0;
   }
+  /* Kill the glow halo that overflows */
+  .agents__orbital::before { display: none; }
+  /* Orbital diagram: contained within padding */
+  .agents__orbital .orbit-diagram {
+    max-width: min(280px, 75vw);
+    margin: 0 auto;
+  }
+  .agents__orbital .orbit-diagram__svg { overflow: hidden; }
+  /* Orbit nodes: prevent text overflow */
+  .orbit-node__text {
+    font-size: 0.42rem !important;
+    white-space: normal !important;
+    max-width: 60px;
+    text-align: center;
+    line-height: 1.3;
+    word-break: break-word;
+  }
+  .orbit-node__icon { width: 28px; height: 28px; font-size: 0.65rem; margin-bottom: 3px; }
+  .orbit-core {
+    width: clamp(60px, 18vw, 80px);
+    height: clamp(60px, 18vw, 80px);
+  }
+  .orbit-core::before { inset: -10px; } /* reduce glow spread */
+  .orbit-core__label { font-size: clamp(0.6rem, 2vw, 0.8rem); }
+  .orbit-core__sub { font-size: 0.4rem; margin-top: 3px; }
+
   .agents__content .section-title { font-size: clamp(1.5rem, 6vw, 2rem) !important; }
   .agents__content .section-sub { max-width: 100%; }
   .agents__grid { grid-template-columns: 1fr; gap: 10px; }
   .agent__card { padding: 18px 16px; }
   .agent__card h3 { font-size: 0.82rem; }
   .agent__card p { font-size: 0.72rem; }
-  .agents__highlight {
-    padding: 18px;
-    gap: 10px;
-  }
+  .agents__highlight { padding: 18px; gap: 10px; }
   .agents__number { font-size: clamp(1.8rem, 5vw, 2.5rem); }
   .agents__note { font-size: 0.78rem; max-width: 100%; }
 
   /* ── Engineering flow ── */
-  .eng__flow { border-radius: var(--r-lg); }
+  .eng__flow { border-radius: var(--r-lg); overflow: hidden; }
   .eng__step { padding: 20px 16px; }
   .eng__step-icon { font-size: 1.1rem; }
   .eng__step-label { font-size: 0.72rem; }
@@ -2215,6 +2238,7 @@ footer {
   .eng__sub { font-size: 0.85rem; max-width: 100%; }
 
   /* ── Branch flow diagram ── */
+  .branch-flow { overflow: hidden; }
   .branch-flow__entry { padding: 12px 18px; font-size: 0.82rem; }
   .branch-card { padding: 18px 16px; }
   .branch-card__title { font-size: 0.8rem; }
@@ -2226,8 +2250,12 @@ footer {
   .forwhom__item p { font-size: 0.82rem; }
   .forwhom__close { padding: 16px 18px; font-size: 0.85rem; }
 
-  /* ── Comparison table ── */
-  .comp__table-wrap { margin-top: 32px; }
+  /* ── Comparison table — scroll container ── */
+  .comp__table-wrap {
+    margin-top: 32px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
   .comp__table { min-width: 520px; }
   .comp__table thead th { font-size: 0.62rem; padding: 10px 12px; }
   .comp__table tbody td { font-size: 0.75rem; padding: 10px 12px; }
@@ -2246,12 +2274,14 @@ footer {
   .faq__a { padding: 0 18px 18px; font-size: 0.85rem; }
 
   /* ── CTA section ── */
-  .cta-section { padding: 72px 0; }
+  .cta-section { padding: 72px 0; overflow: hidden; }
+  .cta-section::before { width: 300px; height: 300px; } /* reduce glow size */
   .cta-section__title { font-size: clamp(1.6rem, 6vw, 2.2rem); }
   .cta-section__sub { font-size: 0.92rem; max-width: 100%; }
   .cta-section__form { flex-direction: column; max-width: 100%; }
   .cta-section__input { width: 100%; }
   .cta-section__micro { font-size: 0.72rem; }
+  .cta-section__social { justify-content: center; }
 
   /* ── Footer ── */
   .footer__inner { gap: 12px; }
@@ -2259,43 +2289,32 @@ footer {
   .footer__copy { font-size: 0.68rem; }
 
   /* ── Flowchart ── */
-  .flowchart { max-width: 100%; }
+  .flowchart { max-width: 100%; overflow: hidden; }
   .fc-node { padding: 12px 16px; }
   .fc-node__label { font-size: 0.82rem; }
   .fc-node__sub { font-size: 0.65rem; }
   .fc-split { gap: 8px; }
   .fc-branch-label { font-size: 0.52rem; padding: 2px 6px; }
 
-  /* ── Orbit diagram ── */
-  .orbit-diagram { max-width: 260px; }
-  .orbit-core { width: 70px; height: 70px; }
-  .orbit-core__label { font-size: 0.5rem; }
-  .orbit-node__icon { width: 30px; height: 30px; font-size: 0.7rem; }
-  .orbit-node__text { font-size: 0.45rem !important; }
-
   /* ── Buttons ── */
   .btn { font-size: 0.88rem; }
   .btn-lg { font-size: 0.95rem; padding: 15px 24px; }
   .btn--primary { padding: 12px 20px; }
 
-  /* ── Nav mobile improvements ── */
-  .nav__mobile {
-    top: 60px;
-    padding: 16px 24px 24px;
-  }
-  .nav__mobile a {
-    font-size: 0.95rem;
-    padding: 12px 0;
-  }
+  /* ── Nav mobile ── */
+  .nav__mobile { top: 60px; padding: 16px 24px 24px; }
+  .nav__mobile a { font-size: 0.95rem; padding: 12px 0; }
+
+  /* ── WhatsApp float ── */
+  .wa-float { bottom: 18px; right: 18px; width: 48px; height: 48px; }
+  .wa-float svg { width: 24px; height: 24px; }
 }
 
 /* ── EXTRA SMALL (≤ 480px) ────────────────────────────────────── */
 @media (max-width: 480px) {
   .container { padding: 0 14px; }
-
   .hero__h1 { font-size: clamp(1.6rem, 9vw, 2.2rem); }
   .hero__sub { font-size: 0.88rem; }
-
   .section-title { font-size: clamp(1.3rem, 7vw, 1.7rem) !important; }
   .section-sub { font-size: 0.85rem; }
 
@@ -2306,14 +2325,17 @@ footer {
   .forwhom__item { padding: 18px 14px; }
 
   .sol__cycle-grid { grid-template-columns: 1fr 1fr; }
-
   .cta-section__title { font-size: clamp(1.4rem, 7vw, 1.8rem); }
 
   .fc-split { grid-template-columns: 1fr; }
   .fc-split::before { display: none; }
 
-  .orbit-diagram { max-width: 220px; }
+  /* Orbital: very small screens */
+  .agents__orbital .orbit-diagram { max-width: min(240px, 65vw); }
   .orbit-node__text { display: none; }
-  .orbit-node__icon { width: 26px; height: 26px; font-size: 0.6rem; }
-  .orbit-core { width: 60px; height: 60px; }
+  .orbit-node__icon { width: 24px; height: 24px; font-size: 0.55rem; margin-bottom: 0; }
+  .orbit-core { width: 56px; height: 56px; }
+  .orbit-core__label { font-size: 0.55rem; }
+  .orbit-core__sub { font-size: 0.35rem; }
+  .orbit-core::before { inset: -6px; }
 }
