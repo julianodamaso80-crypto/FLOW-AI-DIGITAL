@@ -19,6 +19,8 @@ COPY site-v6-video/imobiliarias/ /usr/share/nginx/html/imobiliarias/
 COPY site-v6-video/sobre/ /usr/share/nginx/html/sobre/
 COPY site-v6-video/diagnostico-de-receita/ /usr/share/nginx/html/diagnostico-de-receita/
 COPY site-v6-video/casos/ /usr/share/nginx/html/casos/
+COPY site-v6-video/privacidade/ /usr/share/nginx/html/privacidade/
+COPY site-v6-video/termos/ /usr/share/nginx/html/termos/
 
 # Nginx config
 COPY site-v6-video/nginx.conf /etc/nginx/conf.d/flowai.conf

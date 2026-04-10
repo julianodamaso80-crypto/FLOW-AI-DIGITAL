@@ -128,7 +128,7 @@
   const input = document.getElementById('ctaPhone');
   if (!form || !input) return;
 
-  const WA_NUMBER = '5521999999999'; // TODO: replace with real number
+  const WA_NUMBER = '5521980214882';
 
   function formatPhone(raw) {
     return raw.replace(/\D/g, '');
@@ -212,7 +212,7 @@
               if (!word) return;
               const span = document.createElement('span');
               span.className = 'word';
-              span.style.color = 'var(--green)';
+              span.style.color = 'var(--green)'; /* terracota accent */
               const inner = document.createElement('span');
               inner.className = 'word-inner';
               inner.textContent = word;

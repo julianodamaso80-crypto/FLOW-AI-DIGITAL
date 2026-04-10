@@ -80,7 +80,7 @@ function pageHTML({ title, metaDesc, canonical, schema, breadcrumbs, body, curre
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080c12">
+  <meta name="theme-color" content="#F0E8DA">
   <title>${title}</title>
   <meta name="description" content="${metaDesc}">
   <link rel="canonical" href="${DOMAIN}${canonical}">
@@ -95,7 +95,7 @@ function pageHTML({ title, metaDesc, canonical, schema, breadcrumbs, body, curre
   <meta name="twitter:description" content="${metaDesc}">${ogImage ? `\n  <meta name="twitter:image" content="${ogImage}">` : ''}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/pages.css">
   <script type="application/ld+json">
@@ -119,11 +119,11 @@ ${footer()}
 // CLUSTER CONFIG
 // ══════════════════════════════════════════════════════════════
 const CLUSTERS = {
-  odonto: { label: 'Clínicas Odontológicas', css: 'odonto', color: '#00e5a0' },
-  estetica: { label: 'Clínicas Estéticas', css: 'estetica', color: '#a78bfa' },
-  imobiliaria: { label: 'Imobiliárias', css: 'imobiliaria', color: '#fbbf24' },
-  'engenharia-vendas': { label: 'Engenharia de Vendas', css: 'engenharia', color: '#60a5fa' },
-  'ia-automacao': { label: 'IA & Automação', css: 'ia', color: '#f472b6' }
+  odonto: { label: 'Clínicas Odontológicas', css: 'odonto', color: '#C97656' },
+  estetica: { label: 'Clínicas Estéticas', css: 'estetica', color: '#7A5AB4' },
+  imobiliaria: { label: 'Imobiliárias', css: 'imobiliaria', color: '#B8860B' },
+  'engenharia-vendas': { label: 'Engenharia de Vendas', css: 'engenharia', color: '#4682C8' },
+  'ia-automacao': { label: 'IA & Automação', css: 'ia', color: '#BE5A8C' }
 };
 
 // ══════════════════════════════════════════════════════════════
@@ -571,7 +571,7 @@ const INTERNAL_PAGES = [
     eyebrow: "Diagnóstico Gratuito",
     h1: "30 minutos.<br>Você sai com um plano.",
     sub: "Mapeamos os pontos de vazamento de receita no seu processo comercial atual. Você recebe um diagnóstico real — mesmo que não feche com a FlowAI.",
-    content: `<h2>O que é o Diagnóstico de Receita?</h2><p>Uma conversa de 30 minutos onde analisamos seu processo comercial atual e identificamos exatamente onde você está perdendo receita. Não é pitch de vendas. É diagnóstico real com recomendações acionáveis.</p><h2>O que você descobre</h2><div class="service-grid"><div class="service-card"><div class="service-card__icon">🔍</div><h3>Onde estão os vazamentos</h3><p>Identificamos em qual etapa do funil você está perdendo mais leads e pacientes.</p></div><div class="service-card"><div class="service-card__icon">💰</div><h3>Quanto está na mesa</h3><p>Calculamos a receita potencial que está sendo desperdiçada com o processo atual.</p></div><div class="service-card"><div class="service-card__icon">📋</div><h3>Plano de ação</h3><p>Você sai com recomendações práticas e priorizadas — independente de contratar a FlowAI.</p></div></div><h2>Como funciona</h2><p><strong>Passo 1:</strong> Você preenche um breve formulário com informações sobre sua empresa.<br><strong>Passo 2:</strong> Agendamos uma call de 30 minutos no melhor horário para você.<br><strong>Passo 3:</strong> Na call, mapeamos seu processo atual e identificamos oportunidades.<br><strong>Passo 4:</strong> Você recebe o diagnóstico com plano de ação por escrito.</p><blockquote>Sem compromisso. Sem pressão. Sem proposta surpresa no final. Você decide se quer avançar depois de ver o diagnóstico.</blockquote><div class="page-cta"><h3>Agende seu Diagnóstico de Receita</h3><p>30 minutos que podem mudar o faturamento da sua empresa.</p><a href="https://wa.me/5521999999999?text=Quero%20agendar%20meu%20Diagn%C3%B3stico%20de%20Receita" class="btn btn--primary" target="_blank" rel="noopener">Agendar pelo WhatsApp →</a></div>`
+    content: `<h2>O que é o Diagnóstico de Receita?</h2><p>Uma conversa de 30 minutos onde analisamos seu processo comercial atual e identificamos exatamente onde você está perdendo receita. Não é pitch de vendas. É diagnóstico real com recomendações acionáveis.</p><h2>O que você descobre</h2><div class="service-grid"><div class="service-card"><div class="service-card__icon">🔍</div><h3>Onde estão os vazamentos</h3><p>Identificamos em qual etapa do funil você está perdendo mais leads e pacientes.</p></div><div class="service-card"><div class="service-card__icon">💰</div><h3>Quanto está na mesa</h3><p>Calculamos a receita potencial que está sendo desperdiçada com o processo atual.</p></div><div class="service-card"><div class="service-card__icon">📋</div><h3>Plano de ação</h3><p>Você sai com recomendações práticas e priorizadas — independente de contratar a FlowAI.</p></div></div><h2>Como funciona</h2><p><strong>Passo 1:</strong> Você preenche um breve formulário com informações sobre sua empresa.<br><strong>Passo 2:</strong> Agendamos uma call de 30 minutos no melhor horário para você.<br><strong>Passo 3:</strong> Na call, mapeamos seu processo atual e identificamos oportunidades.<br><strong>Passo 4:</strong> Você recebe o diagnóstico com plano de ação por escrito.</p><blockquote>Sem compromisso. Sem pressão. Sem proposta surpresa no final. Você decide se quer avançar depois de ver o diagnóstico.</blockquote><div class="page-cta"><h3>Agende seu Diagnóstico de Receita</h3><p>30 minutos que podem mudar o faturamento da sua empresa.</p><a href="https://wa.me/5521980214882?text=Quero%20agendar%20meu%20Diagn%C3%B3stico%20de%20Receita" class="btn btn--primary" target="_blank" rel="noopener">Agendar pelo WhatsApp →</a></div>`
   },
   {
     dir: "casos",
