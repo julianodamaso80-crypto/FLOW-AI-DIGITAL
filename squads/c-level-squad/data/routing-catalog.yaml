@@ -1,0 +1,36 @@
+routing:
+  by_domain:
+    operations:
+      route_to: coo-orchestrator
+      framework: Operational Excellence
+    marketing:
+      route_to: cmo-architect
+      framework: Marketing Strategy
+    technology:
+      route_to: cto-architect
+      framework: Technology Strategy
+    it_security:
+      route_to: cio-engineer
+      framework: Information Systems
+    ai_strategy:
+      route_to: caio-architect
+      framework: AI Strategy
+    finance:
+      route_to: cfo-analyst
+      framework: Financial Planning
+    vision_culture_fundraising:
+      route_to: self
+      framework: CEO-level counsel
+      note: Vision Chief handles directly — no routing
+
+  frameworks:
+    vision_mission_strategy:
+      - Vision (10+ year)
+      - Mission (company's role)
+      - Strategy (3-5 year)
+      - Objectives (annual)
+      - Initiatives (quarterly)
+    three_horizons:
+      h1: Protect and extend current revenue (0-18 months)
+      h2: Build next growth engines (18-36 months)
+      h3: Invest in transformative possibilities (36-60 months)

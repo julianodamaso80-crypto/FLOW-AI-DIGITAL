@@ -1,0 +1,33 @@
+routing:
+  by_domain:
+    hooks:
+      specialist: hooks-architect
+      keywords: [hook, PreToolUse, PostToolUse, lifecycle, intercept, automation pipeline]
+    mcp:
+      specialist: mcp-integrator
+      keywords: [mcp, server, stdio, tool discovery, context7, add server]
+    subagents:
+      specialist: swarm-orchestrator
+      keywords: [subagent, swarm, agent team, parallel, worktree, multi-agent]
+    config:
+      specialist: config-engineer
+      keywords: [settings, permissions, CLAUDE.md, rules, sandbox, environment variable]
+    skills:
+      specialist: skill-craftsman
+      keywords: [skill, plugin, slash command, SKILL.md, context engineering]
+    integration:
+      specialist: project-integrator
+      keywords: [project setup, CI/CD, brownfield, monorepo, AIOS, git workflow]
+    roadmap:
+      specialist: roadmap-sentinel
+      keywords: [changelog, version, new feature, what changed, migration, upgrade]
+    prompts:
+      specialist: prompt-engineer
+      keywords: [prompt, context engineering, agent prompt, system prompt]
+
+  direct_answer_domains:
+    - General Claude Code overview questions
+    - How features relate to each other
+    - Quick references (tool list, built-in commands, hook events)
+    - Squad navigation and usage
+    - Comparison questions across feature domains

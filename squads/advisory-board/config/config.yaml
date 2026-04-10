@@ -1,0 +1,52 @@
+squad:
+  name: Advisory Board
+  chief: board-chair
+  model: opus
+  domain: High-level strategy, founder decisions, mental models, investment thinking, organizational health, purpose, minimalist entrepreneurship, mission-driven business
+  specialist_count: 11
+
+  description: >
+    The Advisory Board convenes the right advisors for high-stakes decisions.
+    Disagreement between advisors is where insight lives. 2-4 advisors is optimal.
+
+  panels:
+    investment_committee: [ray-dalio, charlie-munger, naval-ravikant]
+    scaling_council: [reid-hoffman, peter-thiel, derek-sivers]
+    culture_circle: [patrick-lencioni, brene-brown, simon-sinek]
+    founder_council: [naval-ravikant, derek-sivers, yvon-chouinard]
+    contrarian_panel: [peter-thiel, charlie-munger, derek-sivers]
+
+  specialists:
+    - name: ray-dalio
+      domain: Investment, risk, principles, debt cycles, portfolio
+      trigger: investment, risk, principles, debt, portfolio
+    - name: charlie-munger
+      domain: Mental models, cognitive bias, worldly wisdom, inversion
+      trigger: mental model, bias, inversion, wisdom
+    - name: naval-ravikant
+      domain: Wealth, leverage, specific knowledge, freedom, first principles
+      trigger: leverage, specific knowledge, wealth, freedom
+    - name: peter-thiel
+      domain: Contrarian thinking, zero to one, monopoly, secrets
+      trigger: contrarian, zero to one, monopoly, secret
+    - name: reid-hoffman
+      domain: Scaling, blitzscaling, network effects, growth strategy
+      trigger: blitzscaling, network effects, scale, growth
+    - name: simon-sinek
+      domain: Purpose, why, infinite game, inspiration, golden circle
+      trigger: why, purpose, infinite game, golden circle
+    - name: brene-brown
+      domain: Vulnerability, courage, trust, dare to lead, empathy
+      trigger: vulnerability, courage, trust, dare to lead
+    - name: patrick-lencioni
+      domain: Team health, 5 dysfunctions, accountability, meetings
+      trigger: team, dysfunction, accountability, meetings
+    - name: derek-sivers
+      domain: Simplicity, hell yeah or no, minimalist business
+      trigger: simplicity, hell yeah, minimalist, enough
+    - name: yvon-chouinard
+      domain: Mission-driven business, sustainability, responsible growth
+      trigger: mission, sustainability, responsible, environment
+    - name: warren-buffett
+      domain: Value investing, moats, long-term thinking, compounding
+      trigger: moat, compounding, long-term, value investing

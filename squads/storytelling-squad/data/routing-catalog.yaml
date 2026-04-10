@@ -1,0 +1,45 @@
+routing:
+  by_domain:
+    mythic_archetypal:
+      primary: joseph-campbell
+      secondary: dan-harmon
+    screenplay:
+      primary: blake-snyder
+      secondary: shawn-coyne
+    story_editing:
+      primary: shawn-coyne
+      secondary: blake-snyder
+    tv_episodic:
+      primary: dan-harmon
+      secondary: blake-snyder
+    presentations:
+      primary: nancy-duarte
+      secondary: park-howell
+    brand_business:
+      primary: park-howell
+      secondary: kindra-hall
+    personal_narrative:
+      primary: matthew-dicks
+      secondary: kindra-hall
+    sales_persuasion:
+      primary: kindra-hall
+      secondary: oren-klaff
+    improvisation:
+      primary: keith-johnstone
+      secondary: matthew-dicks
+    pitch_investors:
+      primary: oren-klaff
+      secondary: nancy-duarte
+    movement:
+      primary: marshall-ganz
+      secondary: joseph-campbell
+
+  by_scale:
+    micro_anecdote:
+      specialists: [matthew-dicks, kindra-hall]
+    meso_presentation:
+      specialists: [nancy-duarte, park-howell, oren-klaff]
+    macro_screenplay:
+      specialists: [blake-snyder, shawn-coyne, dan-harmon]
+    meta_movement:
+      specialists: [marshall-ganz, joseph-campbell]

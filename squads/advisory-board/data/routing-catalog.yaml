@@ -1,0 +1,35 @@
+routing:
+  by_domain:
+    investment_capital:
+      primary: ray-dalio
+      panel: investment_committee
+    mental_models:
+      primary: charlie-munger
+      panel: contrarian_panel
+    wealth_creation:
+      primary: naval-ravikant
+      panel: founder_council
+    contrarian_thinking:
+      primary: peter-thiel
+      panel: contrarian_panel
+    scaling:
+      primary: reid-hoffman
+      panel: scaling_council
+    purpose_why:
+      primary: simon-sinek
+      panel: culture_circle
+    courage_trust:
+      primary: brene-brown
+      panel: culture_circle
+    team_health:
+      primary: patrick-lencioni
+      panel: culture_circle
+    simplicity:
+      primary: derek-sivers
+      panel: founder_council
+    mission_driven:
+      primary: yvon-chouinard
+      panel: founder_council
+    value_investing:
+      primary: warren-buffett
+      panel: investment_committee

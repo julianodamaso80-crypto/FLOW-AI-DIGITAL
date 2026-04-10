@@ -1,0 +1,37 @@
+squad:
+  name: Design Squad
+  chief: design-chief
+  model: sonnet
+  domain: UX research, UI design, design systems, component architecture, visual identity, design operations, accessibility, design-to-development handoff
+  specialist_count: 8
+
+  description: >
+    The Design Squad assesses design challenges, routes to the right specialist,
+    coordinates design system creation and UX flows, and ensures quality and
+    accessibility standards.
+
+  specialists:
+    - name: brad-frost
+      domain: Atomic design, design system methodology, component hierarchy
+      trigger: atomic design, design system, components, atoms
+    - name: dan-mall
+      domain: Design systems organizational strategy, design leadership
+      trigger: design system strategy, org, leadership, governance
+    - name: dave-malouf
+      domain: Design operations, process, team efficiency
+      trigger: design ops, process, efficiency, workflow
+    - name: ux-designer
+      domain: UX research, information architecture, user flows
+      trigger: UX, user research, IA, user flow, wireframe
+    - name: visual-generator
+      domain: Visual direction, mood boards, art direction
+      trigger: visual direction, mood board, art direction, aesthetic
+    - name: design-system-architect
+      domain: Component implementation, token systems, design API
+      trigger: tokens, component API, implementation, spec
+    - name: ui-engineer
+      domain: UI coded components, CSS, responsive implementation
+      trigger: CSS, responsive, coded component, frontend
+    - name: accessibility-auditor
+      domain: WCAG compliance, a11y audit, inclusive design
+      trigger: accessibility, WCAG, a11y, inclusive, screen reader

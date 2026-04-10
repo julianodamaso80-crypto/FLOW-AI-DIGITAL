@@ -1,0 +1,26 @@
+routing:
+  all_to_danih:
+    note: >
+      Unlike other squads with multiple specialists, the SEO Squad is a
+      single-agent squad. Danih combines the expertise of 7 SEO masters
+      into one unified approach. All SEO tasks route directly to danih-seo.
+
+  by_phase:
+    discovery:
+      tools: [Google Trends, AnswerThePublic, Google Autocomplete, People Also Ask]
+      purpose: Discover what people are searching for
+    validation:
+      tools: [Semrush, Keyword Gap, Manual SERP analysis]
+      purpose: Validate if the keyword is worth pursuing
+    technical:
+      tools: [PageSpeed Insights, Search Console, Screaming Frog, Bing Webmaster]
+      purpose: Ensure site technical health
+    content:
+      tools: [Semrush, SERP analysis, Topic clusters]
+      purpose: Create data-driven content
+    authority:
+      tools: [Backlink analysis, Digital PR, Guest posting]
+      purpose: Build domain authority
+    monitoring:
+      tools: [Search Console, Semrush, Analytics]
+      purpose: Track and iterate on results

@@ -1,0 +1,18 @@
+routing:
+  by_challenge:
+    new_design_system:
+      flow: [brad-frost, dan-mall, design-system-architect, ui-engineer]
+    system_evolution:
+      flow: [brad-frost, dan-mall, design-system-architect]
+    new_product:
+      flow: [ux-designer, visual-generator, brad-frost, ui-engineer]
+    visual_direction:
+      flow: [visual-generator, brad-frost]
+    component_build:
+      flow: [design-system-architect, ui-engineer]
+    design_ops:
+      flow: [dave-malouf, dan-mall]
+    accessibility_audit:
+      flow: [accessibility-auditor, ui-engineer]
+    ux_research:
+      flow: [ux-designer, visual-generator]

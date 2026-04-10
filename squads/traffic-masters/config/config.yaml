@@ -1,0 +1,61 @@
+squad:
+  name: Traffic Masters
+  chief: traffic-chief
+  model: opus
+  domain: Paid traffic (Meta, Google, YouTube, TikTok), campaign strategy, ad creative, tracking/pixel, budget allocation, ROAS optimization, media buying, scaling
+  specialist_count: 16
+
+  description: >
+    Traffic Masters diagnose traffic problems and route to the right platform
+    expert or functional specialist. Every campaign must have validated offer,
+    working tracking, and sustainable CPA before scaling.
+
+  specialists:
+    - name: molly-pittman
+      domain: Meta/Facebook/Instagram ads, campaign structure
+      trigger: Meta, Facebook, Instagram, campaign structure
+    - name: depesh-mandalia
+      domain: Meta scaling, advanced optimization, high-budget
+      trigger: scale Meta, diminishing returns, advanced Facebook
+    - name: tom-breeze
+      domain: YouTube ads, TrueView, pre-roll, video ads
+      trigger: YouTube, pre-roll, TrueView, video ads
+    - name: kasim-aslam
+      domain: Google Ads, Search, Performance Max, Shopping
+      trigger: Google Ads, Search, PMax, Shopping
+    - name: pedro-sobral
+      domain: Brazilian/LATAM market, gestor de trafego, Meta BR
+      trigger: Brasil, LATAM, portugues, gestor de trafego
+    - name: ad-midas
+      domain: Ad creative strategy, angles, hooks, creative testing
+      trigger: creative, ad creative, angles, testing
+    - name: creative-analyst
+      domain: Creative analysis, winning ad identification, fatigue
+      trigger: creative fatigue, winning ads, analysis
+    - name: scale-optimizer
+      domain: Scaling strategy, budget allocation, diminishing returns
+      trigger: scale, budget, allocation, diminishing
+    - name: pixel-specialist
+      domain: Tracking, pixels, iOS attribution, CAPI, GTM
+      trigger: pixel, tracking, attribution, iOS, CAPI, GTM
+    - name: performance-analyst
+      domain: Performance analysis, auditing, KPI tracking
+      trigger: audit, KPI, performance, what's working
+    - name: fiscal
+      domain: Budget management, ROAS targets, cashflow planning
+      trigger: budget, ROAS, cashflow, profitability
+    - name: media-buyer
+      domain: Campaign execution, media buying, bid strategy
+      trigger: media buying, bid, campaign setup, execution
+    - name: ads-analyst
+      domain: Ad metrics analysis, reporting, benchmarks
+      trigger: metrics, reporting, benchmark, analysis
+    - name: tiktok-specialist
+      domain: TikTok ads, short-form video, trends
+      trigger: TikTok, short-form, trends
+    - name: retargeting-expert
+      domain: Retargeting, remarketing, custom audiences
+      trigger: retargeting, remarketing, custom audience, lookalike
+    - name: landing-page-optimizer
+      domain: Landing page optimization, CRO, conversion
+      trigger: landing page, CRO, conversion rate, optimization

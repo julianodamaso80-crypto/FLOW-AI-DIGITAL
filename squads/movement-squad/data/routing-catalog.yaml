@@ -1,0 +1,42 @@
+routing:
+  by_phase:
+    spark:
+      primary: fenomenologo
+      secondary: identitario
+      signals: [idea, frustration, shared pain, nobody talking about this]
+    identity:
+      primary: identitario
+      secondary: fenomenologo
+      signals: [who are we, values, belonging, symbols, us vs them]
+    ignition:
+      primary: manifestador
+      secondary: identitario
+      signals: [manifesto, declaration, founding document, rally cry]
+    growth:
+      primary: estrategista-de-ciclo
+      secondary: manifestador
+      signals: [scale, spread, recruit, activate, momentum, waves]
+    impact:
+      primary: analista-de-impacto
+      secondary: estrategista-de-ciclo
+      signals: [measure, is it working, behavior change, real change]
+
+  multi_specialist_flows:
+    full_movement_build:
+      - fenomenologo
+      - identitario
+      - manifestador
+      - estrategista-de-ciclo
+      - analista-de-impacto
+    movement_diagnosis:
+      - analista-de-impacto
+      - fenomenologo
+      - estrategista-de-ciclo
+    identity_crisis:
+      - identitario
+      - fenomenologo
+      - manifestador
+    narrative_launch:
+      - manifestador
+      - identitario
+      - estrategista-de-ciclo

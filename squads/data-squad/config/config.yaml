@@ -1,0 +1,33 @@
+squad:
+  name: Data Squad
+  chief: data-chief
+  model: sonnet
+  domain: Web analytics, customer lifetime value, growth experimentation, retention/customer success, community strategy, cohort analysis, North Star metrics
+  specialist_count: 7
+
+  description: >
+    The Data Squad diagnoses data questions and routes to the right analyst.
+    Every insight must be actionable — "So What?" is the ultimate test.
+
+  specialists:
+    - name: avinash-kaushik
+      domain: Web analytics, GA4, measurement, dashboards, KPIs
+      trigger: analytics, GA4, dashboard, KPI, measurement
+    - name: peter-fader
+      domain: Customer lifetime value, whale curve, segmentation
+      trigger: CLV, LTV, customer value, segments, whale curve
+    - name: sean-ellis
+      domain: Growth hacking, A/B testing, North Star metric, AARRR
+      trigger: growth, A/B test, North Star, AARRR, PMF
+    - name: wes-kao
+      domain: Education metrics, cohort courses, completion rates
+      trigger: education, cohort, course, completion, creator
+    - name: nick-mehta
+      domain: Retention, customer success, churn, health score, NRR
+      trigger: churn, retention, health score, NRR, customer success
+    - name: david-spinks
+      domain: Community strategy, engagement, SPACES model, community ROI
+      trigger: community, engagement, SPACES, community ROI
+    - name: data-engineer
+      domain: Data pipeline, ETL, data infrastructure
+      trigger: pipeline, ETL, data infrastructure, warehouse

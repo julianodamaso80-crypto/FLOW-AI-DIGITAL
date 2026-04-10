@@ -1,0 +1,61 @@
+squad:
+  name: Hormozi Squad
+  chief: hormozi-chief
+  model: opus
+  domain: Business offers, pricing strategy, lead generation, sales closing, customer retention, business scaling, business models, content strategy, paid ads strategy
+  specialist_count: 16
+
+  description: >
+    The Hormozi Squad diagnoses business problems using proven frameworks
+    (Value Equation, Grand Slam Offers, $100M Leads, CLOSER). Routes to the
+    right specialist based on the core business bottleneck.
+
+  specialists:
+    - name: hormozi-offers
+      domain: Grand Slam Offers, Value Equation, offer creation
+      trigger: offer, grand slam, value equation, pricing
+    - name: hormozi-leads
+      domain: Lead generation, Core 4, $100M Leads methodology
+      trigger: leads, lead generation, pipeline, core 4
+    - name: hormozi-closer
+      domain: Sales closing, CLOSER framework, objection handling
+      trigger: close, sales, objection, CLOSER, no-show
+    - name: hormozi-pricing
+      domain: Value-based pricing, price-to-value mapping
+      trigger: pricing, margins, too expensive, race to bottom
+    - name: hormozi-retention
+      domain: Customer retention, churn reduction, LTGP, onboarding
+      trigger: churn, retention, LTV, cancel, onboarding
+    - name: hormozi-scale
+      domain: Business scaling, team, systems, leverage
+      trigger: scale, bottleneck, hiring, systems
+    - name: hormozi-models
+      domain: Business model selection, margins, scalability
+      trigger: business model, recurring, margins, model
+    - name: hormozi-content
+      domain: Content strategy, organic leads, audience building
+      trigger: content, organic, audience, engagement
+    - name: hormozi-hooks
+      domain: Hooks, headlines, attention, CTR optimization
+      trigger: hook, attention, CTR, thumbnail
+    - name: hormozi-ads
+      domain: Paid ads strategy, CPA, ROAS, creative strategy
+      trigger: ads, CPA, ROAS, paid, creative
+    - name: hormozi-audit
+      domain: Full business diagnostic, bottleneck mapping
+      trigger: audit, diagnostic, evaluate, bottleneck
+    - name: hormozi-launch
+      domain: Product launch, market entry, starting from zero
+      trigger: launch, new product, new market, zero
+    - name: hormozi-copy
+      domain: Sales copy, direct response in Hormozi style
+      trigger: copy, sales page, offer copy
+    - name: hormozi-gym-launch
+      domain: Local business launch, gym launch methodology
+      trigger: local, gym launch, brick and mortar
+    - name: hormozi-partnerships
+      domain: Strategic partnerships, affiliates, JVs
+      trigger: partnership, affiliate, JV, referral
+    - name: hormozi-backend
+      domain: Backend offers, ascension, lifetime value maximization
+      trigger: backend, ascension, upsell, maximize LTV

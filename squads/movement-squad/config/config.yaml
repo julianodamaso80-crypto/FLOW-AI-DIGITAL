@@ -1,0 +1,34 @@
+squad:
+  name: Movement Squad
+  chief: movement-chief
+  model: sonnet
+  domain: Movement building, identity architecture, community growth, manifesto writing, phenomenological analysis, impact measurement, movement lifecycle management
+  specialist_count: 7
+
+  description: >
+    The Movement Squad diagnoses movement phase, routes to the right specialist,
+    and coordinates the full movement lifecycle from spark to systemic impact.
+    Not every campaign is a movement — real movements have real shared tension.
+
+  specialists:
+    - name: fenomenologo
+      domain: Phenomenological analysis, tension mapping, shared frustration
+      trigger: tension, frustration, shared pain, latent anger
+    - name: identitario
+      domain: Identity architecture, values, belonging, symbols, us vs them
+      trigger: identity, values, belonging, symbols, tribe
+    - name: manifestador
+      domain: Manifesto writing, founding documents, declarations, rally cry
+      trigger: manifesto, declaration, rally cry, founding document
+    - name: estrategista-de-ciclo
+      domain: Growth waves, scaling movements, recruitment, activation
+      trigger: scale, spread, recruit, activate, momentum
+    - name: analista-de-impacto
+      domain: Impact measurement, behavior change, systemic change
+      trigger: measure, impact, behavior change, is it working
+    - name: community-architect
+      domain: Community infrastructure, platforms, rituals, governance
+      trigger: community, platform, rituals, governance
+    - name: narrative-weaver
+      domain: Movement narrative, collective storytelling, shared mythology
+      trigger: narrative, collective story, mythology, shared

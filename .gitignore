@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.*
+.env.local
+
+# Build
+dist/
+build/
+
+# Temp
+*.bak
+*.tmp
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test
+test-results/
+coverage/
+
+# IDE
+.vscode/
+.idea/
+
+# Generated
+*.generated.*

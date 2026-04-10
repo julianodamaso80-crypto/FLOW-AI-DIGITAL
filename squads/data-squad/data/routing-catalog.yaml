@@ -1,0 +1,32 @@
+routing:
+  by_domain:
+    web_analytics:
+      primary: avinash-kaushik
+      growth_stage: Any
+    clv_segmentation:
+      primary: peter-fader
+      growth_stage: Mature
+    growth_pmf:
+      primary: sean-ellis
+      growth_stage: Pre/Post-PMF
+    education_audience:
+      primary: wes-kao
+      growth_stage: Any
+    retention_cs:
+      primary: nick-mehta
+      growth_stage: Post-PMF+
+    community:
+      primary: david-spinks
+      growth_stage: Any
+    data_infrastructure:
+      primary: data-engineer
+      growth_stage: Any
+
+  quality_check:
+    - Is the metric actionable? (Kaushik "So What?" test)
+    - Are we measuring the right customers? (Fader value-based test)
+    - Is this hypothesis testable in under 2 weeks? (Ellis velocity test)
+    - Does the insight lead to a clear next experiment?
+    - Are we tracking leading indicators, not just lagging?
+    - Does the community metric tie to business value? (Spinks SPACES test)
+    - Would a non-data person understand this recommendation?

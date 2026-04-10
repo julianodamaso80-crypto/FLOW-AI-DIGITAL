@@ -1,0 +1,73 @@
+routing:
+  by_problem:
+    offer_creation:
+      primary: hormozi-offers
+      secondary: hormozi-pricing
+      framework: Grand Slam Offer / Value Equation
+      signals: [low conversion, "too expensive", no differentiation]
+    lead_generation:
+      primary: hormozi-leads
+      secondary: hormozi-ads
+      framework: Core 4 / $100M Leads
+      signals: [not enough customers, no pipeline, inconsistent leads]
+    pricing:
+      primary: hormozi-pricing
+      secondary: hormozi-offers
+      framework: Value Equation / Price-to-Value
+      signals: [competing on price, thin margins, race to bottom]
+    sales_closing:
+      primary: hormozi-closer
+      secondary: hormozi-offers
+      framework: CLOSER framework
+      signals: [leads don't convert, long cycle, high no-show]
+    retention:
+      primary: hormozi-retention
+      secondary: hormozi-scale
+      framework: LTGP / Onboarding
+      signals: [high churn, low LTV, customers leave 1-3 months]
+    scaling:
+      primary: hormozi-scale
+      secondary: hormozi-models
+      framework: Scaling frameworks
+      signals: [revenue plateau, owner bottleneck, can't hire]
+    business_model:
+      primary: hormozi-models
+      secondary: hormozi-scale
+      framework: Model selection
+      signals: [wrong model, can't scale, low margins]
+    content:
+      primary: hormozi-content
+      secondary: hormozi-hooks
+      framework: Content machine
+      signals: [no organic leads, no audience, low engagement]
+    paid_ads:
+      primary: hormozi-ads
+      secondary: hormozi-hooks
+      framework: Ad frameworks
+      signals: [unprofitable ads, high CPA, creative fatigue]
+    hooks:
+      primary: hormozi-hooks
+      secondary: hormozi-copy
+      framework: Hook frameworks
+      signals: [weak attention, low CTR, bad thumbnails]
+    launch:
+      primary: hormozi-launch
+      secondary: hormozi-offers
+      framework: Launch methodology
+      signals: [new product, new market, starting from zero]
+    audit:
+      primary: hormozi-audit
+      secondary: hormozi-models
+      framework: Full diagnostic
+      signals: [evaluate business, find bottleneck, improvement]
+
+  by_stage:
+    foundation_0_to_100k:
+      focus: [hormozi-offers, hormozi-leads, hormozi-closer]
+      priority: Get the offer right, then get leads, then close
+    optimization_100k_to_1m:
+      focus: [hormozi-ads, hormozi-content, hormozi-retention]
+      priority: Optimize acquisition, build content, reduce churn
+    leverage_1m_plus:
+      focus: [hormozi-scale, hormozi-models, hormozi-partnerships]
+      priority: Build systems, choose right model, leverage partnerships

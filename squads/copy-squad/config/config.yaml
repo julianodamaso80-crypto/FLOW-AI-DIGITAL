@@ -1,0 +1,107 @@
+squad:
+  name: Copy Squad
+  chief: copy-chief
+  model: opus
+  domain: Copywriting, direct response, email sequences, VSL scripts, sales letters, funnels, ad copy, headlines, landing pages, brand copy
+  specialist_count: 22
+
+  description: >
+    The Copy Squad routes persuasive writing tasks to the right legendary copywriter
+    based on medium, awareness level, and objective. Every piece of copy must SELL —
+    every sentence earns the right to the next.
+
+  tiers:
+    tier_1_headlines:
+      - eugene-schwartz
+      - gary-bencivenga
+      - todd-brown
+    tier_2_sales_letters:
+      - gary-halbert
+      - john-carlton
+      - robert-collier
+    tier_3_vsl:
+      - stefan-georgi
+      - jon-benson
+    tier_4_email:
+      - andre-chaperon
+      - ben-settle
+    tier_5_funnels:
+      - russell-brunson
+      - frank-kern
+    tier_6_ads_offers:
+      - dan-kennedy
+      - dan-koe
+    tier_7_brand:
+      - david-ogilvy
+      - david-deutsch
+    tier_8_awareness:
+      - joe-sugarman
+      - ry-schwartz
+      - jim-rutz
+      - parris-lampropoulos
+      - clayton-makepeace
+
+  specialists:
+    - name: eugene-schwartz
+      domain: Headlines, awareness levels, breakthrough advertising
+      trigger: headlines, awareness, breakthrough, attention
+    - name: gary-halbert
+      domain: Sales letters, direct mail, persuasion
+      trigger: sales letter, direct mail, long-form copy
+    - name: stefan-georgi
+      domain: VSL scripts, RMBC method, video sales letters
+      trigger: VSL, video sales letter, RMBC
+    - name: andre-chaperon
+      domain: Email sequences, autoresponder madness, soap opera sequences
+      trigger: email sequence, autoresponder, nurture
+    - name: russell-brunson
+      domain: Funnels, webinars, launch sequences, value ladders
+      trigger: funnel, webinar, launch, value ladder
+    - name: dan-kennedy
+      domain: Offers, ads, landing pages, direct response marketing
+      trigger: offer, ad copy, landing page, direct response
+    - name: david-ogilvy
+      domain: Brand copy, premium positioning, long-form brand
+      trigger: brand copy, premium, institutional, luxury
+    - name: ben-settle
+      domain: Daily emails, personality-driven email, infotainment
+      trigger: daily email, personality, infotainment
+    - name: dan-koe
+      domain: Hooks, content, social media copy, attention
+      trigger: hook, content, social media, attention
+    - name: todd-brown
+      domain: Big ideas, unique mechanisms, E5 method
+      trigger: big idea, mechanism, E5, campaign concept
+    - name: gary-bencivenga
+      domain: Bullet fascinations, proof, credibility
+      trigger: bullets, fascinations, proof, credibility
+    - name: john-carlton
+      domain: Sales letters, storytelling in copy, humor
+      trigger: story-driven copy, humor, personality
+    - name: jon-benson
+      domain: Video sales letters, sellerator, video copy
+      trigger: video copy, sellerator, short VSL
+    - name: frank-kern
+      domain: Funnels, results in advance, behavioral dynamic response
+      trigger: results in advance, behavioral, webinar funnel
+    - name: david-deutsch
+      domain: Brand direct response, sophisticated copy, A-list
+      trigger: sophisticated, A-list, brand direct
+    - name: joe-sugarman
+      domain: Triggers, slippery slide, product-aware copy
+      trigger: triggers, slippery slide, product description
+    - name: ry-schwartz
+      domain: Solution-aware copy, mechanism reveals
+      trigger: mechanism, solution aware, reveal
+    - name: robert-collier
+      domain: Problem-aware copy, entering the conversation
+      trigger: empathy, problem agitation, conversation
+    - name: jim-rutz
+      domain: Unaware copy, story leads, curiosity
+      trigger: cold traffic, unaware, story lead
+    - name: parris-lampropoulos
+      domain: Unaware copy, pattern interrupts
+      trigger: pattern interrupt, cold audience
+    - name: clayton-makepeace
+      domain: Fascinations, bullets, direct response health
+      trigger: fascinations, health copy, bullets

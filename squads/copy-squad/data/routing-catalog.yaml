@@ -1,0 +1,59 @@
+routing:
+  by_medium:
+    sales_letter:
+      primary: gary-halbert
+      secondary: john-carlton
+    vsl:
+      primary: stefan-georgi
+      secondary: jon-benson
+    email_sequence:
+      primary: andre-chaperon
+      secondary: ben-settle
+    daily_email:
+      primary: ben-settle
+      secondary: dan-koe
+    webinar_script:
+      primary: russell-brunson
+      secondary: todd-brown
+    landing_page:
+      primary: dan-kennedy
+      secondary: frank-kern
+    ad_copy:
+      primary: dan-kennedy
+      secondary: dan-koe
+    funnel:
+      primary: russell-brunson
+      secondary: frank-kern
+    brand_premium:
+      primary: david-ogilvy
+      secondary: david-deutsch
+    bullets:
+      primary: gary-bencivenga
+      secondary: clayton-makepeace
+
+  by_awareness_level:
+    most_aware:
+      specialists: [dan-kennedy, russell-brunson, frank-kern]
+      headline_approach: Lead with offer, price, urgency
+    product_aware:
+      specialists: [joe-sugarman, gary-bencivenga, stefan-georgi]
+      headline_approach: Lead with differentiation and proof
+    solution_aware:
+      specialists: [david-ogilvy, todd-brown, ry-schwartz]
+      headline_approach: Lead with mechanism or big idea
+    problem_aware:
+      specialists: [gary-halbert, john-carlton, robert-collier]
+      headline_approach: Lead with empathy and agitation
+    unaware:
+      specialists: [eugene-schwartz, jim-rutz, parris-lampropoulos]
+      headline_approach: Lead with story, curiosity, pattern interrupt
+
+  quality_criteria:
+    - Does the headline stop the scroll?
+    - Does every sentence earn the right to the next?
+    - Is the offer irresistible?
+    - Are objections handled in the copy?
+    - Is there a clear single CTA?
+    - Does it sound like a human, not a template?
+    - Would the target customer read this to the end?
+    - Is it in accessible Portuguese (no jargon)?

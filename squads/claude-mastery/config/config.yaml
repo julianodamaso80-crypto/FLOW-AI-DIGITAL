@@ -1,0 +1,45 @@
+squad:
+  name: Claude Code Mastery
+  chief: claude-mastery-chief
+  model: opus
+  domain: Claude Code configuration, subagent design, MCP server integration, hooks/automation, skills/plugins, project setup, settings/permissions, roadmap updates
+  specialist_count: 8
+
+  description: >
+    Claude Code Mastery covers all dimensions of Claude Code — configuration,
+    agents, MCP, hooks, skills, integration, and roadmap. Triage before routing.
+    Quick answers for cross-cutting questions, specialist routing for depth.
+
+  specialists:
+    - name: hooks-architect
+      persona: Latch
+      domain: Hooks, PreToolUse, PostToolUse, lifecycle, intercept, automation
+      trigger: hook, PreToolUse, PostToolUse, lifecycle, intercept
+    - name: mcp-integrator
+      persona: Piper
+      domain: MCP servers, stdio, tool discovery, server configuration
+      trigger: mcp, server, stdio, tool discovery, add server
+    - name: swarm-orchestrator
+      persona: Nexus
+      domain: Subagents, swarms, agent teams, parallel execution, worktrees
+      trigger: subagent, swarm, agent team, parallel, worktree
+    - name: config-engineer
+      persona: Sigil
+      domain: Settings, permissions, CLAUDE.md, rules, sandbox, environment
+      trigger: settings, permissions, CLAUDE.md, rules, sandbox
+    - name: skill-craftsman
+      persona: Anvil
+      domain: Skills, plugins, slash commands, SKILL.md, context engineering
+      trigger: skill, plugin, slash command, SKILL.md
+    - name: project-integrator
+      persona: Conduit
+      domain: Project setup, CI/CD, brownfield, monorepo, git workflow
+      trigger: project setup, CI/CD, brownfield, monorepo
+    - name: roadmap-sentinel
+      persona: Vigil
+      domain: Changelog, versions, new features, migrations, upgrades
+      trigger: changelog, version, new feature, migration, upgrade
+    - name: prompt-engineer
+      persona: Scribe
+      domain: Prompt engineering, context engineering, agent prompts
+      trigger: prompt, context engineering, agent prompt, system prompt

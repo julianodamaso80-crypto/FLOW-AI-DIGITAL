@@ -1,0 +1,31 @@
+squad:
+  name: C-Level Squad
+  chief: vision-chief
+  model: sonnet
+  domain: Executive strategy, company vision, fundraising, culture architecture, board management, M&A evaluation, go-to-market planning, operations, technology strategy, AI strategy
+  specialist_count: 6
+
+  description: >
+    The C-Level Squad handles executive-level strategic decisions. Vision Chief
+    handles vision, fundraising, culture, board, M&A directly. Routes operations,
+    marketing, technology, IT, and AI to respective C-level specialists.
+
+  specialists:
+    - name: coo-orchestrator
+      domain: Operations, process, OKRs, team structure, scaling
+      trigger: operations, OKRs, process, team structure, efficiency
+    - name: cmo-architect
+      domain: Marketing strategy, brand, demand gen, GTM, CAC
+      trigger: marketing, GTM, demand gen, CAC, positioning
+    - name: cto-architect
+      domain: Technology strategy, architecture, tech debt, engineering
+      trigger: technology, architecture, tech debt, engineering, stack
+    - name: cio-engineer
+      domain: IT, security, compliance, enterprise systems, governance
+      trigger: security, compliance, IT, governance, enterprise
+    - name: caio-architect
+      domain: AI strategy, LLM integration, automation, responsible AI
+      trigger: AI strategy, LLM, automation, responsible AI
+    - name: cfo-analyst
+      domain: Financial planning, unit economics, cash flow, fundraising models
+      trigger: finance, unit economics, cash flow, fundraising, burn rate

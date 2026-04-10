@@ -1,0 +1,49 @@
+squad:
+  name: Storytelling Squad
+  chief: story-chief
+  model: sonnet
+  domain: Narrative strategy, brand storytelling, pitch design, presentations, screenplay structure, personal narrative, movement narrative, improvisation, sales stories
+  specialist_count: 12
+
+  description: >
+    The Storytelling Squad diagnoses narrative challenges and routes to the right
+    specialist among 11 storytelling experts. Synthesizes multi-framework narrative
+    strategies for any scale — from anecdote to movement.
+
+  specialists:
+    - name: joseph-campbell
+      domain: Hero's journey, mythic structure, archetypes
+      trigger: hero's journey, mythology, archetype, transformation
+    - name: blake-snyder
+      domain: Save the Cat, beat sheet, screenplay structure
+      trigger: beat sheet, screenplay, plot, logline, acts
+    - name: shawn-coyne
+      domain: Story Grid, story editing, value shifts, scene analysis
+      trigger: edit, revision, scene, value shift, genre
+    - name: dan-harmon
+      domain: Story Circle, TV/episodic narrative, comedy structure
+      trigger: TV, episode, series, pilot, story circle
+    - name: nancy-duarte
+      domain: Presentations, keynotes, TED talks, data storytelling
+      trigger: presentation, keynote, slides, TED, data story
+    - name: park-howell
+      domain: Brand storytelling, ABT framework, business narrative
+      trigger: brand story, ABT, business narrative, content
+    - name: matthew-dicks
+      domain: Personal narrative, Storyworthy, Moth-style storytelling
+      trigger: personal story, memoir, vulnerability, true story
+    - name: kindra-hall
+      domain: Sales stories, customer stories, testimonial narratives
+      trigger: sales story, case study, testimonial, customer
+    - name: keith-johnstone
+      domain: Improvisation, creative unblocking, spontaneous narrative
+      trigger: improv, creative block, stuck, spontaneous
+    - name: oren-klaff
+      domain: Pitch, frame control, investor presentations, deal narratives
+      trigger: pitch, investors, fundraising, frame, deal
+    - name: marshall-ganz
+      domain: Public narrative, organizing, movement storytelling, collective
+      trigger: movement, organizing, public narrative, collective
+    - name: narrative-synthesizer
+      domain: Cross-framework narrative synthesis
+      trigger: multi-framework, synthesis, complex narrative

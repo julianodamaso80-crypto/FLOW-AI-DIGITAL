@@ -1,0 +1,54 @@
+routing:
+  by_challenge:
+    brand_equity:
+      primary: david-aaker
+      secondary: kevin-keller
+      framework: Aaker Brand Equity Model
+    brand_identity:
+      primary: jean-noel-kapferer
+      secondary: alina-wheeler
+      framework: Identity Prism
+    positioning:
+      primary: al-ries
+      secondary: marty-neumeier
+      framework: Positioning / Zag
+    evidence_based:
+      primary: byron-sharp
+      secondary: kevin-keller
+      framework: How Brands Grow
+    messaging:
+      primary: donald-miller
+      secondary: miller-sticky-brand
+      framework: StoryBrand
+    visual_identity:
+      primary: alina-wheeler
+      secondary: archetype-consultant
+      framework: Brand Identity System
+    differentiation:
+      primary: marty-neumeier
+      secondary: al-ries
+      framework: Zag / Brand Gap
+    brand_culture:
+      primary: denise-yohn
+      secondary: donald-miller
+      framework: Fusion Framework
+    startup_brand:
+      primary: emily-heyward
+      secondary: marty-neumeier
+      framework: Obsessed
+    naming:
+      primary: naming-strategist
+      secondary: domain-scout
+      framework: Naming methodology
+    archetypes:
+      primary: archetype-consultant
+      secondary: jean-noel-kapferer
+      framework: 12 Archetypes
+    luxury:
+      primary: jean-noel-kapferer
+      secondary: david-aaker
+      framework: Luxury Anti-Laws
+    brand_measurement:
+      primary: kevin-keller
+      secondary: byron-sharp
+      framework: CBBE Model

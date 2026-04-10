@@ -1,0 +1,58 @@
+squad:
+  name: Brand Squad
+  chief: brand-chief
+  model: opus
+  domain: Brand positioning, naming, identity systems, messaging frameworks, brand equity, visual identity, archetypes, brand culture, startup branding, luxury strategy
+  specialist_count: 15
+
+  description: >
+    The Brand Squad diagnoses brand challenges and routes to the right specialist
+    among 14 brand experts. Manages cross-framework synthesis and resolves tensions
+    between competing brand schools of thought.
+
+  specialists:
+    - name: david-aaker
+      domain: Brand equity, brand value, brand management
+      trigger: brand equity, brand value, manage brand
+    - name: jean-noel-kapferer
+      domain: Brand identity, identity prism, luxury brands
+      trigger: brand identity, prism, DNA, luxury
+    - name: al-ries
+      domain: Positioning, category ownership, focus
+      trigger: positioning, category, own a word, focus
+    - name: byron-sharp
+      domain: Evidence-based branding, How Brands Grow, penetration
+      trigger: evidence, penetration, reach, how brands grow
+    - name: donald-miller
+      domain: StoryBrand, messaging, one-liner, brand script
+      trigger: message, one-liner, StoryBrand, clarity
+    - name: alina-wheeler
+      domain: Visual identity systems, brand guidelines, design system
+      trigger: visual identity, logo, guidelines, design system
+    - name: marty-neumeier
+      domain: Brand differentiation, Zag, Brand Gap
+      trigger: differentiate, stand out, zag, brand gap
+    - name: denise-yohn
+      domain: Brand culture, employer brand, internal alignment
+      trigger: culture, employer brand, internal, alignment
+    - name: emily-heyward
+      domain: Startup branding, DTC, brand from day one
+      trigger: startup, new brand, DTC, day one
+    - name: archetype-consultant
+      domain: Jungian archetypes, brand personality, tone of voice
+      trigger: archetype, personality, tone, Jungian
+    - name: naming-strategist
+      domain: Brand naming, nomenclature, name evaluation
+      trigger: name, rename, naming, nomenclature
+    - name: kevin-keller
+      domain: CBBE model, brand measurement, brand tracking
+      trigger: measure, tracking, health, CBBE
+    - name: domain-scout
+      domain: Domain name acquisition, digital presence
+      trigger: domain, URL, digital presence
+    - name: miller-sticky-brand
+      domain: Sticky branding, memorability, brand stickiness
+      trigger: sticky, memorable, recall
+    - name: brand-strategist
+      domain: Cross-framework brand strategy synthesis
+      trigger: strategy, cross-framework, synthesis

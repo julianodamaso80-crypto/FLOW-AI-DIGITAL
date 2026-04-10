@@ -1,0 +1,50 @@
+routing:
+  by_platform:
+    meta_facebook:
+      primary: molly-pittman
+      secondary: depesh-mandalia
+    meta_scaling:
+      primary: depesh-mandalia
+      secondary: scale-optimizer
+    youtube:
+      primary: tom-breeze
+      secondary: creative-analyst
+    google_ads:
+      primary: kasim-aslam
+      secondary: fiscal
+    brazilian_market:
+      primary: pedro-sobral
+      secondary: molly-pittman
+    tiktok:
+      primary: tiktok-specialist
+      secondary: ad-midas
+
+  by_function:
+    ad_creative:
+      primary: ad-midas
+      secondary: creative-analyst
+    tracking:
+      primary: pixel-specialist
+      secondary: performance-analyst
+    analysis_audit:
+      primary: performance-analyst
+      secondary: ads-analyst
+    budget_profitability:
+      primary: fiscal
+      secondary: scale-optimizer
+    campaign_setup:
+      primary: media-buyer
+      secondary: molly-pittman
+    retargeting:
+      primary: retargeting-expert
+      secondary: pixel-specialist
+    landing_page:
+      primary: landing-page-optimizer
+      secondary: ad-midas
+
+  diagnostic_checklist:
+    - Is the offer validated before spending?
+    - Is tracking firing correctly (pixel, CAPI, GTM)?
+    - Is CPA sustainable relative to LTV?
+    - Are creatives being tested systematically?
+    - Is budget allocation data-driven?
