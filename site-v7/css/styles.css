@@ -273,6 +273,7 @@ ul { list-style: none; }
 
 /* Agent cards grid */
 .agents__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 32px; }
+.agents__content { text-align: center; }
 .agent__card {
   background: var(--white); border: 1px solid var(--border); border-radius: var(--r-md);
   padding: 20px 16px; text-align: center; position: relative; overflow: hidden;
@@ -291,12 +292,13 @@ ul { list-style: none; }
 
 /* 129 highlight bar */
 .agents__highlight {
-  margin-top: 32px; display: flex; align-items: center; gap: 20px;
+  margin-top: 32px; display: flex; align-items: center; justify-content: center; gap: 20px;
   background: var(--white); border: 1px solid var(--border);
   border-left: 3px solid var(--accent); border-radius: var(--r-md); padding: 20px 24px;
+  text-align: center;
 }
 .agents__number { font-family: var(--font-d); font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 800; color: var(--accent); letter-spacing: -0.05em; line-height: 1; flex-shrink: 0; }
-.agents__note { font-size: 14px; color: var(--text-light); max-width: 340px; margin: 0; line-height: 1.6; }
+.agents__note { font-size: 14px; color: var(--text-light); max-width: 340px; margin: 0; line-height: 1.6; text-align: left; }
 
 @media (max-width: 900px) {
   .agents__layout { grid-template-columns: 1fr; gap: 48px; }
