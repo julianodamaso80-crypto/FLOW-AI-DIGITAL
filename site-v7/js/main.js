@@ -340,6 +340,17 @@ document.addEventListener('DOMContentLoaded', () => {
     flowObserver.observe(fCanvas);
   }
 
+  // ── ORBITAL NODE ROTATION ──
+  const orbitNodes = document.querySelectorAll('.orbit-node');
+  if (orbitNodes.length) {
+    let activeIdx = 0;
+    setInterval(() => {
+      orbitNodes.forEach(n => n.classList.remove('active'));
+      activeIdx = (activeIdx + 1) % orbitNodes.length;
+      orbitNodes[activeIdx].classList.add('active');
+    }, 2000);
+  }
+
   // ── SMOOTH ANCHOR SCROLL ──
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', (e) => {
