@@ -158,7 +158,7 @@ ul { list-style: none; }
 }
 .hero__overlay {
   position: absolute; inset: 0; z-index: 1;
-  background: rgba(245,239,230,0.72);
+  background: rgba(107,65,45,0.55);
 }
 
 .hero__particles {
@@ -177,9 +177,9 @@ ul { list-style: none; }
 .hero__badge {
   display: inline-flex; align-items: center; gap: 10px;
   font-size: 13px; font-weight: 600; letter-spacing: 0.06em;
-  color: var(--accent); margin-bottom: 28px;
-  background: rgba(201,101,60,0.06); padding: 8px 18px;
-  border-radius: 20px; border: 1px solid rgba(201,101,60,0.12);
+  color: var(--white); margin-bottom: 28px;
+  background: rgba(251,248,243,0.12); padding: 8px 18px;
+  border-radius: 20px; border: 1px solid rgba(251,248,243,0.2);
 }
 .hero__badge-dot {
   width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
@@ -190,21 +190,18 @@ ul { list-style: none; }
 
 .hero__h1 {
   font-family: var(--font-d); font-size: clamp(38px, 7vw, 68px);
-  font-weight: 700; line-height: 1.08; color: var(--text); margin-bottom: 24px;
-  letter-spacing: -0.02em;
+  font-weight: 700; line-height: 1.08; color: var(--white); margin-bottom: 24px;
+  letter-spacing: -0.02em; text-shadow: 0 2px 20px rgba(0,0,0,0.15);
 }
 .hero__h1 em {
-  font-style: normal; color: var(--accent);
-  background: linear-gradient(135deg, #C9653C, #A95532);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-style: normal; color: #F5C5A3;
 }
 .hero__sub {
-  font-size: 19px; line-height: 1.65; color: var(--text-light);
+  font-size: 19px; line-height: 1.65; color: rgba(251,248,243,0.85);
   margin-bottom: 36px; max-width: 560px; margin-left: auto; margin-right: auto;
 }
 .hero__cta-wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; }
-.hero__note { font-size: 13px; color: var(--text-light); letter-spacing: 0.02em; }
+.hero__note { font-size: 13px; color: rgba(251,248,243,0.6); letter-spacing: 0.02em; }
 
 /* ── PROBLEMS ── */
 .problems-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
