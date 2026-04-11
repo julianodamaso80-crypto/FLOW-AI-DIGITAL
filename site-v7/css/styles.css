@@ -205,8 +205,8 @@ ul { list-style: none; }
 .hero__note { font-size: 13px; color: rgba(251,248,243,0.6); letter-spacing: 0.02em; }
 
 /* ── AGENTS ORBITAL ── */
-.agents__layout { display: grid; grid-template-columns: 480px 1fr; gap: 64px; align-items: start; }
-.agents__orbital { position: sticky; top: 88px; align-self: start; }
+.agents__layout { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; text-align: center; }
+.agents__orbital { max-width: 420px; margin: 0 auto; }
 .agents__orbital::before {
   content: ''; position: absolute; inset: -60px; border-radius: 50%;
   background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(201,101,60,0.07) 0%, transparent 70%);
@@ -273,7 +273,7 @@ ul { list-style: none; }
 .orbit-node__text { font-size: 10px; font-weight: 600; color: var(--text); line-height: 1.3; white-space: nowrap; }
 
 /* Agent cards grid */
-.agents__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 32px; }
+.agents__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 32px; max-width: 900px; margin-left: auto; margin-right: auto; }
 .agents__content { text-align: center; }
 .agent__card {
   background: var(--white); border: 1px solid var(--border); border-radius: var(--r-md);
@@ -293,17 +293,15 @@ ul { list-style: none; }
 
 /* 129 highlight bar */
 .agents__highlight {
-  margin-top: 32px; display: flex; align-items: center; justify-content: center; gap: 20px;
+  margin-top: 32px; display: flex; align-items: center; justify-content: center; gap: 24px;
   background: var(--white); border: 1px solid var(--border);
-  border-left: 3px solid var(--accent); border-radius: var(--r-md); padding: 20px 24px;
-  text-align: center;
+  border-left: 3px solid var(--accent); border-radius: var(--r-md); padding: 24px 32px;
+  max-width: 700px; margin-left: auto; margin-right: auto;
 }
 .agents__number { font-family: var(--font-d); font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 800; color: var(--accent); letter-spacing: -0.05em; line-height: 1; flex-shrink: 0; }
-.agents__note { font-size: 14px; color: var(--text-light); max-width: 340px; margin: 0; line-height: 1.6; text-align: left; }
+.agents__note { font-size: 14px; color: var(--text-light); max-width: 400px; margin: 0; line-height: 1.6; text-align: left; }
 
 @media (max-width: 900px) {
-  .agents__layout { grid-template-columns: 1fr; gap: 48px; }
-  .agents__orbital { position: static; max-width: 360px; margin: 0 auto; }
   .agents__grid { grid-template-columns: repeat(2, 1fr); }
   .agents__content .section__title { text-align: center !important; margin-left: auto !important; }
   .agents__content .section__sub { text-align: center !important; margin-left: auto !important; }
@@ -315,28 +313,26 @@ ul { list-style: none; }
 /* ── TICKER ── */
 .ticker {
   overflow: hidden; white-space: nowrap;
-  background: var(--bg-dark);
-  padding: 18px 0; position: relative;
-  border-top: 1px solid rgba(201,101,60,0.2);
-  border-bottom: 1px solid rgba(201,101,60,0.2);
+  background: #6B412D;
+  padding: 20px 0; position: relative;
 }
 .ticker::before, .ticker::after {
-  content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
+  content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2; pointer-events: none;
 }
-.ticker::before { left: 0; background: linear-gradient(90deg, var(--bg-dark), transparent); }
-.ticker::after { right: 0; background: linear-gradient(270deg, var(--bg-dark), transparent); }
+.ticker::before { left: 0; background: linear-gradient(90deg, #6B412D, transparent); }
+.ticker::after { right: 0; background: linear-gradient(270deg, #6B412D, transparent); }
 
 .ticker__track {
   display: inline-flex; align-items: center; gap: 0;
-  animation: tickerScroll 40s linear infinite;
+  animation: tickerScroll 35s linear infinite;
 }
 .ticker__item {
-  font-family: var(--font-b); font-size: 14px; font-weight: 600;
-  letter-spacing: 0.04em; text-transform: uppercase;
-  color: rgba(251,248,243,0.85); padding: 0 20px;
+  font-family: var(--font-b); font-size: 15px; font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #FBF8F3; padding: 0 24px;
 }
 .ticker__sep {
-  color: var(--accent); font-size: 8px; opacity: 0.6;
+  color: #C9653C; font-size: 9px;
 }
 
 @keyframes tickerScroll {
