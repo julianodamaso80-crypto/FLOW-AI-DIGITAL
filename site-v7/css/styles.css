@@ -311,6 +311,38 @@ ul { list-style: none; }
   .agents__grid { grid-template-columns: 1fr; }
 }
 
+/* ── TICKER ── */
+.ticker {
+  overflow: hidden; white-space: nowrap;
+  background: var(--bg-dark);
+  padding: 18px 0; position: relative;
+  border-top: 1px solid rgba(201,101,60,0.2);
+  border-bottom: 1px solid rgba(201,101,60,0.2);
+}
+.ticker::before, .ticker::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
+}
+.ticker::before { left: 0; background: linear-gradient(90deg, var(--bg-dark), transparent); }
+.ticker::after { right: 0; background: linear-gradient(270deg, var(--bg-dark), transparent); }
+
+.ticker__track {
+  display: inline-flex; align-items: center; gap: 0;
+  animation: tickerScroll 40s linear infinite;
+}
+.ticker__item {
+  font-family: var(--font-b); font-size: 14px; font-weight: 600;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  color: rgba(251,248,243,0.85); padding: 0 20px;
+}
+.ticker__sep {
+  color: var(--accent); font-size: 8px; opacity: 0.6;
+}
+
+@keyframes tickerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 /* ── PROBLEMS ── */
 .problems-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
 .problem-card {
