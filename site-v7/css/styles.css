@@ -146,20 +146,20 @@ ul { list-style: none; }
   position: relative; min-height: 100vh; display: flex; align-items: center;
   overflow: hidden; padding-top: 80px;
 }
-.hero__mesh {
-  position: absolute; inset: -50%;
-  background:
-    radial-gradient(ellipse at 15% 35%, rgba(201,101,60,0.18) 0%, transparent 45%),
-    radial-gradient(ellipse at 85% 15%, rgba(169,85,50,0.12) 0%, transparent 45%),
-    radial-gradient(ellipse at 50% 85%, rgba(231,216,199,0.35) 0%, transparent 45%),
-    radial-gradient(ellipse at 70% 60%, rgba(201,101,60,0.08) 0%, transparent 40%);
-  filter: blur(80px);
-  animation: meshMove 12s ease-in-out infinite alternate;
+.hero__video {
+  position: absolute; inset: 0; overflow: hidden;
 }
-@keyframes meshMove {
-  0% { transform: translate(0,0) rotate(0deg) scale(1); }
-  50% { transform: translate(-20px,10px) rotate(1deg) scale(1.03); }
-  100% { transform: translate(-40px,20px) rotate(-1deg) scale(1.06); }
+.hero__video video {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.hero__overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(245,239,230,0.65) 0%,
+    rgba(245,239,230,0.5) 40%,
+    rgba(245,239,230,0.75) 100%
+  );
 }
 
 .hero__particles {

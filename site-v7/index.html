@@ -122,7 +122,13 @@
 
 <!-- ── HERO ── -->
 <section class="hero" id="inicio" aria-labelledby="hero-title">
-  <div class="hero__mesh" aria-hidden="true"></div>
+  <!-- Video background -->
+  <div class="hero__video" aria-hidden="true">
+    <video autoplay muted loop playsinline preload="auto">
+      <source src="assets/hero-bg.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero__overlay" aria-hidden="true"></div>
   <canvas class="hero__particles" id="heroParticles" aria-hidden="true"></canvas>
   <div class="hero__grain" aria-hidden="true"></div>
   <div class="container">
