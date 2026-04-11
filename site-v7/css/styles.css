@@ -163,6 +163,7 @@ ul { list-style: none; }
 
 .hero__particles {
   position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  mix-blend-mode: screen;
 }
 
 .hero__grain {
@@ -497,6 +498,47 @@ ul { list-style: none; }
   0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,0.35); }
   50% { box-shadow: 0 4px 30px rgba(37,211,102,0.5); }
 }
+
+/* ── TEXT STAGGER ── */
+.hero-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(40px) rotateX(15deg);
+  filter: blur(4px);
+  transition: none;
+}
+.hero-word.visible {
+  opacity: 1;
+  transform: translateY(0) rotateX(0);
+  filter: blur(0);
+}
+
+/* ── GLOW CARDS ── */
+.squad-card::after,
+.agent__card::after,
+.pillar::after,
+.step::after,
+.problem-card::after {
+  content: '';
+  position: absolute; inset: -1px;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(201,101,60,0.15) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+.squad-card:hover::after,
+.agent__card:hover::after,
+.pillar:hover::after,
+.step:hover::after,
+.problem-card:hover::after {
+  opacity: 1;
+}
+
+/* ── PARALLAX LAYERS ── */
+.parallax-slow { will-change: transform; }
+.parallax-fast { will-change: transform; }
 
 /* ── GSAP REVEAL (overrides default) ── */
 .reveal { opacity: 0; transform: translateY(30px); }

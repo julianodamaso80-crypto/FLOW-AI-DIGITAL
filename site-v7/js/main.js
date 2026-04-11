@@ -91,13 +91,63 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Hero entrance
-  const heroTl = gsap.timeline({ delay: 0.3 });
+  // ── HERO TEXT STAGGER ──
+  const heroWords = document.querySelectorAll('.hero-word');
+  const heroTl = gsap.timeline({ delay: 0.4 });
   heroTl
-    .fromTo('.hero__badge', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 })
-    .fromTo('.hero__h1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, '-=0.3')
-    .fromTo('.hero__sub', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7 }, '-=0.4')
+    .fromTo('.hero__badge', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 });
+
+  // Stagger each word
+  heroWords.forEach((word, i) => {
+    heroTl.to(word, {
+      opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)',
+      duration: 0.6, ease: 'power3.out'
+    }, 0.5 + i * 0.1);
+    word.classList.add('visible-target');
+  });
+
+  heroTl
+    .fromTo('.hero__sub', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7 }, '-=0.2')
     .fromTo('.hero__cta-wrap', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.3');
+
+  // ── PARALLAX SUTIL ──
+  gsap.utils.toArray('.parallax-slow').forEach(el => {
+    gsap.fromTo(el, { y: 0 }, {
+      y: -30,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1.5
+      }
+    });
+  });
+  gsap.utils.toArray('.parallax-fast').forEach(el => {
+    gsap.fromTo(el, { y: 0 }, {
+      y: -50,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1
+      }
+    });
+  });
+
+  // ── GLOW FOLLOW MOUSE on cards ──
+  document.querySelectorAll('.squad-card, .agent__card, .pillar, .step, .problem-card').forEach(card => {
+    card.style.position = 'relative';
+    card.style.overflow = 'hidden';
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      card.style.setProperty('--glow-x', x + '%');
+      card.style.setProperty('--glow-y', y + '%');
+    });
+  });
 
   // ── COUNTER ANIMATION ──
   function animateCounter(el) {
@@ -162,15 +212,15 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeParticles();
     window.addEventListener('resize', resizeParticles);
 
-    // Create particles
-    for (let i = 0; i < 60; i++) {
+    // Create particles — larger and brighter to show over video
+    for (let i = 0; i < 80; i++) {
       particles.push({
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
-        r: Math.random() * 2 + 0.5,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        opacity: Math.random() * 0.3 + 0.05
+        r: Math.random() * 3 + 1,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        opacity: Math.random() * 0.5 + 0.15
       });
     }
 
@@ -187,21 +237,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         pCtx.beginPath();
         pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        pCtx.fillStyle = `rgba(201,101,60,${p.opacity})`;
+        pCtx.fillStyle = `rgba(251,248,243,${p.opacity})`;
         pCtx.fill();
 
-        // Draw connections
+        // Draw connections — white lines visible over dark overlay
         particles.forEach((p2, j) => {
           if (j <= i) return;
           const dx = p.x - p2.x;
           const dy = p.y - p2.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
+          if (dist < 150) {
             pCtx.beginPath();
             pCtx.moveTo(p.x, p.y);
             pCtx.lineTo(p2.x, p2.y);
-            pCtx.strokeStyle = `rgba(201,101,60,${0.06 * (1 - dist / 120)})`;
-            pCtx.lineWidth = 0.5;
+            pCtx.strokeStyle = `rgba(251,248,243,${0.12 * (1 - dist / 150)})`;
+            pCtx.lineWidth = 0.8;
             pCtx.stroke();
           }
         });
