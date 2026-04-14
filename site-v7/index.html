@@ -32,6 +32,41 @@
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css">
 
+  <!-- Flowchart inline CSS (fallback) -->
+  <style>
+    .flowchart { margin-top: 48px; display: flex; flex-direction: column; align-items: center; gap: 0; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .fc-node { width: 100%; background: #FBF8F3; border: 1px solid rgba(107,65,45,0.10); border-radius: 12px; padding: 16px 24px; text-align: center; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; }
+    .fc-node:hover { border-color: rgba(201,101,60,0.2); transform: translateY(-1px); box-shadow: 0 1px 3px rgba(107,65,45,0.06); }
+    .fc-node--accent { background: rgba(201,101,60,0.06); border-color: rgba(201,101,60,0.25); }
+    .fc-node--result { background: linear-gradient(135deg, rgba(201,101,60,0.12), rgba(169,85,50,0.06)); border-color: rgba(201,101,60,0.3); }
+    .fc-node__label { font-family: 'Noto Serif', Georgia, serif; font-size: 0.95rem; font-weight: 700; color: #6B412D; margin-bottom: 4px; }
+    .fc-node__sub { font-size: 0.78rem; color: #8B7355; line-height: 1.5; }
+    .fc-node--accent .fc-node__label, .fc-node--result .fc-node__label { color: #C9653C; }
+    .fc-arrow { width: 2px; height: 28px; background: rgba(107,65,45,0.15); margin: 0 auto; position: relative; flex-shrink: 0; }
+    .fc-arrow::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid rgba(107,65,45,0.2); }
+    .fc-arrow--green { background: #C9653C; }
+    .fc-arrow--green::after { border-top-color: #C9653C; }
+    .fc-split { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; position: relative; }
+    .fc-split::before { content: ''; position: absolute; top: 0; left: 25%; right: 25%; height: 2px; background: rgba(107,65,45,0.15); }
+    .fc-split-branch { display: flex; flex-direction: column; align-items: center; gap: 0; }
+    .fc-split-branch .fc-node { font-size: 0.85rem; padding: 14px 18px; }
+    .fc-branch-label { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 4px 10px; border-radius: 9999px; margin-bottom: 8px; }
+    .fc-branch-label--yes { background: rgba(201,101,60,0.1); color: #C9653C; border: 1px solid rgba(201,101,60,0.25); }
+    .fc-branch-label--no { background: rgba(139,115,85,0.1); color: #8B7355; border: 1px solid rgba(139,115,85,0.25); }
+    @keyframes fc-slide-up { from { opacity: 0; transform: translateY(30px) scale(0.95); filter: blur(4px); } to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
+    @keyframes fc-grow-arrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+    @keyframes fc-glow-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(201,101,60,0); } 50% { box-shadow: 0 0 24px 4px rgba(201,101,60,0.18), 0 0 48px 10px rgba(201,101,60,0.08); } }
+    @keyframes fc-arrow-flow { 0% { background-position: 0 0; } 100% { background-position: 0 56px; } }
+    .flowchart .fc-node, .flowchart .fc-arrow, .flowchart .fc-split { opacity: 0; }
+    .fc-split-branch .fc-node, .fc-split-branch .fc-arrow, .fc-branch-label { opacity: 0; }
+    .flowchart .fc-node.fc-in { animation: fc-slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .flowchart .fc-arrow.fc-in { opacity: 1; transform-origin: top; animation: fc-grow-arrow 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .flowchart .fc-arrow--green.fc-in { background: linear-gradient(to bottom, transparent, #C9653C, transparent); background-size: 2px 56px; animation: fc-grow-arrow 0.4s cubic-bezier(0.16, 1, 0.3, 1) both, fc-arrow-flow 1.5s linear 0.5s infinite; }
+    .flowchart .fc-split.fc-in { opacity: 1; animation: fc-slide-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .fc-split.fc-in .fc-branch-label, .fc-split.fc-in .fc-split-branch .fc-node, .fc-split.fc-in .fc-split-branch .fc-arrow { opacity: 1; animation: fc-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both; }
+    .flowchart .fc-node--accent.fc-in, .flowchart .fc-node--result.fc-in { animation: fc-slide-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both, fc-glow-pulse 2.8s ease-in-out 1s infinite; }
+  </style>
+
   <!-- Schema.org -->
   <script type="application/ld+json">
   {
