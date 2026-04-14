@@ -34,6 +34,21 @@
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css">
 
+  <!-- Logo size override (anti-cache) -->
+  <style>
+    .nav__logo-img { height: 64px !important; width: auto !important; max-width: 200px !important; }
+    .footer__logo { height: 88px !important; width: auto !important; max-width: 260px !important; }
+    #nav .nav__inner { padding: 16px 24px !important; }
+    @media (max-width: 768px) {
+      .nav__logo-img { height: 52px !important; max-width: 160px !important; }
+      .footer__logo { height: 72px !important; max-width: 220px !important; }
+    }
+    @media (max-width: 480px) {
+      .nav__logo-img { height: 46px !important; max-width: 140px !important; }
+      .footer__logo { height: 64px !important; max-width: 200px !important; }
+    }
+  </style>
+
   <!-- CTA green override (fallback anti-cache) -->
   <style>
     .btn--primary,
@@ -147,7 +162,7 @@
 <nav id="nav" role="navigation" aria-label="Navegação principal">
   <div class="nav__inner">
     <a href="/" class="nav__logo" aria-label="FlowAI Digital — Página inicial">
-      <img src="assets/logo/logo-flowai-light.png" alt="FlowAI Digital" class="nav__logo-img">
+      <img src="assets/logo/logo-flowai-light.png" alt="FlowAI Digital" class="nav__logo-img" style="height:64px !important;width:auto;max-width:200px;">
     </a>
     <ul class="nav__links" role="list">
       <li><a href="#solucao">Solução</a></li>
@@ -983,7 +998,7 @@
   <div class="container">
     <div class="footer__inner">
       <div class="footer__brand">
-        <img src="assets/logo/logo-flowai-light.png" alt="FlowAI Digital" class="footer__logo">
+        <img src="assets/logo/logo-flowai-light.png" alt="FlowAI Digital" class="footer__logo" style="height:88px !important;width:auto;max-width:260px;margin:0 auto 16px;">
         <p class="footer__tagline">129 agentes. Zero achismo.</p>
       </div>
       <div class="footer__links">
