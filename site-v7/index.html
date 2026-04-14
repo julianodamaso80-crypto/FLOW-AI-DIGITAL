@@ -243,53 +243,59 @@
 </section>
 
 <!-- ── SQUADS (segunda dobra) ── -->
-<section class="section" id="squads" style="position:relative;overflow:hidden;background:#F5EFE6;">
+<section class="section section--agents" id="squads" style="position:relative;overflow:hidden;background:#F5EFE6;">
   <canvas id="squadsWaves" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
   <div class="container" style="position:relative;z-index:2;">
 
-    <!-- Orbital diagram centered on top -->
-    <div class="agents__orbital reveal" aria-hidden="true" style="max-width:420px;margin:0 auto 48px;">
-      <div class="orbit-diagram" id="orbitDiagram" role="img" aria-label="129 agentes FlowAI operando em ciclo">
-        <svg class="orbit-diagram__svg" viewBox="0 0 400 400" fill="none">
-          <circle cx="200" cy="200" r="178" stroke="rgba(107,65,45,0.06)" stroke-width="1" stroke-dasharray="3 9"/>
-          <circle cx="200" cy="200" r="152" stroke="rgba(107,65,45,0.1)" stroke-width="1"/>
-          <circle cx="200" cy="200" r="152"
-            stroke="#C9653C" stroke-width="2.5" stroke-linecap="round"
-            stroke-dasharray="55 900"
-            style="opacity:0.5; transform-origin:center; transform-box:fill-box; transform:rotate(-90deg); animation:orbit-travel 7s linear infinite;"/>
-          <circle cx="200" cy="200" r="152"
-            stroke="#A95532" stroke-width="1.5" stroke-linecap="round"
-            stroke-dasharray="22 933"
-            style="opacity:0.25; transform-origin:center; transform-box:fill-box; transform:rotate(-90deg); animation:orbit-travel 7s linear infinite 3.5s;"/>
-          <circle cx="200" cy="200" r="64" stroke="rgba(201,101,60,0.1)" stroke-width="1" stroke-dasharray="4 6"/>
-        </svg>
+    <div class="agents__layout" style="margin-bottom:72px;">
 
-        <div class="orbit-core">
-          <div class="orbit-core__label">FlowAI</div>
-          <div class="orbit-core__sub">12 SQUADS<br>129 AGENTES</div>
-        </div>
+      <!-- LEFT: orbital diagram -->
+      <div class="agents__orbital" aria-hidden="true">
+        <div class="orbit-diagram" id="orbitDiagram" role="img" aria-label="129 agentes FlowAI operando em ciclo">
+          <svg class="orbit-diagram__svg" viewBox="0 0 400 400" fill="none">
+            <circle cx="200" cy="200" r="178" stroke="rgba(107,65,45,0.06)" stroke-width="1" stroke-dasharray="3 9"/>
+            <circle cx="200" cy="200" r="152" stroke="rgba(107,65,45,0.1)" stroke-width="1"/>
+            <circle cx="200" cy="200" r="152"
+              stroke="#C9653C" stroke-width="2.5" stroke-linecap="round"
+              stroke-dasharray="55 900"
+              style="opacity:0.5; transform-origin:center; transform-box:fill-box; transform:rotate(-90deg); animation:orbit-travel 7s linear infinite;"/>
+            <circle cx="200" cy="200" r="152"
+              stroke="#A95532" stroke-width="1.5" stroke-linecap="round"
+              stroke-dasharray="22 933"
+              style="opacity:0.25; transform-origin:center; transform-box:fill-box; transform:rotate(-90deg); animation:orbit-travel 7s linear infinite 3.5s;"/>
+            <circle cx="200" cy="200" r="64" stroke="rgba(201,101,60,0.1)" stroke-width="1" stroke-dasharray="4 6"/>
+          </svg>
 
-        <div class="orbit-nodes" id="orbitNodes">
-          <div class="orbit-node active"><div class="orbit-node__ping"></div><div class="orbit-node__icon">🎯</div><div class="orbit-node__text">Tráfego</div></div>
-          <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">🔍</div><div class="orbit-node__text">SEO</div></div>
-          <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">📊</div><div class="orbit-node__text">Tracking</div></div>
-          <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">💬</div><div class="orbit-node__text">Copy</div></div>
-          <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">🗂️</div><div class="orbit-node__text">CRM</div></div>
-          <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">💰</div><div class="orbit-node__text">Vendas</div></div>
-          <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">🔄</div><div class="orbit-node__text">Remarketing</div></div>
-          <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">📈</div><div class="orbit-node__text">Dashboard</div></div>
+          <div class="orbit-core">
+            <div class="orbit-core__label">FlowAI</div>
+            <div class="orbit-core__sub">12 SQUADS<br>129 AGENTES</div>
+          </div>
+
+          <div class="orbit-nodes" id="orbitNodes">
+            <div class="orbit-node active"><div class="orbit-node__ping"></div><div class="orbit-node__icon">🎯</div><div class="orbit-node__text">Tráfego</div></div>
+            <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">🔍</div><div class="orbit-node__text">SEO</div></div>
+            <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">📊</div><div class="orbit-node__text">Tracking</div></div>
+            <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">💬</div><div class="orbit-node__text">Copy</div></div>
+            <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">🗂️</div><div class="orbit-node__text">CRM</div></div>
+            <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">💰</div><div class="orbit-node__text">Vendas</div></div>
+            <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">🔄</div><div class="orbit-node__text">Remarketing</div></div>
+            <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">📈</div><div class="orbit-node__text">Dashboard</div></div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <span class="eyebrow reveal">O ECOSSISTEMA</span>
-    <h2 class="section__title reveal">12 squads. 129 agentes.<br>Operando juntos como um time.</h2>
-    <p class="section__sub reveal">Cada squad é especializado em uma função do processo comercial. Juntos, operam o ciclo completo — do primeiro contato ao fechamento e à reativação.</p>
+      <!-- RIGHT: header content -->
+      <div class="agents__content">
+        <span class="eyebrow reveal">O ECOSSISTEMA</span>
+        <h2 class="section__title reveal" style="text-align:left;">12 squads. 129 agentes.<br>Operando juntos como um time.</h2>
+        <p class="section__sub reveal" style="text-align:left;margin-left:0;">Cada squad é especializado em uma função do processo comercial. Juntos, operam o ciclo completo — do primeiro contato ao fechamento e à reativação.</p>
 
-    <div class="stats-row reveal">
-      <div class="stat"><span class="stat__number" data-target="12">0</span><span class="stat__label">Squads</span></div>
-      <div class="stat"><span class="stat__number" data-target="129">0</span><span class="stat__label">Agentes</span></div>
-      <div class="stat"><span class="stat__number" data-target="24">0</span><span class="stat__label">Horas/dia</span></div>
+        <div class="stats-row reveal" style="justify-content:flex-start;">
+          <div class="stat"><span class="stat__number" data-target="12">0</span><span class="stat__label">Squads</span></div>
+          <div class="stat"><span class="stat__number" data-target="129">0</span><span class="stat__label">Agentes</span></div>
+          <div class="stat"><span class="stat__number" data-target="24">0</span><span class="stat__label">Horas/dia</span></div>
+        </div>
+      </div>
     </div>
 
     <div class="squads-grid">
@@ -946,8 +952,77 @@
   </div>
 </section>
 
+<!-- ── DEPOIMENTOS ── -->
+<section class="section section--alt" id="depoimentos">
+  <div class="container">
+    <span class="eyebrow reveal">QUEM JÁ OPERA COM A FLOWAI</span>
+    <h2 class="section__title reveal">Empresários que pararam de perder receita.</h2>
+    <p class="section__sub reveal">Resultados de quem tirou a operação comercial do achismo e colocou processo pra rodar 24/7.</p>
+    <div class="testimonial-grid">
+      <figure class="testimonial-card reveal">
+        <div class="testimonial-stars" aria-label="5 de 5 estrelas">★★★★★</div>
+        <blockquote>
+          <p>“Antes a gente perdia lead qualificado porque ninguém retornava no mesmo dia. Hoje o primeiro contato sai em minutos e meu time só entra quando o lead já está pré-qualificado. Fechamos o último trimestre com o maior volume de captação desde a abertura da casa.”</p>
+        </blockquote>
+        <figcaption class="testimonial-author">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rafael Monteiro" loading="lazy" width="56" height="56">
+          <div>
+            <strong>Rafael Monteiro</strong>
+            <span>Sócio · Gestora de investimentos · São Paulo/SP</span>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="testimonial-card reveal">
+        <div class="testimonial-stars" aria-label="5 de 5 estrelas">★★★★★</div>
+        <blockquote>
+          <p>“A gente rodava três ferramentas diferentes e nenhuma conversava. A FlowAI conectou tudo num dashboard só e o custo por associado caiu quase pela metade. Agora eu sei exatamente de qual campanha veio cada adesão — e qual não vale mais um real.”</p>
+        </blockquote>
+        <figcaption class="testimonial-author">
+          <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="Bruno Carvalho" loading="lazy" width="56" height="56">
+          <div>
+            <strong>Bruno Carvalho</strong>
+            <span>Diretor · Associação de proteção veicular · Belo Horizonte/MG</span>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="testimonial-card reveal">
+        <div class="testimonial-stars" aria-label="5 de 5 estrelas">★★★★★</div>
+        <blockquote>
+          <p>“Minha recepcionista passava o dia no WhatsApp e ainda esquecia de confirmar consulta. Os agentes responderam 100% dos leads em minutos e o no-show despencou. Consegui tirar meu time da digitação e colocar pra cuidar da paciente na cadeira.”</p>
+        </blockquote>
+        <figcaption class="testimonial-author">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Patrícia Almeida" loading="lazy" width="56" height="56">
+          <div>
+            <strong>Patrícia Almeida</strong>
+            <span>Sócia · Clínica de estética avançada · Curitiba/PR</span>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="testimonial-card reveal">
+        <div class="testimonial-stars" aria-label="5 de 5 estrelas">★★★★★</div>
+        <blockquote>
+          <p>“Abrir unidade nova sempre foi dor de cabeça — pedido duplicado, cupom perdido, cliente reclamando. A FlowAI montou o processo inteiro, do atendimento ao pós-venda, e hoje roda sozinho. Abri duas franquias esse ano sem precisar contratar uma pessoa a mais no comercial.”</p>
+        </blockquote>
+        <figcaption class="testimonial-author">
+          <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Thiago Ribeiro" loading="lazy" width="56" height="56">
+          <div>
+            <strong>Thiago Ribeiro</strong>
+            <span>Fundador · Rede de pizzarias (6 unidades) · Rio de Janeiro/RJ</span>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+    <div class="section__cta reveal" style="text-align:center;margin-top:56px;">
+      <a href="#cta-final" class="btn btn--primary btn--lg">Quero esse resultado também</a>
+    </div>
+  </div>
+</section>
+
 <!-- ── FAQ ── -->
-<section class="section section--alt" id="faq">
+<section class="section" id="faq">
   <div class="container">
     <span class="eyebrow reveal">DÚVIDAS</span>
     <h2 class="section__title reveal">Perguntas que todo empresário faz.</h2>
