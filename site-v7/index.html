@@ -426,74 +426,134 @@
 </section>
 
 <!-- ── AGENTES CONVERSAM ── -->
-<section class="section section--alt" id="agentes-conversam">
-  <div class="container">
-    <span class="eyebrow reveal">O DIFERENCIAL</span>
-    <h2 class="section__title reveal">Agentes que conversam entre si.</h2>
-    <p class="section__sub reveal">Em toda agência tradicional, o time de tráfego não fala com o de vendas. O de CRM não fala com o de atendimento. Aqui, cada agente alimenta o próximo em tempo real.</p>
+<section class="section section--conversam" id="agentes-conversam" style="background:#3D2518;color:#F5EFE6;padding:120px 0;position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(201,101,60,0.12) 0%,transparent 50%),radial-gradient(ellipse at 70% 80%,rgba(201,101,60,0.08) 0%,transparent 50%);pointer-events:none;"></div>
+  <div class="container" style="position:relative;z-index:1;">
 
-    <div class="convo-grid">
-      <div class="convo-card">
-        <div class="convo-from">Agente de Tráfego</div>
-        <div class="convo-arrow">→</div>
-        <div class="convo-to">Agente de Tracking</div>
-        <p class="convo-msg">"Campanha Meta trouxe 47 leads hoje. CPA R$ 28. Melhor criativo: anúncio #3."</p>
+    <span class="eyebrow" style="color:#E8A97A;display:inline-flex;align-items:center;gap:10px;font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:20px;">
+      <span style="width:24px;height:2px;background:#E8A97A;border-radius:1px;"></span>
+      O DIFERENCIAL
+    </span>
+    <h2 style="font-family:'Noto Serif',serif;font-size:clamp(30px,5vw,48px);font-weight:700;line-height:1.12;color:#F5EFE6;margin-bottom:20px;max-width:720px;margin-left:auto;margin-right:auto;text-align:center;">
+      Agentes que conversam entre si.
+    </h2>
+    <p style="font-size:18px;line-height:1.7;color:rgba(245,239,230,0.7);max-width:620px;margin:0 auto 72px;text-align:center;">
+      Em toda agência tradicional, o time de tráfego não fala com o de vendas. O CRM não fala com o atendimento. Aqui, <strong style="color:#F5EFE6;">cada agente alimenta o próximo em tempo real</strong>.
+    </p>
+
+    <!-- Grid estilo stories/criativo -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;max-width:1100px;margin:0 auto;">
+
+      <!-- Card 1 -->
+      <div style="background:rgba(245,239,230,0.05);border:1px solid rgba(245,239,230,0.12);border-radius:16px;padding:28px 26px;backdrop-filter:blur(10px);position:relative;overflow:hidden;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#C9653C,#A95532);display:flex;align-items:center;justify-content:center;font-size:18px;">📊</div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#E8A97A;">Agente de Tráfego</div>
+            <div style="font-size:11px;color:rgba(245,239,230,0.5);">envia agora</div>
+          </div>
+        </div>
+        <p style="font-family:'Noto Serif',serif;font-size:16px;line-height:1.55;color:#F5EFE6;font-style:italic;margin:0;padding-left:14px;border-left:2px solid #C9653C;">
+          "Campanha Meta trouxe 47 leads hoje. CPA R$ 28. Melhor criativo: anúncio #3."
+        </p>
+        <div style="margin-top:16px;padding-top:14px;border-top:1px dashed rgba(245,239,230,0.15);font-size:12px;color:rgba(245,239,230,0.5);display:flex;align-items:center;gap:8px;">
+          <span style="color:#C9653C;">→</span> para <strong style="color:#F5EFE6;">Agente de Tracking</strong>
+        </div>
       </div>
 
-      <div class="convo-card">
-        <div class="convo-from">Agente de Tracking</div>
-        <div class="convo-arrow">→</div>
-        <div class="convo-to">Agente de CRM</div>
-        <p class="convo-msg">"Lead João Silva chegou pelo anúncio #3, interesse alto, perfil qualificado."</p>
+      <!-- Card 2 -->
+      <div style="background:rgba(245,239,230,0.05);border:1px solid rgba(245,239,230,0.12);border-radius:16px;padding:28px 26px;backdrop-filter:blur(10px);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#C9653C,#A95532);display:flex;align-items:center;justify-content:center;font-size:18px;">🎯</div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#E8A97A;">Agente de Tracking</div>
+            <div style="font-size:11px;color:rgba(245,239,230,0.5);">há 2 segundos</div>
+          </div>
+        </div>
+        <p style="font-family:'Noto Serif',serif;font-size:16px;line-height:1.55;color:#F5EFE6;font-style:italic;margin:0;padding-left:14px;border-left:2px solid #C9653C;">
+          "Lead João Silva chegou pelo anúncio #3. Interesse alto. Perfil qualificado."
+        </p>
+        <div style="margin-top:16px;padding-top:14px;border-top:1px dashed rgba(245,239,230,0.15);font-size:12px;color:rgba(245,239,230,0.5);display:flex;align-items:center;gap:8px;">
+          <span style="color:#C9653C;">→</span> para <strong style="color:#F5EFE6;">Agente de CRM</strong>
+        </div>
       </div>
 
-      <div class="convo-card">
-        <div class="convo-from">Agente de CRM</div>
-        <div class="convo-arrow">→</div>
-        <div class="convo-to">Agente de Atendimento</div>
-        <p class="convo-msg">"Responda João em 5 minutos. 87% de chance de fechar pelo histórico."</p>
+      <!-- Card 3 -->
+      <div style="background:rgba(245,239,230,0.05);border:1px solid rgba(245,239,230,0.12);border-radius:16px;padding:28px 26px;backdrop-filter:blur(10px);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#C9653C,#A95532);display:flex;align-items:center;justify-content:center;font-size:18px;">🗂️</div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#E8A97A;">Agente de CRM</div>
+            <div style="font-size:11px;color:rgba(245,239,230,0.5);">há 4 segundos</div>
+          </div>
+        </div>
+        <p style="font-family:'Noto Serif',serif;font-size:16px;line-height:1.55;color:#F5EFE6;font-style:italic;margin:0;padding-left:14px;border-left:2px solid #C9653C;">
+          "Responda João em 5 minutos. 87% de chance de fechar pelo histórico."
+        </p>
+        <div style="margin-top:16px;padding-top:14px;border-top:1px dashed rgba(245,239,230,0.15);font-size:12px;color:rgba(245,239,230,0.5);display:flex;align-items:center;gap:8px;">
+          <span style="color:#C9653C;">→</span> para <strong style="color:#F5EFE6;">Agente de Atendimento</strong>
+        </div>
       </div>
 
-      <div class="convo-card">
-        <div class="convo-from">Agente de Atendimento</div>
-        <div class="convo-arrow">→</div>
-        <div class="convo-to">Agente de Vendas</div>
-        <p class="convo-msg">"Objeção de preço detectada. Envia case de cliente similar que faturou R$ 180k."</p>
+      <!-- Card 4 -->
+      <div style="background:rgba(245,239,230,0.05);border:1px solid rgba(245,239,230,0.12);border-radius:16px;padding:28px 26px;backdrop-filter:blur(10px);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#C9653C,#A95532);display:flex;align-items:center;justify-content:center;font-size:18px;">💬</div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#E8A97A;">Agente de Atendimento</div>
+            <div style="font-size:11px;color:rgba(245,239,230,0.5);">há 5 segundos</div>
+          </div>
+        </div>
+        <p style="font-family:'Noto Serif',serif;font-size:16px;line-height:1.55;color:#F5EFE6;font-style:italic;margin:0;padding-left:14px;border-left:2px solid #C9653C;">
+          "Objeção de preço detectada. Envia case de cliente similar que faturou R$ 180k."
+        </p>
+        <div style="margin-top:16px;padding-top:14px;border-top:1px dashed rgba(245,239,230,0.15);font-size:12px;color:rgba(245,239,230,0.5);display:flex;align-items:center;gap:8px;">
+          <span style="color:#C9653C;">→</span> para <strong style="color:#F5EFE6;">Agente de Vendas</strong>
+        </div>
       </div>
 
-      <div class="convo-card">
-        <div class="convo-from">Agente de Vendas</div>
-        <div class="convo-arrow">→</div>
-        <div class="convo-to">Agente de Dashboard</div>
-        <p class="convo-msg">"Venda fechada. R$ 12k. Tempo total do lead até fechar: 2 dias 4 horas."</p>
+      <!-- Card 5 -->
+      <div style="background:rgba(245,239,230,0.05);border:1px solid rgba(245,239,230,0.12);border-radius:16px;padding:28px 26px;backdrop-filter:blur(10px);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#C9653C,#A95532);display:flex;align-items:center;justify-content:center;font-size:18px;">💰</div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#E8A97A;">Agente de Vendas</div>
+            <div style="font-size:11px;color:rgba(245,239,230,0.5);">há 8 segundos</div>
+          </div>
+        </div>
+        <p style="font-family:'Noto Serif',serif;font-size:16px;line-height:1.55;color:#F5EFE6;font-style:italic;margin:0;padding-left:14px;border-left:2px solid #C9653C;">
+          "Venda fechada. R$ 12k. Tempo total do lead até fechar: 2 dias e 4 horas."
+        </p>
+        <div style="margin-top:16px;padding-top:14px;border-top:1px dashed rgba(245,239,230,0.15);font-size:12px;color:rgba(245,239,230,0.5);display:flex;align-items:center;gap:8px;">
+          <span style="color:#C9653C;">→</span> para <strong style="color:#F5EFE6;">Agente de Dashboard</strong>
+        </div>
       </div>
 
-      <div class="convo-card">
-        <div class="convo-from">Agente de Dashboard</div>
-        <div class="convo-arrow">→</div>
-        <div class="convo-to">Agente de Tráfego</div>
-        <p class="convo-msg">"ROAS do anúncio #3 = 4.2x. Aumenta budget 30% e pausa anúncio #7."</p>
+      <!-- Card 6 -->
+      <div style="background:rgba(245,239,230,0.05);border:1px solid rgba(245,239,230,0.12);border-radius:16px;padding:28px 26px;backdrop-filter:blur(10px);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#C9653C,#A95532);display:flex;align-items:center;justify-content:center;font-size:18px;">📈</div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#E8A97A;">Agente de Dashboard</div>
+            <div style="font-size:11px;color:rgba(245,239,230,0.5);">há 10 segundos</div>
+          </div>
+        </div>
+        <p style="font-family:'Noto Serif',serif;font-size:16px;line-height:1.55;color:#F5EFE6;font-style:italic;margin:0;padding-left:14px;border-left:2px solid #C9653C;">
+          "ROAS do anúncio #3 = 4.2x. Aumenta budget 30% e pausa anúncio #7 (ROAS 0.8x)."
+        </p>
+        <div style="margin-top:16px;padding-top:14px;border-top:1px dashed rgba(245,239,230,0.15);font-size:12px;color:rgba(245,239,230,0.5);display:flex;align-items:center;gap:8px;">
+          <span style="color:#C9653C;">→</span> para <strong style="color:#F5EFE6;">Agente de Tráfego</strong>
+        </div>
       </div>
 
-      <div class="convo-card">
-        <div class="convo-from">Agente de Follow-up</div>
-        <div class="convo-arrow">→</div>
-        <div class="convo-to">Agente de Remarketing</div>
-        <p class="convo-msg">"Lead Maria não respondeu em 7 toques. Passa pra sequência de reativação."</p>
-      </div>
-
-      <div class="convo-card">
-        <div class="convo-from">Agente de SEO</div>
-        <div class="convo-arrow">→</div>
-        <div class="convo-to">Agente de Criativo</div>
-        <p class="convo-msg">"Keyword 'automação comercial' virou pico. Cria post pra Instagram hoje."</p>
-      </div>
     </div>
 
-    <div class="convo-footnote reveal">
-      <span class="convo-dot"></span>
-      Todos os agentes trocando mensagens agora — em tempo real, 24 horas por dia
+    <!-- Indicador "ao vivo" -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-top:56px;font-size:14px;font-weight:600;color:#E8A97A;letter-spacing:0.03em;">
+      <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#C9653C;box-shadow:0 0 12px rgba(201,101,60,0.6);animation:pulse 2s ease-in-out infinite;"></span>
+      Todos os agentes trocando mensagens agora — 24 horas por dia, 7 dias por semana
     </div>
+
   </div>
 </section>
 
