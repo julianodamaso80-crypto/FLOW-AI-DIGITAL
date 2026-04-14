@@ -1,155 +1,233 @@
-# FlowAI Digital — Claude Code Operating System
+# FlowAI Digital — Contexto Completo do Projeto
 
-## Identity
+## Quem é a FlowAI
 
-You are the operating system of FlowAI Digital, an **AI agency** based in Rio de Janeiro, Brazil. Founded by Juliano.
+A FlowAI Digital é uma **agência de IA** baseada no Rio de Janeiro, fundada pelo Juliano.
 
-FlowAI is NOT a marketing agency. It is an **ecosystem of 129 specialist AI agents organized in 12 squads** that operate 24/7 inside the client's business. The agents communicate with each other: CRM talks to traffic, traffic talks to tracking, tracking talks to SEO, SEO talks to creative, creative talks to customer service, customer service talks to dashboard, dashboard talks to remarketing. One feeds the other. No guessing — decisions based on real numbers flowing between agents in real time.
+**Não é agência de marketing.** É um ecossistema onde **129 agentes de IA especializados, organizados em 12 squads**, operam 24/7 dentro da operação comercial do cliente. Os agentes conversam entre si em tempo real — CRM fala com tráfego, que fala com tracking, que fala com SEO, que fala com criativo, que fala com atendimento, que fala com dashboard, que fala com remarketing. Um alimenta o outro. Sem achismo. Decisões baseadas em dados reais que fluem entre os agentes.
 
-## Core Belief: Delegate, Don't Solve
+## Posicionamento
 
-You have access to specialized subagents via @agent-name. For complex, multi-domain tasks, your role is to DISPATCH work to specialized agents — not to solve everything yourself.
+- **O que é**: Agência de IA — ecossistema de agentes inteligentes
+- **O que NÃO é**: Não é agência de marketing, não é bot de WhatsApp, não é consultoria de relatório mensal
+- **Público**: Empresários e empresas (SEM nicho fixo) que precisam organizar operação comercial, automatizar processo e crescer com previsibilidade
+- **Comparação central**: "Agência tradicional (achismo, equipe isolada, horário comercial, relatório mensal) VS FlowAI (dados reais, agentes conectados, 24/7, dashboard ao vivo)"
 
-## Agent Dispatch Protocol
+## Os 12 Squads e 129 Agentes (client-facing)
 
-### Triage the Request
+1. **Tráfego & Campanhas** — Meta, Google, YouTube
+2. **SEO & Conteúdo** — Blog, keywords, autoridade
+3. **Tracking & Analytics** — Cada clique medido
+4. **Design & Criativo** — Anúncios, artes, páginas
+5. **Copywriting & Persuasão** — Textos que vendem
+6. **Social Media** — Presença com estratégia
+7. **E-mail Marketing & Nutrição** — Sequências
+8. **CRO & Otimização** — Testes contínuos
+9. **Automação & CRM** — Pipeline organizado
+10. **Sites & Landing Pages** — Rápidas e convertem
+11. **Vendas & Fechamento** — Scripts, objeções, follow-up
+12. **Remarketing & Reativação** — Lead frio não é lead perdido
 
-When a user gives a mission, classify it:
+## Identidade Visual (OBRIGATÓRIA)
 
-**Handle Directly (no dispatch):**
-- Simple code changes or file edits
-- Factual questions you can answer from context
-- Git operations, build commands, deploy tasks
-- Single-file modifications
+### Paleta (regra 70/20/10)
+- `#F5EFE6` — Off-white Quente (fundo principal, 70%)
+- `#E7D8C7` — Areia Editorial (cards, apoio)
+- `#6B412D` — Marrom Espresso (títulos, texto forte, 20%)
+- `#C9653C` — Terracota Flow (acentos, 10%)
+- `#A95532` — Cobre Queimado (hover, bordas)
+- `#3D2518` — Marrom Escuro (seções dark como tracking e "agentes conversam")
+- `#16A34A` — Verde CTA (TODOS os botões de ação)
 
-**Dispatch to @flowai-organizer:**
-- Mission involves copywriting, offers, brand, traffic, design, data, storytelling, or business strategy
-- Mission requires knowledge from multiple domains
-- Mission involves client-facing deliverables
-- Examples: 'muda o site', 'cria proposta', 'reformula a oferta', 'escreve copy pro Instagram', 'faz o diagnostico dessa empresa'
+### Tipografia
+- **Headlines**: `Noto Serif Bold`
+- **UI/Corpo**: `Noto Sans` (400, 500, 600, 700)
+- Import via Google Fonts com `display=swap`
 
-**Dispatch directly to @claude-mastery-chief:**
-- Mission involves Claude Code configuration, agents, MCP, hooks
+### Regras visuais
+- Nunca preto puro — usar #6B412D
+- Nunca fundo escuro como padrão — base é clara
+- Nunca neon azul, roxo, verde eletrico
+- `text-wrap: balance` em TODOS os headings (sem órfãos)
+- `word-break: keep-all` para português
+- Sem `<br>` forçados que quebram em mobile
 
-### Execute the Dispatch
+### Logo
+- Arquivos: `site-v7/assets/logo/logo-flowai-light.png` (principal)
+- Versões disponíveis: light, 3d, padrão
+- Nav: 90px de altura com margin negativa (-22px) para caber em navbar compacto
+- Footer: 176px (grande)
 
-1. User gives mission
-2. You triage: direct or dispatch?
-3. If dispatch — invoke @flowai-organizer with the full mission
-4. flowai-organizer returns an EXECUTION PLAN with agent team, sequence, and handoff protocol
-5. You execute the plan step by step:
-   a. Invoke the first @agent recommended in the plan
-   b. When it completes, pass the HANDOFF CONTEXT to the next
-   c. Repeat until all steps are done
-6. Synthesize the final output and present to user
+## Regras Absolutas
 
-### Mandatory Process Verbalization
+1. **Sem preço no site** — nunca mencionar valores
+2. **Sem nicho** — falar de "empresas" e "empresários", não de clínicas, imobiliárias, etc.
+3. **Sem jargão** — zero Hormozi, CLOSER, Value Equation, StoryBrand no material client-facing
+4. **CTA único em verde** — sempre texto impactante tipo "Quero parar de perder dinheiro", "Agendar diagnóstico"
+5. **Sem números inventados** — nunca fabricar benchmarks, percentuais, projeções
+6. **Sem clichê de IA** — nunca "revolucionário", "disruptivo", robôs, neon
 
-Before acting on any dispatched task, you MUST verbalize:
-- 'Dispatching to @flowai-organizer for mission analysis...'
-- 'Executing Step 1: Invoking @[agent-name] for [role]...'
-- 'Step 1 complete. Passing handoff context to Step 2...'
-- 'All steps complete. Synthesizing final output...'
-
-This verbalization is not optional. It keeps the user informed and creates an audit trail.
-
-### Dispatch Rules
-
-- Once @flowai-organizer returns a plan, FOLLOW IT
-- Do NOT skip agents the organizer recommended
-- Do NOT add agents the organizer did not recommend
-- Do NOT modify the execution sequence
-- Pass handoff context EXACTLY as specified in the plan
-- If an agent's output is unsatisfactory, re-invoke THAT agent with specific feedback — do not move to next step with bad output
-- If a step fails, STOP and ask the user how to proceed
-
-### Follow-Up Question Handling
-
-When the user asks a follow-up after a dispatched workflow:
-- If it's a small clarification — handle directly using the completed workflow's context
-- If it's a modification to the deliverable — re-invoke the relevant agent with the modification request
-- If it's a new domain entirely — re-dispatch to @flowai-organizer
-
-## The 12 Squads & 129 Agents
-
-FlowAI operates with 12 specialized squads, each led by a Chief agent:
-
-| # | Squad | Chief | Agents | Domain |
-|---|-------|-------|--------|--------|
-| 1 | Copy Squad | copy-chief | 22 | Copywriting, sales letters, VSL, email, funnels, ads |
-| 2 | Hormozi Squad | hormozi-chief | 16 | Offers, pricing, leads, sales, retention, scaling |
-| 3 | Brand Squad | brand-chief | 15 | Positioning, naming, identity, messaging, archetypes |
-| 4 | Traffic Masters | traffic-chief | 16 | Paid ads (Meta/Google/YouTube), tracking, scaling |
-| 5 | Storytelling Squad | story-chief | 12 | Narrative, pitch, presentations, manifesto |
-| 6 | Design Squad | design-chief | 8 | UX, UI, design systems, accessibility |
-| 7 | Data Squad | data-chief | 7 | Analytics, CLV, growth, retention, community |
-| 8 | Advisory Board | board-chair | 11 | Strategy, mental models, investment, culture |
-| 9 | C-Level Squad | vision-chief | 6 | Executive strategy, GTM, operations, tech, AI |
-| 10 | Movement Squad | movement-chief | 7 | Movement building, identity, manifesto, impact |
-| 11 | Claude Mastery | claude-mastery-chief | 8 | Claude Code config, MCP, hooks, skills, agents |
-| 12 | SEO Squad | danih-seo | 1 | SEO tecnico, keywords, content, schema, E-E-A-T |
-
-**Total: 129 specialist agents**
-
-## Project Structure
+## Estrutura do Repositório (atual)
 
 ```
 FLOW-AI-DIGITAL/
+├── site-v7/              # ÚNICO SITE (produção)
+│   ├── index.html        # Landing page completa (11 secoes)
+│   ├── css/styles.css    # Design system completo
+│   ├── js/main.js        # GSAP, Lenis, Perlin waves, etc
+│   ├── assets/
+│   │   ├── logo/         # 3 variações do logo
+│   │   ├── hero-bg.mp4   # Video do hero
+│   │   └── favicon.svg   # Favicon editorial
+│   ├── nginx.conf
+│   ├── robots.txt
+│   └── sitemap.xml
+├── squads/               # 12 squads com config.yaml + routing-catalog.yaml
 ├── .claude/
-│   ├── agents/          # 13 registered subagents (Chiefs + organizer)
-│   └── skills/          # Brand, visual, copy, and site skills
-├── squads/              # 12 squad directories
-│   └── {squad}/
-│       ├── config/config.yaml
-│       ├── data/routing-catalog.yaml
-│       └── agents/      # Specialist knowledge files
-├── site-v6-video/       # Current production site
-├── site-v7/             # New site (in development)
-├── pesquisa-sites-ia/   # Research & v7 plan
-├── flowai-growth-os/    # Growth plugin system
-├── flowai-revenue-engine/ # Revenue plugin system
-└── .github/workflows/   # CI/CD deploy pipeline
+│   ├── agents/           # 13 chiefs + organizer
+│   └── skills/           # 4 skills (brand, visual, copy, site)
+├── pesquisa-sites-ia/    # Plano master + pesquisa de 20 sites de IA
+│   ├── PLANO_SITE_V7.md
+│   ├── padroes-encontrados.md
+│   ├── efeitos-referencias.md
+│   ├── RESUMO_EXECUTIVO.md
+│   ├── CHECKLIST_EXECUCAO.md
+│   └── analises/         # 20 análises individuais
+├── flowai-growth-os/     # Plugin system (growth)
+├── flowai-revenue-engine/# Plugin system (revenue)
+├── .github/workflows/    # deploy.yml (GitHub Actions → EasyPanel)
+├── Dockerfile            # nginx:alpine servindo site-v7/
+├── CLAUDE.md             # Este arquivo
+└── .gitignore
 ```
 
-## FlowAI Business Context
+## Seções do Site V7 (ordem atual)
 
-- **What FlowAI IS**: An AI agency — an ecosystem where intelligent agents work 24/7 inside the client's business. Each agent is a specialist. They talk to each other. No guessing — decisions based on real data flowing between agents in real time.
-- **What FlowAI is NOT**: Not a marketing agency. Not a WhatsApp bot company. Not a consultancy that delivers reports and leaves. Not an agency that runs isolated campaigns.
-- **Target audience**: Business owners and companies (no fixed niche) that need to organize their commercial operation, automate processes, and grow with predictability.
-- **Products**:
-  - Call gratuita de alinhamento: Entry point. Free 30-minute call to understand the business.
-  - Diagnostico: Deep analysis of where revenue is stuck.
-  - Implantacao: Build the full commercial structure with AI agents.
-  - Operacao mensal: Ongoing optimization and growth.
-- **Positioning**: "Traditional marketing agency (guesswork, isolated team, business hours, monthly reports) VS FlowAI AI Agency (real data, connected agents, 24/7, live dashboard)."
-- **Client Language**: Accessible Portuguese. No technical jargon. No framework names (Hormozi, Kennedy, etc.) in client materials. Speak like a confident engineer talking to a business owner.
+1. **Hero** — Vídeo de fundo + overlay marrom + partículas + text stagger
+2. **Orbital dos 129 agentes** — Diagrama animado com 8 nodes
+3. **Ticker** — Fundo marrom escuro, texto negrito rolando infinito
+4. **O Problema** — Grid de 6 cards com dores reais
+5. **O Tracking Que Te Engana** (fundo marrom) — Comparativo Meta Pixel/GTM/GA4/Stape VS ecossistema próprio
+6. **A Solução** — 3 pilares + métricas (5min, 24/7, 7x, 100%)
+7. **Comparativo** — Tabela Agência Tradicional vs FlowAI
+8. **12 Squads** (com Perlin waves de fundo em marrom) — Grid de cards + counters animados
+9. **Agentes que Conversam** (fundo marrom) — 6 cards estilo chat com mensagens reais entre agentes
+10. **Como Funciona** — 4 passos
+11. **O que Você Ganha em 30 Minutos** — Flowchart vertical animado (cascade)
+12. **Pra Quem É** — Cards por dor
+13. **FAQ** — 8 perguntas reais
+14. **CTA Final** — Urgência sutil
+15. **Footer** — Logo grande (176px) + links
 
-## Visual Identity
+## Stack Técnica
 
-- **Palette**:
-  - Off-white Quente `#F5EFE6` (main background, 70%)
-  - Areia Editorial `#E7D8C7` (cards, support areas)
-  - Marrom Espresso `#6B412D` (titles, strong text, 20%)
-  - Terracota Flow `#C9653C` (CTAs, accents, highlights, 10%)
-  - Cobre Queimado `#A95532` (hover, borders, depth)
-- **Typography**: Noto Serif Bold (headlines) + Noto Sans SemiBold (body, UI, CTAs)
-- **Style**: Editorial, premium, warm, organized. Generous spacing. Soft corners. Subtle shadows. Zero excess effects. Zero template look.
-- **Rules**: Never pure black. Never dark backgrounds as default. Never neon blue. Never cold metallic.
-- **Logo**: Located in `site-v6-video/assets/logo/` (logo-flowai.png, logo-flowai-light.png, logo-flowai-3d.png)
+- **HTML estático** (sem framework, sem build step)
+- **CSS puro** com custom properties
+- **JS vanilla** ES6+ com defer
+- **Bibliotecas externas via CDN**:
+  - GSAP + ScrollTrigger (animações de scroll)
+  - Lenis (smooth scroll)
+- **Perlin noise** implementado em vanilla (portado de React component)
+- **Deploy**: Docker nginx:alpine → EasyPanel em Hostinger KVM 4
+- **CI/CD**: GitHub Actions — push para `main` dispara webhook do EasyPanel
+- **GitHub**: github.com/julianodamaso80-crypto/FLOW-AI-DIGITAL
 
-## Absolute Rules
+## Efeitos Visuais Aplicados
 
-1. **No pricing on the site** — never mention values
-2. **No fixed niche** — speak of "businesses" and "business owners", not "clinics" or "real estate"
-3. **No jargon** — no Hormozi, CLOSER, Value Equation, StoryBrand in client materials
-4. **Single CTA** — always "Agendar call de alinhamento" (or close variation)
-5. **No invented numbers** — never fabricate benchmarks, percentages, or projections without real data
-6. **AI without cliche** — never use "revolutionary", "disruptive", "game-changing", robot imagery, or neon aesthetics
+| Efeito | Onde | Como |
+|---|---|---|
+| Gradient mesh animado | Hero | CSS radial-gradient com animação |
+| Partículas conectadas | Hero | Canvas com linhas entre pontos |
+| Grain overlay | Global | SVG turbulence fixo |
+| Text stagger | Hero headline | GSAP timeline por palavra |
+| Parallax scroll | Seções O Problema, Solução, Squads | GSAP ScrollTrigger scrub |
+| Glow follow mouse | Todos os cards | CSS radial-gradient com var(--glow-x/y) |
+| Scroll reveal | Todas as seções | GSAP + Intersection Observer |
+| Counter animado | 12/129/24 e métricas | GSAP innerText snap |
+| Interactive Perlin waves | Seção squads | Canvas + noise + física de cursor |
+| Orbital diagram | Seção agentes | SVG + nodes rotativos |
+| Ticker infinito | Entre seções | CSS keyframes linear infinite |
+| Flow arrows pulsantes | Flowchart "30 min" | CSS gradient animado |
 
-## Code Standards
+## Deploy Flow
 
-- HTML static + CSS pure + JS vanilla for the site
-- Node.js for backend / scripts
-- Editorial warm visual style consistent with brand
-- GitHub: github.com/julianodamaso80-crypto/FLOW-AI-DIGITAL
-- Deploy target: EasyPanel with Docker on Hostinger KVM 4
+```
+Edit local → git commit → git push origin main
+         ↓
+GitHub Actions (.github/workflows/deploy.yml)
+         ↓
+curl webhook EasyPanel (timeout 300s)
+         ↓
+EasyPanel rebuild Docker
+         ↓
+nginx:alpine + site-v7/ servido
+         ↓
+flowaidigital.com.br
+```
+
+## Problemas Conhecidos & Workarounds
+
+1. **Cache do CSS externo**: quando mudamos `css/styles.css`, o navegador cache a versão antiga. SOLUÇÃO: CSS crítico é inline no `<head>` do HTML com `!important` (logo, botões verdes, flowchart, seções dark).
+
+2. **Deploy timeout**: o webhook do EasyPanel pode demorar. Configurado `--max-time 300` no curl.
+
+3. **Vídeo hero 20MB**: pesado mas necessário para o impacto. Alternativa futura: usar CSS gradient mesh puro.
+
+4. **GSAP/Lenis sem build**: carregados via CDN (jsdelivr). Ponto único de falha — se o CDN cair, as animações param.
+
+## Tom de Voz
+
+- **Direto**: vai ao ponto, sem introdução longa
+- **Confiante**: sabe o que faz, não pede desculpa
+- **Acessível**: qualquer empresário entende
+- **Baseado em dados**: só afirma o que pode provar
+- **Humano**: linguagem natural, coloquial quando cabe
+
+### Exemplos CERTO vs ERRADO
+| ❌ Errado | ✅ Certo |
+|---|---|
+| "Revolucione seu negócio com IA" | "129 agentes trabalham 24/7. Sem horário comercial." |
+| "Solução disruptiva" | "Enquanto você dorme, seus leads estão sendo respondidos" |
+| "Potencialize seus resultados" | "Seu lead espera 2 horas. O nosso responde em 5 minutos" |
+
+### Palavras proibidas
+Revolucionário, disruptivo, inovador, potencializar, alavancar, sinergia, paradigma, "líderes do mercado", "os melhores"
+
+### Palavras aprovadas
+Processo, operação, estrutura, agentes, dashboard ao vivo, dados reais, 24/7, previsibilidade, diagnóstico, call de alinhamento
+
+## CTAs do Site (todos em VERDE #16A34A)
+
+| Local | Texto |
+|---|---|
+| Nav | "Agendar diagnóstico" |
+| Hero | "Quero parar de perder dinheiro" |
+| Solução | "Quero entender como funciona" |
+| Tracking | "Quero parar de jogar dinheiro fora agora" |
+| Como funciona | "Começar pelo passo 1" |
+| Call gratuita | "Agendar minha call gratuita" |
+| CTA final | "Quero parar de perder dinheiro" |
+| WhatsApp float | (ícone) |
+
+## Pesquisa de Referência
+
+Os 20 sites analisados em `pesquisa-sites-ia/analises/`:
+anthropic.com, openai.com, perplexity.ai, cursor.com, vercel.com, linear.app, lovable.dev, v0.dev, bolt.new, replit.com, runwayml.com, elevenlabs.io, mistral.ai, cohere.com, writer.com, framer.com, stripe.com, resend.com, clerk.com, huggingface.co
+
+### Padrões capturados no v7
+- Paleta warm editorial (Anthropic tem paleta quase idêntica)
+- Serif display + Sans body (universal em premium)
+- Espaçamento generoso
+- Grain overlay (Linear, Cursor, Anthropic)
+- Gradient mesh (Stripe, Linear)
+- Scroll reveal sutil (todos)
+- Zero robôs, zero neon, zero "revolucionário"
+- Visualização interativa dos "muitos agentes" (inspirado em HuggingFace, Mistral)
+
+## Como Continuar o Projeto
+
+1. **Editar copy/visual**: mexer direto no `site-v7/index.html` e `site-v7/css/styles.css`
+2. **Ajustar animações**: `site-v7/js/main.js`
+3. **Commit + push**: GitHub Actions faz o deploy automaticamente
+4. **Se falhar**: clicar em "Implantar" no painel do EasyPanel
+5. **Cache problema**: forçar reload com Ctrl+Shift+R, ou usar CSS inline no `<head>` do HTML com `!important`
