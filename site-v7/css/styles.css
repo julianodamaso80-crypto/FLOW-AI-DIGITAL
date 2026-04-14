@@ -268,14 +268,14 @@ ul { list-style: none; }
 
 .orbit-nodes { position: absolute; inset: 0; pointer-events: none; }
 .orbit-node { position: absolute; transform: translate(-50%, -50%); text-align: center; z-index: 2; }
-.orbit-node:nth-child(1) { top: 50%; left: 92%; }
-.orbit-node:nth-child(2) { top: 80%; left: 80%; }
-.orbit-node:nth-child(3) { top: 92%; left: 50%; }
-.orbit-node:nth-child(4) { top: 80%; left: 20%; }
-.orbit-node:nth-child(5) { top: 50%; left: 8%; }
-.orbit-node:nth-child(6) { top: 20%; left: 20%; }
-.orbit-node:nth-child(7) { top: 8%; left: 50%; }
-.orbit-node:nth-child(8) { top: 20%; left: 80%; }
+.orbit-node:nth-child(1) { top: 8%;  left: 50%; }
+.orbit-node:nth-child(2) { top: 20%; left: 80%; }
+.orbit-node:nth-child(3) { top: 50%; left: 92%; }
+.orbit-node:nth-child(4) { top: 80%; left: 80%; }
+.orbit-node:nth-child(5) { top: 92%; left: 50%; }
+.orbit-node:nth-child(6) { top: 80%; left: 20%; }
+.orbit-node:nth-child(7) { top: 50%; left: 8%;  }
+.orbit-node:nth-child(8) { top: 20%; left: 20%; }
 
 .orbit-node__ping {
   position: absolute; top: 50%; left: 50%; width: 42px; height: 42px;
