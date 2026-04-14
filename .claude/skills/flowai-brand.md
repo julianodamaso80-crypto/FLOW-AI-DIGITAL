@@ -25,7 +25,8 @@ A FlowAI fala como um engenheiro experiente que conversa com um dono de empresa:
 Nunca usar em material client-facing:
 - "Revolucionário", "disruptivo", "inovador", "de ponta"
 - "Potencializar", "alavancar", "escalar" (jargão startup)
-- "Sinergia", "paradigma", "ecossistema" (quando falando com cliente)
+- "Sinergia", "paradigma" (quando falando com cliente)
+  - **Exceção:** "ecossistema" foi liberado em 2026-04-14 por decisão do Juliano — vende bem como descritor do conjunto de 12 squads + 129 agentes operando juntos. Pode usar em copy de marketing.
 - "IA" como buzzword isolado sem contexto
 - Nomes de frameworks: "Hormozi", "CLOSER", "Value Equation", "StoryBrand"
 - "Líderes do mercado", "os melhores", "numero 1"
