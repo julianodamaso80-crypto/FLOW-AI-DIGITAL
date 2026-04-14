@@ -370,8 +370,40 @@ ul { list-style: none; }
   width: 40px; height: 3px; background: var(--accent); border-radius: 0 0 3px 3px;
 }
 .pillar:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+.pillar__icon { font-size: 36px; margin-bottom: 16px; line-height: 1; }
 .pillar__title { font-family: var(--font-d); font-size: 22px; font-weight: 700; margin-bottom: 14px; }
 .pillar p { font-size: 15px; line-height: 1.65; color: var(--text-light); }
+
+/* ── METRICS ROW ── */
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 56px;
+  padding: 32px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+}
+.metric { text-align: center; padding: 8px 4px; }
+.metric__value {
+  font-family: var(--font-d);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.metric__label {
+  font-size: 13px;
+  color: var(--text-light);
+  line-height: 1.4;
+}
+@media (max-width: 768px) {
+  .metrics-row { grid-template-columns: repeat(2, 1fr); padding: 24px 16px; gap: 20px; }
+}
 
 /* ── COMPARE TABLE ── */
 .compare-table { overflow-x: auto; border-radius: var(--r-md); }
@@ -416,6 +448,98 @@ ul { list-style: none; }
 /* ── FLOW DIAGRAM ── */
 .flow-diagram { display: flex; justify-content: center; overflow: hidden; margin-top: 40px; }
 #flowCanvas { max-width: 100%; height: auto; }
+
+/* ── CONVO GRID (agentes conversam) ── */
+.convo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+  max-width: 1100px;
+  margin: 48px auto 0;
+}
+.convo-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 20px 22px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s var(--ease);
+}
+.convo-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+  background: linear-gradient(180deg, var(--accent), transparent);
+}
+.convo-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(201,101,60,0.2);
+}
+.convo-from,
+.convo-to {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 4px 10px;
+  background: rgba(201,101,60,0.08);
+  border-radius: 6px;
+  vertical-align: middle;
+}
+.convo-arrow {
+  display: inline-block;
+  color: var(--accent);
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 6px;
+  vertical-align: middle;
+}
+.convo-msg {
+  font-family: var(--font-d);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text);
+  font-style: italic;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(107,65,45,0.15);
+  position: relative;
+}
+.convo-msg::before {
+  content: '"';
+  position: absolute;
+  top: 8px; left: -4px;
+  font-size: 40px;
+  color: rgba(201,101,60,0.2);
+  font-family: var(--font-d);
+  line-height: 1;
+}
+
+.convo-footnote {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  margin-top: 40px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+.convo-dot {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px rgba(201,101,60,0.4);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@media (max-width: 640px) {
+  .convo-grid { grid-template-columns: 1fr; }
+  .convo-from, .convo-to { font-size: 11px; padding: 3px 8px; }
+  .convo-msg { font-size: 14px; }
+}
 
 /* ── STEPS ── */
 .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 32px; counter-reset: step; }

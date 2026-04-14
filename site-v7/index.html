@@ -325,19 +325,42 @@
   <div class="container">
     <span class="eyebrow reveal">A SOLUÇÃO</span>
     <h2 class="section__title reveal">Um ecossistema que opera por você.</h2>
-    <p class="section__sub reveal">12 squads. 129 agentes especializados. Trabalhando dentro da sua operação, 24 horas por dia, 7 dias por semana.</p>
+    <p class="section__sub reveal">12 squads. 129 agentes especializados. Trabalhando dentro da sua operação, 24 horas por dia, 7 dias por semana. Sem férias, sem esquecimento, sem achismo.</p>
+
     <div class="pillars">
       <div class="pillar reveal">
+        <div class="pillar__icon">🔗</div>
         <h3 class="pillar__title">Agentes conectados</h3>
-        <p>CRM conversa com tráfego, que conversa com tracking, que conversa com SEO. Um alimenta o outro.</p>
+        <p>CRM conversa com tráfego, que conversa com tracking, que conversa com SEO. Um alimenta o outro. Decisões tomadas com o dado do vizinho, não no vácuo.</p>
       </div>
       <div class="pillar reveal">
+        <div class="pillar__icon">📊</div>
         <h3 class="pillar__title">Dados em tempo real</h3>
-        <p>Dashboard ao vivo. Você vê cada número no momento que acontece.</p>
+        <p>Dashboard ao vivo. Você vê cada lead, cada conversão, cada real investido e retornado — no momento exato que acontece. Sem esperar relatório no fim do mês.</p>
       </div>
       <div class="pillar reveal">
+        <div class="pillar__icon">⚡</div>
         <h3 class="pillar__title">Zero dependência de pessoas</h3>
-        <p>Os agentes não pedem férias, não esquecem follow-up, não dormem.</p>
+        <p>Agentes não pedem férias, não esquecem follow-up, não dormem, não pedem aumento. Operam o mesmo processo, no mesmo padrão, todo dia.</p>
+      </div>
+    </div>
+
+    <div class="metrics-row reveal">
+      <div class="metric">
+        <div class="metric__value">5 min</div>
+        <div class="metric__label">Tempo de resposta ao lead</div>
+      </div>
+      <div class="metric">
+        <div class="metric__value">24/7</div>
+        <div class="metric__label">Operação sem pausas</div>
+      </div>
+      <div class="metric">
+        <div class="metric__value">7x</div>
+        <div class="metric__label">Toques de follow-up automáticos</div>
+      </div>
+      <div class="metric">
+        <div class="metric__value">100%</div>
+        <div class="metric__label">Das decisões baseadas em dados</div>
       </div>
     </div>
   </div>
@@ -407,9 +430,69 @@
   <div class="container">
     <span class="eyebrow reveal">O DIFERENCIAL</span>
     <h2 class="section__title reveal">Agentes que conversam entre si.</h2>
-    <p class="section__sub reveal">Cada decisão de um agente alimenta o próximo. O resultado: uma operação que se otimiza sozinha.</p>
-    <div class="flow-diagram reveal">
-      <canvas id="flowCanvas" width="800" height="400" aria-label="Diagrama de fluxo entre agentes"></canvas>
+    <p class="section__sub reveal">Em toda agência tradicional, o time de tráfego não fala com o de vendas. O de CRM não fala com o de atendimento. Aqui, cada agente alimenta o próximo em tempo real.</p>
+
+    <div class="convo-grid">
+      <div class="convo-card">
+        <div class="convo-from">Agente de Tráfego</div>
+        <div class="convo-arrow">→</div>
+        <div class="convo-to">Agente de Tracking</div>
+        <p class="convo-msg">"Campanha Meta trouxe 47 leads hoje. CPA R$ 28. Melhor criativo: anúncio #3."</p>
+      </div>
+
+      <div class="convo-card">
+        <div class="convo-from">Agente de Tracking</div>
+        <div class="convo-arrow">→</div>
+        <div class="convo-to">Agente de CRM</div>
+        <p class="convo-msg">"Lead João Silva chegou pelo anúncio #3, interesse alto, perfil qualificado."</p>
+      </div>
+
+      <div class="convo-card">
+        <div class="convo-from">Agente de CRM</div>
+        <div class="convo-arrow">→</div>
+        <div class="convo-to">Agente de Atendimento</div>
+        <p class="convo-msg">"Responda João em 5 minutos. 87% de chance de fechar pelo histórico."</p>
+      </div>
+
+      <div class="convo-card">
+        <div class="convo-from">Agente de Atendimento</div>
+        <div class="convo-arrow">→</div>
+        <div class="convo-to">Agente de Vendas</div>
+        <p class="convo-msg">"Objeção de preço detectada. Envia case de cliente similar que faturou R$ 180k."</p>
+      </div>
+
+      <div class="convo-card">
+        <div class="convo-from">Agente de Vendas</div>
+        <div class="convo-arrow">→</div>
+        <div class="convo-to">Agente de Dashboard</div>
+        <p class="convo-msg">"Venda fechada. R$ 12k. Tempo total do lead até fechar: 2 dias 4 horas."</p>
+      </div>
+
+      <div class="convo-card">
+        <div class="convo-from">Agente de Dashboard</div>
+        <div class="convo-arrow">→</div>
+        <div class="convo-to">Agente de Tráfego</div>
+        <p class="convo-msg">"ROAS do anúncio #3 = 4.2x. Aumenta budget 30% e pausa anúncio #7."</p>
+      </div>
+
+      <div class="convo-card">
+        <div class="convo-from">Agente de Follow-up</div>
+        <div class="convo-arrow">→</div>
+        <div class="convo-to">Agente de Remarketing</div>
+        <p class="convo-msg">"Lead Maria não respondeu em 7 toques. Passa pra sequência de reativação."</p>
+      </div>
+
+      <div class="convo-card">
+        <div class="convo-from">Agente de SEO</div>
+        <div class="convo-arrow">→</div>
+        <div class="convo-to">Agente de Criativo</div>
+        <p class="convo-msg">"Keyword 'automação comercial' virou pico. Cria post pra Instagram hoje."</p>
+      </div>
+    </div>
+
+    <div class="convo-footnote reveal">
+      <span class="convo-dot"></span>
+      Todos os agentes trocando mensagens agora — em tempo real, 24 horas por dia
     </div>
   </div>
 </section>
