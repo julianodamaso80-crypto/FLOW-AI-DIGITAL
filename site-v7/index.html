@@ -419,15 +419,72 @@
   <div class="container">
     <span class="eyebrow reveal">CALL GRATUITA</span>
     <h2 class="section__title reveal">O que você ganha em 30 minutos.</h2>
-    <div class="value-stack">
-      <div class="value-item reveal"><span class="value-check" aria-hidden="true">&#10003;</span> Diagnóstico rápido da sua operação comercial</div>
-      <div class="value-item reveal"><span class="value-check" aria-hidden="true">&#10003;</span> Mapa dos pontos onde você está perdendo receita</div>
-      <div class="value-item reveal"><span class="value-check" aria-hidden="true">&#10003;</span> Análise do seu funil atual (tráfego → lead → venda)</div>
-      <div class="value-item reveal"><span class="value-check" aria-hidden="true">&#10003;</span> Recomendações práticas que você pode aplicar mesmo sozinho</div>
-      <div class="value-item reveal"><span class="value-check" aria-hidden="true">&#10003;</span> Proposta personalizada (se fizer sentido para os dois lados)</div>
-      <div class="value-item reveal"><span class="value-check" aria-hidden="true">&#10003;</span> Zero compromisso. Zero pressão.</div>
+
+    <div class="flowchart">
+      <div class="fc-node">
+        <div class="fc-node__label">Início</div>
+        <div class="fc-node__sub">Você agenda a call de alinhamento (30 minutos · gratuita)</div>
+      </div>
+      <div class="fc-arrow fc-arrow--green"></div>
+
+      <div class="fc-node">
+        <div class="fc-node__label">Diagnóstico Rápido</div>
+        <div class="fc-node__sub">Mapeamos sua operação comercial atual em tempo real</div>
+      </div>
+      <div class="fc-arrow fc-arrow--green"></div>
+
+      <div class="fc-node">
+        <div class="fc-node__label">Mapa de Vazamento de Receita</div>
+        <div class="fc-node__sub">Identificamos onde você está perdendo dinheiro hoje</div>
+      </div>
+      <div class="fc-arrow fc-arrow--green"></div>
+
+      <div class="fc-node">
+        <div class="fc-node__label">Análise do Funil Atual</div>
+        <div class="fc-node__sub">Tráfego → Lead → Atendimento → Venda</div>
+      </div>
+      <div class="fc-arrow fc-arrow--green"></div>
+
+      <!-- Decision: faz sentido? -->
+      <div class="fc-split">
+        <div class="fc-split-branch">
+          <div class="fc-branch-label fc-branch-label--no">Não faz sentido</div>
+          <div class="fc-arrow"></div>
+          <div class="fc-node">
+            <div class="fc-node__label">Recomendações Práticas</div>
+            <div class="fc-node__sub">Você sai com um plano — mesmo sem contratar</div>
+          </div>
+        </div>
+        <div class="fc-split-branch">
+          <div class="fc-branch-label fc-branch-label--yes">Faz sentido</div>
+          <div class="fc-arrow fc-arrow--green"></div>
+          <div class="fc-node fc-node--accent">
+            <div class="fc-node__label">Proposta Personalizada</div>
+            <div class="fc-node__sub">Sob medida para o seu negócio</div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-arrow fc-arrow--green"></div>
+
+      <div class="fc-node">
+        <div class="fc-node__label">Implantação dos 129 Agentes</div>
+        <div class="fc-node__sub">CRM · Tráfego · Tracking · Follow-up · Dashboard</div>
+      </div>
+      <div class="fc-arrow fc-arrow--green"></div>
+
+      <div class="fc-node fc-node--accent">
+        <div class="fc-node__label">Operação Contínua 24/7</div>
+        <div class="fc-node__sub">Agentes operam · Você acompanha pelo dashboard</div>
+      </div>
+      <div class="fc-arrow fc-arrow--green"></div>
+
+      <div class="fc-node fc-node--result">
+        <div class="fc-node__label">Receita Previsível</div>
+        <div class="fc-node__sub">Mais vendas · Menos esforço · Crescimento sustentável</div>
+      </div>
     </div>
-    <div class="text-center reveal" style="margin-top:40px;">
+
+    <div class="text-center reveal" style="margin-top:48px;">
       <a href="#cta-final" class="btn btn--primary btn--lg">Agendar minha call gratuita</a>
     </div>
   </div>

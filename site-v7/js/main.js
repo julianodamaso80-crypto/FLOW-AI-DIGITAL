@@ -401,6 +401,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 2000);
   }
 
+  // ── FLOWCHART CASCADE ──
+  const flowchart = document.querySelector('.flowchart');
+  if (flowchart) {
+    const flowItems = flowchart.querySelectorAll('.fc-node, .fc-arrow, .fc-split');
+    const flowObs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        flowItems.forEach((item, i) => {
+          setTimeout(() => item.classList.add('fc-in'), i * 180);
+        });
+        flowObs.unobserve(flowchart);
+      }
+    }, { threshold: 0.1 });
+    flowObs.observe(flowchart);
+  }
+
   // ── SMOOTH ANCHOR SCROLL ──
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', (e) => {
