@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Cards with stagger
-  gsap.utils.toArray('.problems-grid, .pillars, .squads-grid, .audience-grid, .steps').forEach(grid => {
+  gsap.utils.toArray('.problems-grid, .pillars, .squads-grid, .audience-grid, .steps, .testimonial-grid').forEach(grid => {
     const children = grid.children;
     gsap.fromTo(children, { opacity: 0, y: 30 }, {
       opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: 'power3.out',
