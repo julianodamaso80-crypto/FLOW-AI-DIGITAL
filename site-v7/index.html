@@ -57,14 +57,12 @@
     @keyframes fc-grow-arrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
     @keyframes fc-glow-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(201,101,60,0); } 50% { box-shadow: 0 0 24px 4px rgba(201,101,60,0.18), 0 0 48px 10px rgba(201,101,60,0.08); } }
     @keyframes fc-arrow-flow { 0% { background-position: 0 0; } 100% { background-position: 0 56px; } }
-    .flowchart .fc-node, .flowchart .fc-arrow, .flowchart .fc-split { opacity: 0; }
-    .fc-split-branch .fc-node, .fc-split-branch .fc-arrow, .fc-branch-label { opacity: 0; }
-    .flowchart .fc-node.fc-in { animation: fc-slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
-    .flowchart .fc-arrow.fc-in { opacity: 1; transform-origin: top; animation: fc-grow-arrow 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
-    .flowchart .fc-arrow--green.fc-in { background: linear-gradient(to bottom, transparent, #C9653C, transparent); background-size: 2px 56px; animation: fc-grow-arrow 0.4s cubic-bezier(0.16, 1, 0.3, 1) both, fc-arrow-flow 1.5s linear 0.5s infinite; }
-    .flowchart .fc-split.fc-in { opacity: 1; animation: fc-slide-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
-    .fc-split.fc-in .fc-branch-label, .fc-split.fc-in .fc-split-branch .fc-node, .fc-split.fc-in .fc-split-branch .fc-arrow { opacity: 1; animation: fc-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both; }
-    .flowchart .fc-node--accent.fc-in, .flowchart .fc-node--result.fc-in { animation: fc-slide-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both, fc-glow-pulse 2.8s ease-in-out 1s infinite; }
+    .flowchart .fc-node, .flowchart .fc-arrow, .flowchart .fc-split { opacity: 1; }
+    .fc-split-branch .fc-node, .fc-split-branch .fc-arrow, .fc-branch-label { opacity: 1; }
+    .flowchart .fc-node { animation: fc-slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .flowchart .fc-arrow { transform-origin: top; animation: fc-grow-arrow 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .flowchart .fc-arrow--green { background: linear-gradient(to bottom, transparent, #C9653C, transparent); background-size: 2px 56px; animation: fc-grow-arrow 0.4s cubic-bezier(0.16, 1, 0.3, 1) both, fc-arrow-flow 1.5s linear 0.5s infinite; }
+    .flowchart .fc-node--accent, .flowchart .fc-node--result { animation: fc-slide-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both, fc-glow-pulse 2.8s ease-in-out 1s infinite; }
   </style>
 
   <!-- Schema.org -->
