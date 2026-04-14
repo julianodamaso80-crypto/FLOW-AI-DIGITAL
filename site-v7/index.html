@@ -242,68 +242,72 @@
   </div>
 </section>
 
-<!-- ── AGENTES ORBITAL (segunda dobra) ── -->
-<section class="section section--alt section--agents" id="agentes-orbital">
-  <div class="container">
-    <div class="agents__layout">
+<!-- ── SQUADS (segunda dobra) ── -->
+<section class="section" id="squads" style="position:relative;overflow:hidden;background:#F5EFE6;">
+  <canvas id="squadsWaves" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+  <div class="container" style="position:relative;z-index:2;">
 
-      <!-- LEFT: orbital diagram -->
-      <div class="agents__orbital" aria-hidden="true">
-        <div class="orbit-diagram" id="orbitDiagram" role="img" aria-label="129 agentes FlowAI operando em ciclo">
-          <svg class="orbit-diagram__svg" viewBox="0 0 400 400" fill="none">
-            <circle cx="200" cy="200" r="178" stroke="rgba(107,65,45,0.06)" stroke-width="1" stroke-dasharray="3 9"/>
-            <circle cx="200" cy="200" r="152" stroke="rgba(107,65,45,0.1)" stroke-width="1"/>
-            <circle cx="200" cy="200" r="152"
-              stroke="#C9653C" stroke-width="2.5" stroke-linecap="round"
-              stroke-dasharray="55 900"
-              style="opacity:0.5; transform-origin:center; transform-box:fill-box; transform:rotate(-90deg); animation:orbit-travel 7s linear infinite;"/>
-            <circle cx="200" cy="200" r="152"
-              stroke="#A95532" stroke-width="1.5" stroke-linecap="round"
-              stroke-dasharray="22 933"
-              style="opacity:0.25; transform-origin:center; transform-box:fill-box; transform:rotate(-90deg); animation:orbit-travel 7s linear infinite 3.5s;"/>
-            <circle cx="200" cy="200" r="64" stroke="rgba(201,101,60,0.1)" stroke-width="1" stroke-dasharray="4 6"/>
-          </svg>
+    <!-- Orbital diagram centered on top -->
+    <div class="agents__orbital reveal" aria-hidden="true" style="max-width:420px;margin:0 auto 48px;">
+      <div class="orbit-diagram" id="orbitDiagram" role="img" aria-label="129 agentes FlowAI operando em ciclo">
+        <svg class="orbit-diagram__svg" viewBox="0 0 400 400" fill="none">
+          <circle cx="200" cy="200" r="178" stroke="rgba(107,65,45,0.06)" stroke-width="1" stroke-dasharray="3 9"/>
+          <circle cx="200" cy="200" r="152" stroke="rgba(107,65,45,0.1)" stroke-width="1"/>
+          <circle cx="200" cy="200" r="152"
+            stroke="#C9653C" stroke-width="2.5" stroke-linecap="round"
+            stroke-dasharray="55 900"
+            style="opacity:0.5; transform-origin:center; transform-box:fill-box; transform:rotate(-90deg); animation:orbit-travel 7s linear infinite;"/>
+          <circle cx="200" cy="200" r="152"
+            stroke="#A95532" stroke-width="1.5" stroke-linecap="round"
+            stroke-dasharray="22 933"
+            style="opacity:0.25; transform-origin:center; transform-box:fill-box; transform:rotate(-90deg); animation:orbit-travel 7s linear infinite 3.5s;"/>
+          <circle cx="200" cy="200" r="64" stroke="rgba(201,101,60,0.1)" stroke-width="1" stroke-dasharray="4 6"/>
+        </svg>
 
-          <div class="orbit-core">
-            <div class="orbit-core__label">FlowAI</div>
-            <div class="orbit-core__sub">OS · 129<br>agentes</div>
-          </div>
+        <div class="orbit-core">
+          <div class="orbit-core__label">FlowAI</div>
+          <div class="orbit-core__sub">12 SQUADS<br>129 AGENTES</div>
+        </div>
 
-          <div class="orbit-nodes" id="orbitNodes">
-            <div class="orbit-node active"><div class="orbit-node__ping"></div><div class="orbit-node__icon">🎯</div><div class="orbit-node__text">Leads<br>Centralizados</div></div>
-            <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">🤖</div><div class="orbit-node__text">IA<br>Aplicada</div></div>
-            <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">💬</div><div class="orbit-node__text">Follow-up<br>Automático</div></div>
-            <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">📱</div><div class="orbit-node__text">WhatsApp<br>Instagram</div></div>
-            <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">💰</div><div class="orbit-node__text">Recuperação<br>de Vendas</div></div>
-            <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">📊</div><div class="orbit-node__text">Indicadores<br>Performance</div></div>
-            <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">⚙️</div><div class="orbit-node__text">Automação<br>de Vendas</div></div>
-            <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">🗂️</div><div class="orbit-node__text">CRM<br>Inteligente</div></div>
-          </div>
+        <div class="orbit-nodes" id="orbitNodes">
+          <div class="orbit-node active"><div class="orbit-node__ping"></div><div class="orbit-node__icon">🎯</div><div class="orbit-node__text">Tráfego</div></div>
+          <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">🔍</div><div class="orbit-node__text">SEO</div></div>
+          <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">📊</div><div class="orbit-node__text">Tracking</div></div>
+          <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">💬</div><div class="orbit-node__text">Copy</div></div>
+          <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">🗂️</div><div class="orbit-node__text">CRM</div></div>
+          <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">💰</div><div class="orbit-node__text">Vendas</div></div>
+          <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">🔄</div><div class="orbit-node__text">Remarketing</div></div>
+          <div class="orbit-node"><div class="orbit-node__ping"></div><div class="orbit-node__icon">📈</div><div class="orbit-node__text">Dashboard</div></div>
         </div>
       </div>
+    </div>
 
-      <!-- RIGHT: content -->
-      <div class="agents__content">
-        <span class="eyebrow">129 Agentes Especializados</span>
-        <h2 class="section__title" style="text-align:center;">Uma equipe completa. Pelo custo de um funcionário.</h2>
-        <p class="section__sub" style="text-align:center;">Cada agente é especializado em uma função do processo comercial. Juntos, operam o ciclo completo — do primeiro contato ao fechamento e à reativação.</p>
+    <span class="eyebrow reveal">O ECOSSISTEMA</span>
+    <h2 class="section__title reveal">12 squads. 129 agentes.<br>Operando juntos como um time.</h2>
+    <p class="section__sub reveal">Cada squad é especializado em uma função do processo comercial. Juntos, operam o ciclo completo — do primeiro contato ao fechamento e à reativação.</p>
 
-        <div class="agents__grid">
-          <div class="agent__card"><div class="agent__icon">🎯</div><h3>Ativação de Leads</h3><p>Responde em menos de 5 minutos, 24h por dia. Qualifica, segmenta e encaminha automaticamente.</p></div>
-          <div class="agent__card"><div class="agent__icon">📅</div><h3>Agendamento</h3><p>Agenda diretamente no calendário, envia confirmações e lembretes, reduz no-show em até 60%.</p></div>
-          <div class="agent__card"><div class="agent__icon">💬</div><h3>Nutrição e Follow-up</h3><p>Sequências personalizadas por WhatsApp e e-mail. Mensagem certa no momento certo.</p></div>
-          <div class="agent__card"><div class="agent__icon">🛡️</div><h3>Gestão de Objeções</h3><p>Scripts treinados com suas objeções reais. Preço, tempo, dúvidas — respondidas com precisão.</p></div>
-          <div class="agent__card"><div class="agent__icon">🗂️</div><h3>CRM Inteligente</h3><p>Pipeline atualizado automaticamente. Score de cada lead. Priorização por probabilidade de fechamento.</p></div>
-          <div class="agent__card"><div class="agent__icon">📊</div><h3>Tráfego Pago</h3><p>Criação e otimização de campanhas no Meta e Google. Budget alocado onde há maior retorno.</p></div>
-          <div class="agent__card"><div class="agent__icon">🔄</div><h3>Remarketing</h3><p>Reativa leads frios. Segmenta por comportamento e reengaja no momento certo.</p></div>
-          <div class="agent__card"><div class="agent__icon">📈</div><h3>Analytics & Dados</h3><p>Dashboard em tempo real. Custo por aquisição, taxa de conversão e ROI de cada campanha.</p></div>
-        </div>
+    <div class="stats-row reveal">
+      <div class="stat"><span class="stat__number" data-target="12">0</span><span class="stat__label">Squads</span></div>
+      <div class="stat"><span class="stat__number" data-target="129">0</span><span class="stat__label">Agentes</span></div>
+      <div class="stat"><span class="stat__number" data-target="24">0</span><span class="stat__label">Horas/dia</span></div>
+    </div>
 
-        <div class="agents__highlight">
-          <div class="agents__number">129</div>
-          <p class="agents__note">Agentes especializados operando seu processo comercial — pelo custo de menos de um funcionário. Cada um treinado com os dados e diferenciais do seu negócio.</p>
-        </div>
-      </div>
+    <div class="squads-grid">
+      <div class="squad-card reveal"><h3>Tráfego & Campanhas</h3><p>Sobem e otimizam campanhas em Meta, Google e YouTube. Sem queimar orçamento.</p></div>
+      <div class="squad-card reveal"><h3>SEO & Conteúdo</h3><p>Posicionam sua empresa no Google. Blog, keywords, autoridade.</p></div>
+      <div class="squad-card reveal"><h3>Tracking & Analytics</h3><p>Medem cada clique, cada conversão, cada centavo investido.</p></div>
+      <div class="squad-card reveal"><h3>Design & Criativo</h3><p>Criam anúncios, artes e páginas que convertem.</p></div>
+      <div class="squad-card reveal"><h3>Copywriting & Persuasão</h3><p>Escrevem textos que vendem. Anúncios, emails, páginas.</p></div>
+      <div class="squad-card reveal"><h3>Social Media</h3><p>Gerenciam presença nas redes com estratégia, não com achismo.</p></div>
+      <div class="squad-card reveal"><h3>E-mail & Nutrição</h3><p>Sequências que aquecem leads frios até virarem clientes.</p></div>
+      <div class="squad-card reveal"><h3>CRO & Otimização</h3><p>Testam e melhoram cada etapa do funil continuamente.</p></div>
+      <div class="squad-card reveal"><h3>Automação & CRM</h3><p>Pipeline organizado. Nenhum lead se perde.</p></div>
+      <div class="squad-card reveal"><h3>Sites & Landing Pages</h3><p>Páginas rápidas, bonitas e que convertem.</p></div>
+      <div class="squad-card reveal"><h3>Vendas & Fechamento</h3><p>Scripts, objeções, follow-up. Do lead ao contrato.</p></div>
+      <div class="squad-card reveal"><h3>Remarketing & Reativação</h3><p>Lead frio não é lead perdido. É lead que precisa de outro toque.</p></div>
+    </div>
+    <div class="section__cta reveal" style="text-align:center;margin-top:56px;">
+      <a href="#cta-final" class="btn btn--primary btn--lg">Quero esses 129 agentes operando</a>
     </div>
   </div>
 </section>
@@ -370,6 +374,9 @@
         <div class="problem-card__icon">🔄</div>
         <p>Remarketing? Não existe. Lead frio é lead esquecido.</p>
       </div>
+    </div>
+    <div class="section__cta reveal" style="text-align:center;margin-top:56px;">
+      <a href="#cta-final" class="btn btn--primary btn--lg">Quero resolver isso agora</a>
     </div>
   </div>
 </section>
@@ -637,6 +644,9 @@
         <div class="metric__label">Das decisões baseadas em dados</div>
       </div>
     </div>
+    <div class="section__cta reveal" style="text-align:center;margin-top:56px;">
+      <a href="#cta-final" class="btn btn--primary btn--lg">Quero entender como funciona</a>
+    </div>
   </div>
 </section>
 
@@ -666,36 +676,8 @@
         </tbody>
       </table>
     </div>
-  </div>
-</section>
-
-<!-- ── SQUADS ── -->
-<section class="section" id="squads" style="position:relative;overflow:hidden;background:#F5EFE6;">
-  <canvas id="squadsWaves" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
-  <div class="container" style="position:relative;z-index:2;">
-    <span class="eyebrow reveal">O ECOSSISTEMA</span>
-    <h2 class="section__title reveal">12 squads. 129 agentes. Todos conectados.</h2>
-    <p class="section__sub reveal">Cada squad cuida de uma área da sua operação. Os agentes dentro de cada squad são especialistas treinados.</p>
-
-    <div class="stats-row reveal">
-      <div class="stat"><span class="stat__number" data-target="12">0</span><span class="stat__label">Squads</span></div>
-      <div class="stat"><span class="stat__number" data-target="129">0</span><span class="stat__label">Agentes</span></div>
-      <div class="stat"><span class="stat__number" data-target="24">0</span><span class="stat__label">Horas/dia</span></div>
-    </div>
-
-    <div class="squads-grid">
-      <div class="squad-card reveal"><h3>Tráfego & Campanhas</h3><p>Sobem e otimizam campanhas em Meta, Google e YouTube. Sem queimar orçamento.</p></div>
-      <div class="squad-card reveal"><h3>SEO & Conteúdo</h3><p>Posicionam sua empresa no Google. Blog, keywords, autoridade.</p></div>
-      <div class="squad-card reveal"><h3>Tracking & Analytics</h3><p>Medem cada clique, cada conversão, cada centavo investido.</p></div>
-      <div class="squad-card reveal"><h3>Design & Criativo</h3><p>Criam anúncios, artes e páginas que convertem.</p></div>
-      <div class="squad-card reveal"><h3>Copywriting & Persuasão</h3><p>Escrevem textos que vendem. Anúncios, emails, páginas.</p></div>
-      <div class="squad-card reveal"><h3>Social Media</h3><p>Gerenciam presença nas redes com estratégia, não com achismo.</p></div>
-      <div class="squad-card reveal"><h3>E-mail & Nutrição</h3><p>Sequências que aquecem leads frios até virarem clientes.</p></div>
-      <div class="squad-card reveal"><h3>CRO & Otimização</h3><p>Testam e melhoram cada etapa do funil continuamente.</p></div>
-      <div class="squad-card reveal"><h3>Automação & CRM</h3><p>Pipeline organizado. Nenhum lead se perde.</p></div>
-      <div class="squad-card reveal"><h3>Sites & Landing Pages</h3><p>Páginas rápidas, bonitas e que convertem.</p></div>
-      <div class="squad-card reveal"><h3>Vendas & Fechamento</h3><p>Scripts, objeções, follow-up. Do lead ao contrato.</p></div>
-      <div class="squad-card reveal"><h3>Remarketing & Reativação</h3><p>Lead frio não é lead perdido. É lead que precisa de outro toque.</p></div>
+    <div class="section__cta reveal" style="text-align:center;margin-top:56px;">
+      <a href="#cta-final" class="btn btn--primary btn--lg">Quero trocar achismo por dados</a>
     </div>
   </div>
 </section>
@@ -829,6 +811,10 @@
       Todos os agentes trocando mensagens agora — 24 horas por dia, 7 dias por semana
     </div>
 
+    <div class="section__cta" style="text-align:center;margin-top:56px;">
+      <a href="#cta-final" class="btn btn--primary btn--lg">Quero meus agentes conversando assim</a>
+    </div>
+
   </div>
 </section>
 
@@ -954,6 +940,9 @@
       <div class="audience-card reveal"><p>Você não tem dashboard — descobre o resultado no final do mês</p></div>
       <div class="audience-card reveal"><p>Você sabe que precisa de processo mas não sabe por onde começar</p></div>
     </div>
+    <div class="section__cta reveal" style="text-align:center;margin-top:56px;">
+      <a href="#cta-final" class="btn btn--primary btn--lg">É exatamente o meu caso</a>
+    </div>
   </div>
 </section>
 
@@ -995,6 +984,9 @@
         <button class="faq-question" aria-expanded="false">E se eu já tenho CRM e tráfego rodando?<span class="faq-icon" aria-hidden="true">+</span></button>
         <div class="faq-answer"><p>Ótimo. Nós integramos com o que você já tem e adicionamos o que falta. Não jogamos fora o que funciona.</p></div>
       </div>
+    </div>
+    <div class="section__cta reveal" style="text-align:center;margin-top:56px;">
+      <a href="#cta-final" class="btn btn--primary btn--lg">Agendar diagnóstico gratuito</a>
     </div>
   </div>
 </section>
