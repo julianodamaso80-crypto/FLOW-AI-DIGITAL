@@ -36,15 +36,36 @@
 
   <!-- Logo size override (anti-cache) -->
   <style>
-    .nav__logo-img { height: 128px !important; width: auto !important; max-width: 380px !important; }
-    .footer__logo { height: 176px !important; width: auto !important; max-width: 480px !important; }
-    #nav .nav__inner { padding: 20px 24px !important; }
+    /* Nav compact — logo grande visualmente sem aumentar navbar */
+    #nav .nav__inner {
+      padding: 10px 24px !important;
+      overflow: visible !important;
+    }
+    .nav__logo {
+      display: flex !important;
+      align-items: center !important;
+      overflow: visible !important;
+      height: auto;
+    }
+    .nav__logo-img {
+      height: 90px !important;
+      width: auto !important;
+      max-width: 260px !important;
+      margin: -22px 0 !important;
+    }
+    .footer__logo {
+      height: 176px !important;
+      width: auto !important;
+      max-width: 480px !important;
+    }
     @media (max-width: 768px) {
-      .nav__logo-img { height: 96px !important; max-width: 280px !important; }
+      #nav .nav__inner { padding: 8px 20px !important; }
+      .nav__logo-img { height: 72px !important; max-width: 200px !important; margin: -18px 0 !important; }
       .footer__logo { height: 140px !important; max-width: 380px !important; }
     }
     @media (max-width: 480px) {
-      .nav__logo-img { height: 80px !important; max-width: 240px !important; }
+      #nav .nav__inner { padding: 6px 16px !important; }
+      .nav__logo-img { height: 60px !important; max-width: 170px !important; margin: -14px 0 !important; }
       .footer__logo { height: 120px !important; max-width: 320px !important; }
     }
   </style>
@@ -162,7 +183,7 @@
 <nav id="nav" role="navigation" aria-label="Navegação principal">
   <div class="nav__inner">
     <a href="/" class="nav__logo" aria-label="FlowAI Digital — Página inicial">
-      <img src="assets/logo/logo-flowai-light.png" alt="FlowAI Digital" class="nav__logo-img" style="height:128px !important;width:auto;max-width:380px;">
+      <img src="assets/logo/logo-flowai-light.png" alt="FlowAI Digital" class="nav__logo-img" style="height:90px !important;width:auto;max-width:260px;margin:-22px 0;">
     </a>
     <ul class="nav__links" role="list">
       <li><a href="#solucao">Solução</a></li>
