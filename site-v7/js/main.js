@@ -658,15 +658,29 @@ document.addEventListener('DOMContentLoaded', () => {
       animateLoadingSteps();
 
       try {
-        const response = await fetch('/api/diagnostico', {
+        // Timeout de 120 segundos
+        var controller = new AbortController();
+        var timeoutId = setTimeout(function() { controller.abort(); }, 120000);
+
+        var response = await fetch('/api/diagnostico', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData),
+          signal: controller.signal,
         });
 
-        const data = await response.json();
+        clearTimeout(timeoutId);
 
-        if (!response.ok || !data.success) {
+        if (!response.ok) {
+          console.error('Response not ok:', response.status);
+          showDiagStep(4);
+          return;
+        }
+
+        var data = await response.json();
+
+        if (!data.success) {
+          console.error('API error:', data.error);
           showDiagStep(4);
           return;
         }
@@ -686,16 +700,16 @@ document.addEventListener('DOMContentLoaded', () => {
           scoreMsg.textContent = 'Sua presenca digital precisa de atencao. O relatorio tem o plano de acao completo.';
         }
 
-        // Open WhatsApp automatically with the PDF link
+        // Abrir WhatsApp automaticamente (protegido contra bloqueio de popup)
         if (data.whatsappLink) {
           whatsappBtn.href = data.whatsappLink;
-          window.open(data.whatsappLink, '_blank');
+          try { window.open(data.whatsappLink, '_blank'); } catch(e) {}
         }
 
         showDiagStep(3);
 
       } catch (err) {
-        console.error('Diagnostico error:', err);
+        console.error('Diagnostico error:', err.name, err.message);
         showDiagStep(4);
       }
     });
