@@ -1064,6 +1064,9 @@ ul { list-style: none; }
   margin-bottom: 24px;
 }
 
+/* ── Required asterisk ── */
+.diag-required { color: #DC2626; font-weight: 700; }
+
 /* ── Form ── */
 .diag-form { display: flex; flex-direction: column; gap: 14px; }
 .diag-form__field { display: flex; flex-direction: column; gap: 4px; }
@@ -1205,6 +1208,23 @@ ul { list-style: none; }
   background: var(--bg-alt);
   border-color: var(--accent);
   color: var(--accent);
+}
+.diag-success__whatsapp-msg {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #DCFCE7;
+  border: 1px solid rgba(22,163,74,0.2);
+  border-radius: var(--r-md);
+  padding: 16px 20px;
+  margin-top: 8px;
+  text-align: left;
+}
+.diag-success__whatsapp-msg p {
+  font-size: 14px;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.5;
 }
 
 /* ── Modal responsive ── */

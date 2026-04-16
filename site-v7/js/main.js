@@ -649,10 +649,10 @@ document.addEventListener('DOMContentLoaded', () => {
         telefone: document.getElementById('diagTelefone').value.trim(),
         email: document.getElementById('diagEmail').value.trim(),
         site: document.getElementById('diagSite').value.trim(),
-        instagram: document.getElementById('diagInstagram').value.trim() || null,
+        instagram: document.getElementById('diagInstagram').value.trim(),
       };
 
-      if (!formData.empresa || !formData.telefone || !formData.email || !formData.site) return;
+      if (!formData.empresa || !formData.telefone || !formData.email || !formData.site || !formData.instagram) return;
 
       showDiagStep(2);
       animateLoadingSteps();
@@ -671,10 +671,9 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
-        const scoreNum = document.getElementById('diagScoreNum');
-        const scoreMsg = document.getElementById('diagScoreMsg');
-        const downloadBtn = document.getElementById('diagDownloadBtn');
-        const whatsappBtn = document.getElementById('diagWhatsAppBtn');
+        var scoreNum = document.getElementById('diagScoreNum');
+        var scoreMsg = document.getElementById('diagScoreMsg');
+        var whatsappBtn = document.getElementById('diagWhatsAppBtn');
 
         scoreNum.textContent = data.score;
         scoreNum.style.color = data.score >= 60 ? '#16A34A' : data.score >= 35 ? '#D97706' : '#DC2626';
@@ -687,8 +686,11 @@ document.addEventListener('DOMContentLoaded', () => {
           scoreMsg.textContent = 'Sua presenca digital precisa de atencao. O relatorio tem o plano de acao completo.';
         }
 
-        downloadBtn.href = data.pdfUrl;
-        if (data.whatsappLink) whatsappBtn.href = data.whatsappLink;
+        // Open WhatsApp automatically with the PDF link
+        if (data.whatsappLink) {
+          whatsappBtn.href = data.whatsappLink;
+          window.open(data.whatsappLink, '_blank');
+        }
 
         showDiagStep(3);
 
