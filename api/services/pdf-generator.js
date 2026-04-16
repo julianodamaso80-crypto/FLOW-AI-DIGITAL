@@ -88,8 +88,14 @@ function populateTemplate(html, data) {
   // SERP section
   html = html.replace(/{{SERP_SECTION}}/g, buildSerpSection(serp));
 
-  // Instagram page
+  // Competitors page
+  html = html.replace(/{{COMPETITORS_PAGE}}/g, buildCompetitorsPage(data.competitors, empresa.domain));
+
+  // Instagram page (simplified - just handle link)
   html = html.replace(/{{INSTAGRAM_PAGE}}/g, buildInstagramPage(instagram, empresa.nome));
+
+  // AI Summary
+  html = html.replace(/{{AI_SUMMARY}}/g, data.aiSummary || buildScoreSummary(score.total));
 
   // Recommendations
   html = html.replace(/{{RECOMMENDATIONS}}/g, buildRecommendations(data));
@@ -100,9 +106,8 @@ function populateTemplate(html, data) {
 function buildScoreBars(breakdown) {
   const bars = [
     { label: 'SEO On-Page', value: breakdown.seo || 0, max: 40 },
-    { label: 'Performance', value: breakdown.technical || 0, max: 25 },
-    { label: 'Visibilidade', value: breakdown.serp || 0, max: 20 },
-    { label: 'Instagram', value: breakdown.instagram || 0, max: 15 },
+    { label: 'Performance', value: breakdown.technical || 0, max: 30 },
+    { label: 'Visibilidade', value: breakdown.serp || 0, max: 30 },
   ];
 
   return bars.map(bar => {
@@ -248,8 +253,51 @@ function buildSerpSection(serp) {
     </table>`;
 }
 
+function buildCompetitorsPage(competitors, clientDomain) {
+  if (!competitors || competitors.length === 0) {
+    return '';
+  }
+
+  const rows = competitors.map((c, i) => `
+    <tr>
+      <td style="font-weight:600;">${i + 1}. ${c.domain}</td>
+      <td style="text-align:center;">${formatNumber(c.keywordsCount)}</td>
+      <td style="text-align:center;">${c.avgPosition}</td>
+      <td style="text-align:center;">${c.intersections}</td>
+    </tr>`).join('');
+
+  return `
+  <div class="page">
+    <div class="page__header">
+      <span class="page__logo">FlowAI Digital</span>
+      <span class="page__num">Analise Competitiva</span>
+    </div>
+
+    <h2>Seus Concorrentes no Google</h2>
+    <p style="margin-bottom:20px;">Estes sao os dominios que competem com <strong>${clientDomain}</strong> pelas mesmas keywords no Google Brasil.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Concorrente</th>
+          <th style="text-align:center;">Keywords</th>
+          <th style="text-align:center;">Posicao Media</th>
+          <th style="text-align:center;">Keywords em Comum</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+
+    <div style="margin-top:24px;padding:20px;background:rgba(201,101,60,0.06);border-radius:12px;border-left:4px solid var(--accent);">
+      <p style="font-size:14px;color:var(--text);margin:0;">
+        <strong>O que isso significa:</strong> Seus concorrentes estao aparecendo para as mesmas buscas que seus potenciais clientes fazem. Cada keyword que eles dominam e um lead que poderia ser seu.
+      </p>
+    </div>
+  </div>`;
+}
+
 function buildInstagramPage(instagram, empresaNome) {
-  if (!instagram || !instagram.hasData) return '';
+  if (!instagram || !instagram.handle) return '';
 
   return `
   <div class="page">
@@ -258,37 +306,24 @@ function buildInstagramPage(instagram, empresaNome) {
       <span class="page__num">Redes Sociais</span>
     </div>
 
-    <h2>Analise do Instagram</h2>
+    <h2>Presenca no Instagram</h2>
     <div class="insta-card">
       <h3>@${instagram.handle}</h3>
-      ${instagram.bio ? `<p style="opacity:0.9;font-size:14px;margin-top:8px;">${instagram.bio}</p>` : ''}
-      <div class="insta-stats">
-        <div>
-          <div class="insta-stat__num">${formatNumber(instagram.followers)}</div>
-          <div class="insta-stat__label">Seguidores</div>
-        </div>
-        <div>
-          <div class="insta-stat__num">${formatNumber(instagram.following)}</div>
-          <div class="insta-stat__label">Seguindo</div>
-        </div>
-        <div>
-          <div class="insta-stat__num">${formatNumber(instagram.postsCount)}</div>
-          <div class="insta-stat__label">Publicacoes</div>
-        </div>
-      </div>
+      <p style="opacity:0.9;font-size:14px;margin-top:8px;">instagram.com/${instagram.handle}</p>
     </div>
 
-    ${instagram.followers < 1000 ? `
-    <div class="recommendation" style="margin-top:20px;">
-      <div class="recommendation__priority recommendation__priority--high">Prioridade alta</div>
-      <p><strong>Perfil com menos de 1.000 seguidores.</strong> Para crescer no Instagram, voce precisa de uma estrategia consistente de conteudo + trafego pago para o perfil.</p>
-    </div>` : ''}
-
-    ${instagram.postsCount < 30 ? `
-    <div class="recommendation">
-      <div class="recommendation__priority recommendation__priority--medium">Prioridade media</div>
-      <p><strong>Poucas publicacoes.</strong> Perfis com mais conteudo geram mais confianca e engajamento. Recomendamos pelo menos 3-4 posts por semana.</p>
-    </div>` : ''}
+    <div style="margin-top:20px;">
+      <div class="recommendation">
+        <div class="recommendation__priority recommendation__priority--medium">Recomendacao</div>
+        <h3>Consistencia e estrategia de conteudo</h3>
+        <p style="margin-top:4px;font-size:14px;color:var(--text-light);">Para crescer no Instagram, voce precisa de frequencia (3-4 posts/semana), conteudo de valor para seu publico, e campanhas de trafego pago para o perfil. Reels e carrosseis geram mais alcance organico.</p>
+      </div>
+      <div class="recommendation">
+        <div class="recommendation__priority recommendation__priority--medium">Recomendacao</div>
+        <h3>Bio otimizada e link na bio</h3>
+        <p style="margin-top:4px;font-size:14px;color:var(--text-light);">Sua bio deve comunicar claramente o que voce faz, para quem, e ter um CTA com link direto para WhatsApp ou site. Use destaques para organizar conteudo por tema.</p>
+      </div>
+    </div>
   </div>`;
 }
 

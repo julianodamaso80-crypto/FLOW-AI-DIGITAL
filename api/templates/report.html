@@ -508,20 +508,24 @@
     {{SERP_SECTION}}
   </div>
 
-  <!-- ── PAGE 5: INSTAGRAM (if available) ── -->
+  <!-- ── PAGE 5: COMPETITORS ── -->
+  {{COMPETITORS_PAGE}}
+
+  <!-- ── PAGE 6: INSTAGRAM + SOCIAL ── -->
   {{INSTAGRAM_PAGE}}
 
-  <!-- ── PAGE 6: RECOMMENDATIONS ── -->
+  <!-- ── PAGE 7: RECOMMENDATIONS + AI SUMMARY ── -->
   <div class="page">
     <div class="page__header">
       <span class="page__logo">FlowAI Digital</span>
-      <span class="page__num">Recomendacoes</span>
+      <span class="page__num">Resumo & Recomendacoes</span>
     </div>
 
-    <h2>Proximos Passos Recomendados</h2>
-    <p>Com base na analise completa, estas sao as acoes prioritarias para melhorar sua presenca digital:</p>
+    <h2>Resumo Executivo</h2>
+    <div style="background:var(--white);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;margin-bottom:28px;font-size:14px;line-height:1.8;white-space:pre-line;">{{AI_SUMMARY}}</div>
 
-    <div style="margin-top:20px;">
+    <h2>Proximos Passos Recomendados</h2>
+    <div style="margin-top:16px;">
       {{RECOMMENDATIONS}}
     </div>
 

@@ -1,6 +1,6 @@
 {
   "name": "flowai-diagnostico-api",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "API de diagnostico digital - FlowAI Digital",
   "main": "server.js",
   "scripts": {
@@ -13,6 +13,7 @@
     "puppeteer-core": "^23.0.0",
     "node-fetch": "^2.7.0",
     "dotenv": "^16.4.0",
-    "uuid": "^10.0.0"
+    "uuid": "^10.0.0",
+    "@anthropic-ai/sdk": "^0.39.0"
   }
 }

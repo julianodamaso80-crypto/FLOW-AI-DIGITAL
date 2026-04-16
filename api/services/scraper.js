@@ -57,61 +57,20 @@ async function scrapeWebsite(url) {
   }
 }
 
-async function scrapeInstagram(instagramHandle) {
-  // Clean handle
+function parseInstagram(instagramHandle) {
+  // Clean handle - no scraping needed, Instagram blocks scrapers
   let handle = instagramHandle.trim();
   handle = handle.replace(/^@/, '');
   handle = handle.replace(/^https?:\/\/(www\.)?instagram\.com\//, '');
   handle = handle.replace(/\/$/, '');
 
-  console.log(`[Scraper] Scraping Instagram: @${handle}`);
+  console.log(`[Instagram] Registrado: @${handle}`);
 
-  try {
-    const url = `https://www.instagram.com/${handle}/`;
-    const response = await fetch(`${FIRECRAWL_URL}/scrape`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${FIRECRAWL_API_KEY}`,
-      },
-      body: JSON.stringify({
-        url,
-        formats: ['markdown'],
-        onlyMainContent: true,
-        timeout: 30000,
-      }),
-    });
-
-    if (!response.ok) {
-      console.error(`[Scraper] Instagram scrape failed (${response.status})`);
-      return null;
-    }
-
-    const data = await response.json();
-    if (!data.success || !data.data) return null;
-
-    const markdown = data.data.markdown || '';
-    const metadata = data.data.metadata || {};
-
-    // Try to extract Instagram metrics from the page content
-    const followers = extractNumber(markdown, /(\d[\d.,]*)\s*(followers|seguidores)/i);
-    const following = extractNumber(markdown, /(\d[\d.,]*)\s*(following|seguindo)/i);
-    const postsCount = extractNumber(markdown, /(\d[\d.,]*)\s*(posts|publica)/i);
-
-    return {
-      handle,
-      url,
-      followers,
-      following,
-      postsCount,
-      bio: metadata.description || extractBio(markdown),
-      profileName: metadata.title || handle,
-      hasData: followers > 0 || postsCount > 0,
-    };
-  } catch (err) {
-    console.error('[Scraper] Error scraping Instagram:', err.message);
-    return null;
-  }
+  return {
+    handle,
+    url: `https://www.instagram.com/${handle}/`,
+    hasData: true,
+  };
 }
 
 function extractFromHtml(html, tag) {
@@ -138,4 +97,4 @@ function extractBio(markdown) {
   return lines[0] || '';
 }
 
-module.exports = { scrapeWebsite, scrapeInstagram };
+module.exports = { scrapeWebsite, parseInstagram };

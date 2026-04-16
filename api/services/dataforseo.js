@@ -128,4 +128,36 @@ async function getSerpRankings(domain) {
   };
 }
 
-module.exports = { getOnPageAnalysis, getSerpRankings };
+/**
+ * Get competitors for a domain
+ * Endpoint: /v3/dataforseo_labs/google/competitors_domain/live
+ * Cost: ~$0.01
+ */
+async function getCompetitors(domain) {
+  console.log(`[DataForSEO] Getting competitors for: ${domain}`);
+
+  const data = await apiCall('/v3/dataforseo_labs/google/competitors_domain/live', [{
+    target: domain,
+    language_name: 'Portuguese',
+    location_code: 2076,
+    limit: 5,
+    filters: ['avg_position', '<=', 50],
+  }]);
+
+  if (!data || !data.tasks || !data.tasks[0] || !data.tasks[0].result) {
+    return null;
+  }
+
+  const result = data.tasks[0].result[0];
+  if (!result || !result.items) return null;
+
+  return result.items.slice(0, 5).map(item => ({
+    domain: item.domain || '',
+    avgPosition: Math.round(item.avg_position || 0),
+    keywordsCount: item.se_keywords || 0,
+    intersections: item.intersections || 0,
+    visibility: item.visibility || 0,
+  }));
+}
+
+module.exports = { getOnPageAnalysis, getSerpRankings, getCompetitors };
