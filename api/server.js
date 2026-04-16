@@ -17,8 +17,8 @@ const PORT = process.env.API_PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// Serve generated PDFs
-app.use('/reports', express.static(path.join(__dirname, 'reports')));
+// Serve generated PDFs (nginx proxies /api/* so path is /api/reports/*)
+app.use('/api/reports', express.static(path.join(__dirname, 'reports')));
 
 // Health check
 app.get('/api/health', (req, res) => {
