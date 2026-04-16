@@ -19,15 +19,15 @@ async function apiCall(endpoint, body) {
       body: JSON.stringify(body),
     });
 
-    if (!response.ok) {
-      console.error(`[DataForSEO] Error ${response.status} on ${endpoint}`);
-      return null;
-    }
-
     const data = await response.json();
+
     if (data.status_code !== 20000) {
-      console.error(`[DataForSEO] API error:`, data.status_message);
-      return null;
+      console.error(`[DataForSEO] API error on ${endpoint}:`, data.status_message);
+      // Check if task-level error
+      if (data.tasks && data.tasks[0] && data.tasks[0].status_code !== 20000) {
+        console.error(`[DataForSEO] Task error:`, data.tasks[0].status_message);
+        return null;
+      }
     }
 
     return data;
@@ -38,42 +38,59 @@ async function apiCall(endpoint, body) {
 }
 
 /**
- * Get backlinks summary for a domain
- * Endpoint: /v3/backlinks/summary/live
- * Cost: ~$0.02
+ * On-Page instant analysis for a URL
+ * Endpoint: /v3/on_page/instant_pages
+ * Cost: ~$0.0001
  */
-async function getBacklinks(domain) {
-  console.log(`[DataForSEO] Getting backlinks for: ${domain}`);
+async function getOnPageAnalysis(url) {
+  console.log(`[DataForSEO] On-Page analysis for: ${url}`);
 
-  const data = await apiCall('/v3/backlinks/summary/live', [{
-    target: domain,
-    internal_list_limit: 0,
-    include_subdomains: true,
+  const data = await apiCall('/v3/on_page/instant_pages', [{
+    url: url,
+    enable_javascript: true,
+    enable_browser_rendering: true,
   }]);
 
   if (!data || !data.tasks || !data.tasks[0] || !data.tasks[0].result) {
     return null;
   }
 
-  const result = data.tasks[0].result[0];
-  if (!result) return null;
+  const items = data.tasks[0].result[0]?.items;
+  if (!items || items.length === 0) return null;
+
+  const page = items[0];
+  const meta = page.meta || {};
+  const onPage = page.onpage_score || 0;
+  const checks = page.checks || {};
 
   return {
-    totalBacklinks: result.total_backlinks || 0,
-    referringDomains: result.referring_domains || 0,
-    referringDomainsNofollow: result.referring_domains_nofollow || 0,
-    brokenBacklinks: result.broken_backlinks || 0,
-    referringIps: result.referring_ips || 0,
-    referringSubnets: result.referring_subnets || 0,
-    rank: result.rank || 0,
-    backlinkSpamScore: result.backlink_spam_score || 0,
+    onPageScore: onPage,
+    title: meta.title || '',
+    description: meta.description || '',
+    statusCode: page.status_code || 0,
+    totalDomSize: page.page_timing?.dom_complete || 0,
+    loadTime: page.page_timing?.duration || 0,
+    internalLinks: meta.internal_links_count || 0,
+    externalLinks: meta.external_links_count || 0,
+    imagesCount: meta.images_count || 0,
+    imagesWithoutAlt: checks.no_image_alt_attribute || 0,
+    h1Count: meta.htags?.h1?.length || 0,
+    h2Count: meta.htags?.h2?.length || 0,
+    hasCanonical: !!meta.canonical,
+    hasOG: !checks.no_og_tags,
+    isHttps: page.url?.startsWith('https'),
+    wordCount: meta.content?.plain_text_word_count || 0,
+    encodingDeclared: !checks.no_encoding_meta_tag,
+    hasViewport: !checks.is_small_page_size,
+    cacheControl: page.cache_control || null,
+    checks,
   };
 }
 
 /**
  * Get SERP rankings for a domain (what keywords it ranks for)
  * Endpoint: /v3/dataforseo_labs/google/ranked_keywords/live
- * Cost: ~$0.05
+ * Cost: ~$0.01
  */
 async function getSerpRankings(domain) {
   console.log(`[DataForSEO] Getting SERP rankings for: ${domain}`);
@@ -84,7 +101,6 @@ async function getSerpRankings(domain) {
     location_code: 2076, // Brazil
     limit: 20,
     order_by: ['keyword_data.keyword_info.search_volume,desc'],
-    filters: ['ranked_serp_element.serp_item.rank_absolute', '<=', 100],
   }]);
 
   if (!data || !data.tasks || !data.tasks[0] || !data.tasks[0].result) {
@@ -112,4 +128,4 @@ async function getSerpRankings(domain) {
   };
 }
 
-module.exports = { getBacklinks, getSerpRankings };
+module.exports = { getOnPageAnalysis, getSerpRankings };

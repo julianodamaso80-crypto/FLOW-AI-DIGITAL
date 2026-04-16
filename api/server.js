@@ -8,7 +8,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const { scrapeWebsite, scrapeInstagram } = require('./services/scraper');
 const { analyzeSEOOnPage } = require('./services/seo-analyzer');
-const { getBacklinks, getSerpRankings } = require('./services/dataforseo');
+const { getOnPageAnalysis, getSerpRankings } = require('./services/dataforseo');
 const { generatePDF } = require('./services/pdf-generator');
 
 const app = express();
@@ -43,26 +43,33 @@ app.post('/api/diagnostico', async (req, res) => {
     const domain = new URL(siteUrl).hostname.replace('www.', '');
 
     // Run all analyses in parallel
-    const [websiteData, instagramData, backlinksData, serpData] = await Promise.allSettled([
+    const [websiteData, instagramData, onPageData, serpData] = await Promise.allSettled([
       scrapeWebsite(siteUrl),
-      instagram ? scrapeInstagram(instagram) : Promise.resolve(null),
-      getBacklinks(domain),
+      scrapeInstagram(instagram),
+      getOnPageAnalysis(siteUrl),
       getSerpRankings(domain),
     ]);
 
     // Extract results (handle failures gracefully)
     const website = websiteData.status === 'fulfilled' ? websiteData.value : null;
     const insta = instagramData.status === 'fulfilled' ? instagramData.value : null;
-    const backlinks = backlinksData.status === 'fulfilled' ? backlinksData.value : null;
+    const onPage = onPageData.status === 'fulfilled' ? onPageData.value : null;
     const serp = serpData.status === 'fulfilled' ? serpData.value : null;
 
-    console.log(`[${reportId}] Scraping concluido. Website: ${!!website}, Instagram: ${!!insta}, Backlinks: ${!!backlinks}, SERP: ${!!serp}`);
+    console.log(`[${reportId}] Analise concluida. Website: ${!!website}, Instagram: ${!!insta}, OnPage: ${!!onPage}, SERP: ${!!serp}`);
 
-    // Analyze on-page SEO from scraped HTML
+    // Analyze on-page SEO from scraped HTML (our own analysis)
     const seoAnalysis = website ? analyzeSEOOnPage(website) : null;
 
+    // Merge DataForSEO on-page data with our analysis
+    if (seoAnalysis && onPage) {
+      seoAnalysis.onPageScore = onPage.onPageScore;
+      seoAnalysis.loadTime = onPage.loadTime;
+      seoAnalysis.checks = onPage.checks;
+    }
+
     // Calculate overall score
-    const score = calculateScore(seoAnalysis, backlinks, serp, insta);
+    const score = calculateScore(seoAnalysis, onPage, serp, insta);
 
     // Compile report data
     const reportData = {
@@ -71,7 +78,7 @@ app.post('/api/diagnostico', async (req, res) => {
       empresa: { nome: empresa, telefone, email, site: siteUrl, instagram, domain },
       score,
       seo: seoAnalysis,
-      backlinks,
+      onPage,
       serp,
       instagram: insta,
       website: website ? {
@@ -103,7 +110,7 @@ app.post('/api/diagnostico', async (req, res) => {
   }
 });
 
-function calculateScore(seo, backlinks, serp, instagram) {
+function calculateScore(seo, onPage, serp, instagram) {
   let total = 0;
   let breakdown = {};
 
@@ -122,16 +129,18 @@ function calculateScore(seo, backlinks, serp, instagram) {
     total += seoScore;
   }
 
-  // Backlinks (0-25 points)
-  if (backlinks) {
-    let blScore = 0;
-    if (backlinks.totalBacklinks > 0) blScore += 5;
-    if (backlinks.totalBacklinks > 10) blScore += 5;
-    if (backlinks.totalBacklinks > 100) blScore += 5;
-    if (backlinks.referringDomains > 5) blScore += 5;
-    if (backlinks.referringDomains > 20) blScore += 5;
-    breakdown.backlinks = blScore;
-    total += blScore;
+  // Technical Performance - DataForSEO On Page (0-25 points)
+  if (onPage) {
+    let techScore = 0;
+    if (onPage.onPageScore >= 80) techScore += 10;
+    else if (onPage.onPageScore >= 50) techScore += 5;
+    if (onPage.loadTime < 3000) techScore += 5;
+    else if (onPage.loadTime < 5000) techScore += 3;
+    if (onPage.isHttps) techScore += 5;
+    if (onPage.hasCanonical) techScore += 3;
+    if (onPage.imagesWithoutAlt === 0) techScore += 2;
+    breakdown.technical = techScore;
+    total += techScore;
   }
 
   // SERP Visibility (0-20 points)

@@ -50,7 +50,7 @@ async function generatePDF(reportData, outputPath) {
 }
 
 function populateTemplate(html, data) {
-  const { empresa, score, seo, backlinks, serp, instagram } = data;
+  const { empresa, score, seo, onPage, serp, instagram } = data;
 
   // Cover
   html = html.replace(/{{EMPRESA_NOME}}/g, empresa.nome);
@@ -82,8 +82,8 @@ function populateTemplate(html, data) {
     html = html.replace(/{{#if SEO_HAS_PASSES}}[\s\S]*?{{\/if}}/g, '');
   }
 
-  // Backlinks section
-  html = html.replace(/{{BACKLINKS_SECTION}}/g, buildBacklinksSection(backlinks));
+  // Technical/OnPage section (replaced backlinks)
+  html = html.replace(/{{BACKLINKS_SECTION}}/g, buildTechnicalSection(data.onPage));
 
   // SERP section
   html = html.replace(/{{SERP_SECTION}}/g, buildSerpSection(serp));
@@ -100,7 +100,7 @@ function populateTemplate(html, data) {
 function buildScoreBars(breakdown) {
   const bars = [
     { label: 'SEO On-Page', value: breakdown.seo || 0, max: 40 },
-    { label: 'Backlinks', value: breakdown.backlinks || 0, max: 25 },
+    { label: 'Performance', value: breakdown.technical || 0, max: 25 },
     { label: 'Visibilidade', value: breakdown.serp || 0, max: 20 },
     { label: 'Instagram', value: breakdown.instagram || 0, max: 15 },
   ];
@@ -134,9 +134,9 @@ function buildStatsCards(data) {
     cards.push({ num: data.seo.issues.length, label: 'Problemas SEO' });
     cards.push({ num: data.seo.wordCount || 0, label: 'Palavras na pagina' });
   }
-  if (data.backlinks) {
-    cards.push({ num: formatNumber(data.backlinks.totalBacklinks), label: 'Backlinks' });
-    cards.push({ num: data.backlinks.referringDomains, label: 'Dominios referindo' });
+  if (data.onPage) {
+    cards.push({ num: Math.round(data.onPage.onPageScore), label: 'Score Tecnico' });
+    cards.push({ num: (data.onPage.loadTime / 1000).toFixed(1) + 's', label: 'Tempo de carga' });
   }
   if (data.serp) {
     cards.push({ num: data.serp.totalKeywords || 0, label: 'Keywords no Google' });
@@ -176,32 +176,35 @@ function buildChecklist(items, type) {
   }).join('');
 }
 
-function buildBacklinksSection(backlinks) {
-  if (!backlinks) {
-    return '<div class="no-data">Nao foi possivel obter dados de backlinks para este dominio</div>';
+function buildTechnicalSection(onPage) {
+  if (!onPage) {
+    return '<div class="no-data">Nao foi possivel obter dados tecnicos para este dominio</div>';
   }
+
+  const loadTimeSec = (onPage.loadTime / 1000).toFixed(1);
+  const loadColor = onPage.loadTime < 3000 ? 'green' : onPage.loadTime < 5000 ? 'yellow' : 'red';
 
   return `
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-card__num">${formatNumber(backlinks.totalBacklinks)}</div>
-        <div class="stat-card__label">Total de Backlinks</div>
+        <div class="stat-card__num" style="color:${onPage.onPageScore >= 70 ? 'var(--green)' : onPage.onPageScore >= 40 ? 'var(--yellow)' : 'var(--red)'}">${Math.round(onPage.onPageScore)}</div>
+        <div class="stat-card__label">Score Tecnico DataForSEO</div>
       </div>
       <div class="stat-card">
-        <div class="stat-card__num">${backlinks.referringDomains}</div>
-        <div class="stat-card__label">Dominios Referindo</div>
+        <div class="stat-card__num" style="color:var(--${loadColor})">${loadTimeSec}s</div>
+        <div class="stat-card__label">Tempo de Carregamento</div>
       </div>
       <div class="stat-card">
-        <div class="stat-card__num">${backlinks.referringIps}</div>
-        <div class="stat-card__label">IPs Unicos</div>
+        <div class="stat-card__num">${onPage.wordCount}</div>
+        <div class="stat-card__label">Palavras no Conteudo</div>
       </div>
     </div>
     <div style="margin-top:16px;font-size:14px;color:var(--text-light);">
-      ${backlinks.totalBacklinks === 0
-        ? 'Seu site nao possui backlinks. Backlinks sao como "votos de confianca" de outros sites — sem eles, o Google nao tem motivo para rankear voce acima dos concorrentes.'
-        : backlinks.referringDomains < 10
-          ? 'Seu perfil de backlinks e limitado. Investir em link building estrategico pode aumentar significativamente sua autoridade de dominio e visibilidade organica.'
-          : 'Voce tem uma base de backlinks. Para crescer, foque em conquistar links de dominios com alta autoridade no seu nicho.'
+      ${onPage.onPageScore >= 70
+        ? 'Seu site tem uma boa estrutura tecnica. Pequenos ajustes podem levar a performance ao proximo nivel.'
+        : onPage.onPageScore >= 40
+          ? 'Existem problemas tecnicos que afetam a experiencia do usuario e o posicionamento no Google. Corrigir esses pontos pode trazer resultados rapidos.'
+          : 'Seu site tem problemas tecnicos serios que prejudicam tanto a experiencia do usuario quanto o SEO. Correcao urgente recomendada.'
       }
     </div>`;
 }
@@ -320,12 +323,19 @@ function buildRecommendations(data) {
     }
   }
 
-  // Based on backlinks
-  if (!data.backlinks || data.backlinks.totalBacklinks < 10) {
+  // Based on technical performance
+  if (data.onPage && data.onPage.loadTime > 5000) {
     recs.push({
       priority: 'high',
-      title: 'Investir em link building',
-      desc: 'Backlinks sao um dos fatores mais importantes para o Google. Sem eles, e quase impossivel competir por keywords valiosas. Comece com parceiros, fornecedores e diretórios do seu nicho.',
+      title: 'Melhorar velocidade do site',
+      desc: `Seu site leva ${(data.onPage.loadTime / 1000).toFixed(1)}s para carregar. Sites lentos perdem visitantes e posicoes no Google. Otimize imagens, ative cache e revise o codigo.`,
+    });
+  }
+  if (data.onPage && data.onPage.onPageScore < 50) {
+    recs.push({
+      priority: 'high',
+      title: 'Corrigir problemas tecnicos do site',
+      desc: 'O score tecnico do seu site esta abaixo de 50. Problemas de estrutura HTML, meta tags e performance impactam diretamente seu rankeamento.',
     });
   }
 
