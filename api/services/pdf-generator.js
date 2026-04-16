@@ -24,12 +24,16 @@ async function generatePDF(reportData, outputPath) {
       '--disable-dev-shm-usage',
       '--disable-gpu',
       '--font-render-hinting=none',
+      '--disable-web-security',
     ],
   });
 
   try {
     const page = await browser.newPage();
-    await page.setContent(html, { waitUntil: 'networkidle0', timeout: 30000 });
+    // Load content without waiting for external resources (fonts are local)
+    await page.setContent(html, { waitUntil: 'domcontentloaded', timeout: 15000 });
+    // Small delay to ensure fonts are rendered
+    await new Promise(r => setTimeout(r, 500));
 
     await page.pdf({
       path: outputPath,
