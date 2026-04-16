@@ -67,19 +67,19 @@ function populateTemplate(html, data) {
   // Stats cards
   html = html.replace(/{{STATS_CARDS}}/g, buildStatsCards(data));
 
-  // SEO section
+  // SEO section (new order: passes first, then issues)
   if (seo) {
     html = html.replace(/{{SEO_TOTAL_CHECKS}}/g, seo.totalChecks);
-    html = html.replace(/{{#if SEO_HAS_ISSUES}}/, '');
-    html = html.replace(/{{\/if}}/, '');
-    html = html.replace(/{{SEO_ISSUES}}/g, buildChecklist(seo.issues, 'issue'));
     html = html.replace(/{{#if SEO_HAS_PASSES}}/, '');
     html = html.replace(/{{\/if}}/, '');
     html = html.replace(/{{SEO_PASSES}}/g, buildChecklist(seo.passes, 'pass'));
+    html = html.replace(/{{#if SEO_HAS_ISSUES}}/, '');
+    html = html.replace(/{{\/if}}/, '');
+    html = html.replace(/{{SEO_ISSUES}}/g, buildChecklist(seo.issues, 'issue'));
   } else {
     html = html.replace(/{{SEO_TOTAL_CHECKS}}/g, '0');
-    html = html.replace(/{{#if SEO_HAS_ISSUES}}[\s\S]*?{{\/if}}/g, '<div class="no-data">Nao foi possivel analisar o SEO do site</div>');
     html = html.replace(/{{#if SEO_HAS_PASSES}}[\s\S]*?{{\/if}}/g, '');
+    html = html.replace(/{{#if SEO_HAS_ISSUES}}[\s\S]*?{{\/if}}/g, '<div class="no-data">Nao foi possivel analisar o site</div>');
   }
 
   // Technical/OnPage section (replaced backlinks)
@@ -216,7 +216,10 @@ function buildTechnicalSection(onPage) {
 
 function buildSerpSection(serp) {
   if (!serp || serp.organicCount === 0) {
-    return '<div class="no-data">Nenhuma keyword organica encontrada para este dominio no Google Brasil. Isso significa que seu site nao aparece nas buscas — seus concorrentes estao capturando esses leads.</div>';
+    return `<div class="no-data" style="padding:32px;font-style:normal;font-size:15px;">
+      <strong style="color:var(--red);font-size:18px;">Seu site nao aparece no Google.</strong><br><br>
+      Quando alguem pesquisa pelo que voce vende, sao os seus concorrentes que aparecem. Cada busca dessas e um cliente que poderia ser seu — mas vai pra outro lugar.
+    </div>`;
   }
 
   let keywordRows = serp.keywords.map(k => {

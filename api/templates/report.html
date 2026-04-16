@@ -426,10 +426,41 @@
   <div class="cover">
     <div class="cover__badge">
       <span class="cover__badge-dot"></span>
-      Diagnostico Digital Gratuito
+      Analise exclusiva e gratuita
     </div>
-    <h1 class="cover__title">Diagnostico<br>da Presenca Digital</h1>
+    <h1 class="cover__title">Analise de Mercado</h1>
     <div class="cover__empresa">{{EMPRESA_NOME}}</div>
+
+    <!-- Orbital SVG -->
+    <svg viewBox="0 0 320 320" style="width:220px;height:220px;margin:24px 0;" xmlns="http://www.w3.org/2000/svg">
+      <!-- Orbit rings -->
+      <circle cx="160" cy="160" r="140" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <circle cx="160" cy="160" r="100" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <!-- Center -->
+      <circle cx="160" cy="160" r="44" fill="rgba(201,101,60,0.3)" stroke="rgba(201,101,60,0.5)" stroke-width="1.5"/>
+      <text x="160" y="153" text-anchor="middle" fill="white" font-family="'Noto Serif',serif" font-size="13" font-weight="700">FlowAI</text>
+      <text x="160" y="172" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-family="'Noto Sans',sans-serif" font-size="9">129 AGENTES</text>
+      <!-- Nodes -->
+      <circle cx="160" cy="20" r="16" fill="rgba(201,101,60,0.25)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+      <text x="160" y="24" text-anchor="middle" fill="white" font-size="7" font-family="'Noto Sans',sans-serif">Trafego</text>
+      <circle cx="259" cy="60" r="16" fill="rgba(201,101,60,0.25)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+      <text x="259" y="64" text-anchor="middle" fill="white" font-size="7" font-family="'Noto Sans',sans-serif">SEO</text>
+      <circle cx="300" cy="160" r="16" fill="rgba(201,101,60,0.25)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+      <text x="300" y="164" text-anchor="middle" fill="white" font-size="7" font-family="'Noto Sans',sans-serif">Tracking</text>
+      <circle cx="259" cy="260" r="16" fill="rgba(201,101,60,0.25)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+      <text x="259" y="264" text-anchor="middle" fill="white" font-size="7" font-family="'Noto Sans',sans-serif">Copy</text>
+      <circle cx="160" cy="300" r="16" fill="rgba(201,101,60,0.25)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+      <text x="160" y="304" text-anchor="middle" fill="white" font-size="7" font-family="'Noto Sans',sans-serif">CRM</text>
+      <circle cx="61" cy="260" r="16" fill="rgba(201,101,60,0.25)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+      <text x="61" y="264" text-anchor="middle" fill="white" font-size="7" font-family="'Noto Sans',sans-serif">Vendas</text>
+      <circle cx="20" cy="160" r="16" fill="rgba(201,101,60,0.25)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+      <text x="20" y="157" text-anchor="middle" fill="white" font-size="6" font-family="'Noto Sans',sans-serif">Remar-</text>
+      <text x="20" y="167" text-anchor="middle" fill="white" font-size="6" font-family="'Noto Sans',sans-serif">keting</text>
+      <circle cx="61" cy="60" r="16" fill="rgba(201,101,60,0.25)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+      <text x="61" y="57" text-anchor="middle" fill="white" font-size="6" font-family="'Noto Sans',sans-serif">Dash-</text>
+      <text x="61" y="67" text-anchor="middle" fill="white" font-size="6" font-family="'Noto Sans',sans-serif">board</text>
+    </svg>
+
     <p class="cover__meta">
       {{EMPRESA_SITE}}<br>
       Gerado em {{DATA}}
@@ -437,14 +468,15 @@
     <div class="cover__logo">FLOWAI DIGITAL</div>
   </div>
 
-  <!-- ── PAGE 2: SCORE ── -->
+  <!-- ── PAGE 2: RESUMO EXECUTIVO (o mais importante) ── -->
   <div class="page">
     <div class="page__header">
       <span class="page__logo">FlowAI Digital</span>
-      <span class="page__num">{{EMPRESA_NOME}} — Diagnostico Digital</span>
+      <span class="page__num">Analise de Mercado — {{EMPRESA_NOME}}</span>
     </div>
 
-    <h2>Score Geral</h2>
+    <h2>O que encontramos na {{EMPRESA_NOME}}</h2>
+
     <div class="score-card">
       <div class="score-circle score-circle--{{SCORE_LEVEL}}">
         <span class="score-circle__num">{{SCORE_TOTAL}}</span>
@@ -455,85 +487,90 @@
       </div>
     </div>
 
-    <p style="font-size:14px;color:var(--text-light);">
-      {{SCORE_SUMMARY}}
-    </p>
-
-    <div class="divider"></div>
-
-    <h2>Resumo da Analise</h2>
-    <div class="stats-grid">
-      {{STATS_CARDS}}
-    </div>
+    <div style="background:var(--white);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;margin-top:24px;font-size:14px;line-height:1.8;white-space:pre-line;">{{AI_SUMMARY}}</div>
   </div>
 
-  <!-- ── PAGE 3: SEO ON-PAGE ── -->
+  <!-- ── PAGE 3: Numeros que importam ── -->
   <div class="page">
     <div class="page__header">
       <span class="page__logo">FlowAI Digital</span>
-      <span class="page__num">SEO On-Page</span>
+      <span class="page__num">Seus numeros</span>
     </div>
 
-    <h2>Analise SEO On-Page</h2>
-    <p>Verificamos {{SEO_TOTAL_CHECKS}} pontos criticos do seu site para os mecanismos de busca.</p>
+    <h2>Seus numeros de um jeito simples</h2>
+    <p>Esses sao os dados reais que encontramos sobre a presenca digital da {{EMPRESA_NOME}}.</p>
 
-    {{#if SEO_HAS_ISSUES}}
-    <h3 style="margin-top:24px;color:var(--red);">Problemas Encontrados</h3>
-    <ul class="checklist">
-      {{SEO_ISSUES}}
-    </ul>
-    {{/if}}
+    <div class="stats-grid" style="margin-top:20px;">
+      {{STATS_CARDS}}
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>Velocidade e saude do site</h2>
+    {{BACKLINKS_SECTION}}
+  </div>
+
+  <!-- ── PAGE 4: Seu site no Google ── -->
+  <div class="page">
+    <div class="page__header">
+      <span class="page__logo">FlowAI Digital</span>
+      <span class="page__num">Voce no Google</span>
+    </div>
+
+    <h2>Quando alguem pesquisa no Google, voce aparece?</h2>
+    {{SERP_SECTION}}
+  </div>
+
+  <!-- ── PAGE 5: O que achamos no seu site ── -->
+  <div class="page">
+    <div class="page__header">
+      <span class="page__logo">FlowAI Digital</span>
+      <span class="page__num">Checklist do site</span>
+    </div>
+
+    <h2>O que esta funcionando (e o que nao esta)</h2>
+    <p>Passamos {{SEO_TOTAL_CHECKS}} pontos do seu site pelo nosso checklist. Veja o resultado:</p>
 
     {{#if SEO_HAS_PASSES}}
-    <h3 style="margin-top:24px;color:var(--green);">O Que Esta Funcionando</h3>
+    <h3 style="margin-top:24px;color:var(--green);">Pontos positivos</h3>
     <ul class="checklist">
       {{SEO_PASSES}}
     </ul>
     {{/if}}
+
+    {{#if SEO_HAS_ISSUES}}
+    <h3 style="margin-top:24px;color:var(--red);">O que precisa de atencao</h3>
+    <ul class="checklist">
+      {{SEO_ISSUES}}
+    </ul>
+    {{/if}}
   </div>
 
-  <!-- ── PAGE 4: BACKLINKS & SERP ── -->
-  <div class="page">
-    <div class="page__header">
-      <span class="page__logo">FlowAI Digital</span>
-      <span class="page__num">Performance & Visibilidade</span>
-    </div>
-
-    <h2>Performance Tecnica</h2>
-    {{BACKLINKS_SECTION}}
-
-    <div class="divider"></div>
-
-    <h2>Visibilidade no Google</h2>
-    {{SERP_SECTION}}
-  </div>
-
-  <!-- ── PAGE 5: COMPETITORS ── -->
+  <!-- ── PAGE 6: COMPETITORS ── -->
   {{COMPETITORS_PAGE}}
 
-  <!-- ── PAGE 6: INSTAGRAM + SOCIAL ── -->
+  <!-- ── PAGE 7: INSTAGRAM ── -->
   {{INSTAGRAM_PAGE}}
 
-  <!-- ── PAGE 7: RECOMMENDATIONS + AI SUMMARY ── -->
+  <!-- ── PAGE 8: PROXIMOS PASSOS ── -->
   <div class="page">
     <div class="page__header">
       <span class="page__logo">FlowAI Digital</span>
-      <span class="page__num">Resumo & Recomendacoes</span>
+      <span class="page__num">Proximos passos</span>
     </div>
 
-    <h2>Resumo Executivo</h2>
-    <div style="background:var(--white);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;margin-bottom:28px;font-size:14px;line-height:1.8;white-space:pre-line;">{{AI_SUMMARY}}</div>
+    <h2>O que fazer agora</h2>
+    <p>Com base em tudo que analisamos, esses sao os passos mais importantes pra sua empresa crescer online:</p>
 
-    <h2>Proximos Passos Recomendados</h2>
     <div style="margin-top:16px;">
       {{RECOMMENDATIONS}}
     </div>
 
     <!-- CTA -->
     <div class="cta-section">
-      <h2>Quer resolver tudo isso sem dor de cabeca?</h2>
-      <p>129 agentes de IA podem operar sua presenca digital 24/7. Do primeiro lead ao fechamento.</p>
-      <div class="cta-button">Agendar diagnostico gratuito</div>
+      <h2>Quer que a gente resolva tudo isso pra voce?</h2>
+      <p>129 agentes de IA trabalhando na sua operacao. 24 horas por dia. 7 dias por semana. Do primeiro lead ao fechamento.</p>
+      <div class="cta-button">Falar com a FlowAI agora</div>
       <p class="cta-whatsapp">WhatsApp: (21) 98021-4882 | flowaidigital.com.br</p>
     </div>
   </div>
