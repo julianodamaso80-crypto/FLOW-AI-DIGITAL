@@ -29,3 +29,6 @@ coverage/
 
 # Generated
 *.generated.*
+
+# PDF reports (generated at runtime)
+api/reports/

@@ -1,8 +1,17 @@
 flowai-revenue-engine/
 flowai-growth-os/
+flowai-video/
 sales/
 productivity/
+pesquisa-sites-ia/
+squads/
+.claude/
+.github/
 *.zip
+*.md
 logoflow.png
 .git/
 node_modules/
+.env
+.env.*
+api/reports/*.pdf

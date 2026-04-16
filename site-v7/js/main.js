@@ -638,4 +638,101 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   }
 
+  // ── DIAGNOSTICO DIGITAL — Form Handler ──
+  const diagForm = document.getElementById('diagnosticoForm');
+  if (diagForm) {
+    diagForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const formData = {
+        empresa: document.getElementById('diagEmpresa').value.trim(),
+        telefone: document.getElementById('diagTelefone').value.trim(),
+        email: document.getElementById('diagEmail').value.trim(),
+        site: document.getElementById('diagSite').value.trim(),
+        instagram: document.getElementById('diagInstagram').value.trim() || null,
+      };
+
+      if (!formData.empresa || !formData.telefone || !formData.email || !formData.site) return;
+
+      showDiagStep(2);
+      animateLoadingSteps();
+
+      try {
+        const response = await fetch('/api/diagnostico', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          showDiagStep(4);
+          return;
+        }
+
+        const scoreNum = document.getElementById('diagScoreNum');
+        const scoreMsg = document.getElementById('diagScoreMsg');
+        const downloadBtn = document.getElementById('diagDownloadBtn');
+        const whatsappBtn = document.getElementById('diagWhatsAppBtn');
+
+        scoreNum.textContent = data.score;
+        scoreNum.style.color = data.score >= 60 ? '#16A34A' : data.score >= 35 ? '#D97706' : '#DC2626';
+
+        if (data.score >= 60) {
+          scoreMsg.textContent = 'Sua empresa tem uma boa base digital. Veja no relatorio como ir ainda mais longe.';
+        } else if (data.score >= 35) {
+          scoreMsg.textContent = 'Existem oportunidades importantes. O relatorio mostra exatamente onde agir.';
+        } else {
+          scoreMsg.textContent = 'Sua presenca digital precisa de atencao. O relatorio tem o plano de acao completo.';
+        }
+
+        downloadBtn.href = data.pdfUrl;
+        if (data.whatsappLink) whatsappBtn.href = data.whatsappLink;
+
+        showDiagStep(3);
+
+      } catch (err) {
+        console.error('Diagnostico error:', err);
+        showDiagStep(4);
+      }
+    });
+  }
+
+});
+
+function showDiagStep(step) {
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById('diagStep' + i);
+    if (el) el.classList.toggle('diag-step--hidden', i !== step);
+  }
+}
+
+function animateLoadingSteps() {
+  const steps = [
+    { id: 'loadStep1', delay: 0 },
+    { id: 'loadStep2', delay: 3000 },
+    { id: 'loadStep3', delay: 7000 },
+    { id: 'loadStep4', delay: 12000 },
+    { id: 'loadStep5', delay: 18000 },
+  ];
+  steps.forEach(function(step, index) {
+    setTimeout(function() {
+      var el = document.getElementById(step.id);
+      if (el) {
+        el.classList.add('active');
+        if (index > 0) {
+          var prev = document.getElementById(steps[index - 1].id);
+          if (prev) { prev.classList.remove('active'); prev.classList.add('done'); }
+        }
+      }
+    }, step.delay);
+  });
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var modal = document.getElementById('diagnosticoModal');
+    if (modal) modal.classList.remove('active');
+  }
 });

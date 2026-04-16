@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@700&family=Noto+Sans:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #F5EFE6;
+    --bg-alt: #E7D8C7;
+    --bg-dark: #3D2518;
+    --text: #6B412D;
+    --text-light: #8B7355;
+    --accent: #C9653C;
+    --accent-hover: #A95532;
+    --white: #FBF8F3;
+    --green: #16A34A;
+    --red: #DC2626;
+    --yellow: #D97706;
+  }
+
+  body {
+    font-family: 'Noto Sans', system-ui, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+  }
+
+  /* ── COVER PAGE ── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, var(--bg-dark) 0%, #5a3322 50%, var(--accent) 100%);
+    color: var(--white);
+    text-align: center;
+    padding: 60px 40px;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 30% 40%, rgba(201,101,60,0.3) 0%, transparent 60%),
+                radial-gradient(circle at 70% 70%, rgba(107,65,45,0.2) 0%, transparent 50%);
+  }
+  .cover > * { position: relative; z-index: 1; }
+  .cover__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    padding: 8px 20px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .cover__badge-dot {
+    width: 8px; height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+  }
+  .cover__title {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  .cover__empresa {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--accent);
+    background: rgba(201,101,60,0.15);
+    padding: 8px 24px;
+    border-radius: 8px;
+    margin: 16px 0 40px;
+  }
+  .cover__meta {
+    font-size: 14px;
+    opacity: 0.7;
+  }
+  .cover__logo {
+    margin-top: 48px;
+    opacity: 0.9;
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+
+  /* ── PAGE LAYOUT ── */
+  .page {
+    padding: 48px 40px;
+    page-break-after: always;
+    min-height: 100vh;
+  }
+  .page:last-child { page-break-after: avoid; }
+  .page__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--bg-alt);
+  }
+  .page__logo {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .page__num {
+    font-size: 12px;
+    color: var(--text-light);
+  }
+
+  h2 {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+  }
+  h3 {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  p { margin-bottom: 12px; }
+
+  /* ── SCORE CARD ── */
+  .score-card {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    background: var(--white);
+    border: 1px solid rgba(107,65,45,0.1);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+  }
+  .score-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .score-circle--low {
+    background: linear-gradient(135deg, #FEE2E2, #FECACA);
+    border: 3px solid var(--red);
+  }
+  .score-circle--medium {
+    background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+    border: 3px solid var(--yellow);
+  }
+  .score-circle--high {
+    background: linear-gradient(135deg, #DCFCE7, #BBF7D0);
+    border: 3px solid var(--green);
+  }
+  .score-circle__num {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .score-circle--low .score-circle__num { color: var(--red); }
+  .score-circle--medium .score-circle__num { color: var(--yellow); }
+  .score-circle--high .score-circle__num { color: var(--green); }
+  .score-circle__label {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 4px;
+  }
+  .score-breakdown { flex: 1; }
+  .score-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .score-bar__label {
+    font-size: 13px;
+    font-weight: 600;
+    width: 100px;
+    flex-shrink: 0;
+  }
+  .score-bar__track {
+    flex: 1;
+    height: 8px;
+    background: var(--bg-alt);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .score-bar__fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+  .score-bar__fill--green { background: var(--green); }
+  .score-bar__fill--yellow { background: var(--yellow); }
+  .score-bar__fill--red { background: var(--red); }
+  .score-bar__value {
+    font-size: 13px;
+    font-weight: 700;
+    width: 50px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* ── CHECK LIST ── */
+  .checklist { list-style: none; margin: 16px 0; }
+  .checklist__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(107,65,45,0.06);
+    font-size: 14px;
+  }
+  .checklist__icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .checklist__icon--pass { background: #DCFCE7; color: var(--green); }
+  .checklist__icon--warning { background: #FEF3C7; color: var(--yellow); }
+  .checklist__icon--critical { background: #FEE2E2; color: var(--red); }
+  .checklist__icon--info { background: #E0E7FF; color: #4F46E5; }
+  .checklist__area {
+    font-weight: 600;
+    color: var(--text);
+  }
+  .checklist__message {
+    color: var(--text-light);
+  }
+
+  /* ── DATA TABLE ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  .data-table th {
+    background: var(--bg-alt);
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-light);
+  }
+  .data-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(107,65,45,0.06);
+  }
+  .data-table tr:hover td { background: rgba(107,65,45,0.02); }
+
+  /* ── STATS GRID ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .stat-card {
+    background: var(--white);
+    border: 1px solid rgba(107,65,45,0.08);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .stat-card__num {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-card__label {
+    font-size: 12px;
+    color: var(--text-light);
+  }
+
+  /* ── POSITION BADGE ── */
+  .pos-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .pos-badge--top3 { background: #DCFCE7; color: var(--green); }
+  .pos-badge--top10 { background: #FEF3C7; color: var(--yellow); }
+  .pos-badge--top30 { background: #FEE2E2; color: var(--red); }
+  .pos-badge--other { background: var(--bg-alt); color: var(--text-light); }
+
+  /* ── SECTION DIVIDER ── */
+  .divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    margin: 32px 0;
+    opacity: 0.3;
+  }
+
+  /* ── CTA FINAL ── */
+  .cta-section {
+    background: var(--bg-dark);
+    color: var(--white);
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    margin-top: 32px;
+  }
+  .cta-section h2 {
+    color: var(--white);
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+  .cta-section p {
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 24px;
+  }
+  .cta-button {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+  }
+  .cta-whatsapp {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 12px;
+  }
+
+  /* ── INSTAGRAM SECTION ── */
+  .insta-card {
+    background: linear-gradient(135deg, #833AB4, #C13584, #E1306C, #FD1D1D, #F77737);
+    border-radius: 16px;
+    padding: 24px 32px;
+    color: white;
+    margin: 20px 0;
+  }
+  .insta-card h3 { color: white; }
+  .insta-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 16px;
+  }
+  .insta-stat__num {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .insta-stat__label {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  /* ── NO DATA ── */
+  .no-data {
+    background: var(--bg-alt);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    color: var(--text-light);
+    font-style: italic;
+  }
+
+  /* ── RECOMMENDATION ── */
+  .recommendation {
+    background: var(--white);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .recommendation__priority {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .recommendation__priority--high { color: var(--red); }
+  .recommendation__priority--medium { color: var(--yellow); }
+  .recommendation__priority--low { color: var(--green); }
+</style>
+</head>
+<body>
+
+  <!-- ── COVER ── -->
+  <div class="cover">
+    <div class="cover__badge">
+      <span class="cover__badge-dot"></span>
+      Diagnostico Digital Gratuito
+    </div>
+    <h1 class="cover__title">Diagnostico<br>da Presenca Digital</h1>
+    <div class="cover__empresa">{{EMPRESA_NOME}}</div>
+    <p class="cover__meta">
+      {{EMPRESA_SITE}}<br>
+      Gerado em {{DATA}}
+    </p>
+    <div class="cover__logo">FLOWAI DIGITAL</div>
+  </div>
+
+  <!-- ── PAGE 2: SCORE ── -->
+  <div class="page">
+    <div class="page__header">
+      <span class="page__logo">FlowAI Digital</span>
+      <span class="page__num">{{EMPRESA_NOME}} — Diagnostico Digital</span>
+    </div>
+
+    <h2>Score Geral</h2>
+    <div class="score-card">
+      <div class="score-circle score-circle--{{SCORE_LEVEL}}">
+        <span class="score-circle__num">{{SCORE_TOTAL}}</span>
+        <span class="score-circle__label">de 100</span>
+      </div>
+      <div class="score-breakdown">
+        {{SCORE_BARS}}
+      </div>
+    </div>
+
+    <p style="font-size:14px;color:var(--text-light);">
+      {{SCORE_SUMMARY}}
+    </p>
+
+    <div class="divider"></div>
+
+    <h2>Resumo da Analise</h2>
+    <div class="stats-grid">
+      {{STATS_CARDS}}
+    </div>
+  </div>
+
+  <!-- ── PAGE 3: SEO ON-PAGE ── -->
+  <div class="page">
+    <div class="page__header">
+      <span class="page__logo">FlowAI Digital</span>
+      <span class="page__num">SEO On-Page</span>
+    </div>
+
+    <h2>Analise SEO On-Page</h2>
+    <p>Verificamos {{SEO_TOTAL_CHECKS}} pontos criticos do seu site para os mecanismos de busca.</p>
+
+    {{#if SEO_HAS_ISSUES}}
+    <h3 style="margin-top:24px;color:var(--red);">Problemas Encontrados</h3>
+    <ul class="checklist">
+      {{SEO_ISSUES}}
+    </ul>
+    {{/if}}
+
+    {{#if SEO_HAS_PASSES}}
+    <h3 style="margin-top:24px;color:var(--green);">O Que Esta Funcionando</h3>
+    <ul class="checklist">
+      {{SEO_PASSES}}
+    </ul>
+    {{/if}}
+  </div>
+
+  <!-- ── PAGE 4: BACKLINKS & SERP ── -->
+  <div class="page">
+    <div class="page__header">
+      <span class="page__logo">FlowAI Digital</span>
+      <span class="page__num">Autoridade & Visibilidade</span>
+    </div>
+
+    <h2>Perfil de Backlinks</h2>
+    {{BACKLINKS_SECTION}}
+
+    <div class="divider"></div>
+
+    <h2>Visibilidade no Google</h2>
+    {{SERP_SECTION}}
+  </div>
+
+  <!-- ── PAGE 5: INSTAGRAM (if available) ── -->
+  {{INSTAGRAM_PAGE}}
+
+  <!-- ── PAGE 6: RECOMMENDATIONS ── -->
+  <div class="page">
+    <div class="page__header">
+      <span class="page__logo">FlowAI Digital</span>
+      <span class="page__num">Recomendacoes</span>
+    </div>
+
+    <h2>Proximos Passos Recomendados</h2>
+    <p>Com base na analise completa, estas sao as acoes prioritarias para melhorar sua presenca digital:</p>
+
+    <div style="margin-top:20px;">
+      {{RECOMMENDATIONS}}
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <h2>Quer resolver tudo isso sem dor de cabeca?</h2>
+      <p>129 agentes de IA podem operar sua presenca digital 24/7. Do primeiro lead ao fechamento.</p>
+      <div class="cta-button">Agendar diagnostico gratuito</div>
+      <p class="cta-whatsapp">WhatsApp: (21) 98021-4882 | flowaidigital.com.br</p>
+    </div>
+  </div>
+
+</body>
+</html>
