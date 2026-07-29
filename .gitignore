@@ -32,3 +32,15 @@ coverage/
 
 # PDF reports (generated at runtime)
 api/reports/
+
+_backups/
+_to_delete/
+_incoming-site-v8.zip
+site-v8/node_modules/
+site-v8/out/
+site-v8/.next/
+site-v9/node_modules/
+site-v9/out/
+site-v9/.next/
+site-v9/tsconfig.tsbuildinfo
+site-v9-entrega.zip

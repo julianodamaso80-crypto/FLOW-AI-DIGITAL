@@ -1,0 +1,25 @@
+{
+  "_comment": "Manifesto das mídias geradas pelo Higgsfield para o site-v9. Depois de rodar baixar-assets.ps1, cada 'local' abaixo existe em public/scenes/<local> e os componentes passam a carregá-los do próprio site — nada mais depende do CDN do Higgsfield.",
+  "items": [
+    {
+      "id": "finale-portrait",
+      "kind": "image",
+      "model": "nano_banana_pro",
+      "status": "aguardando aprovação de semelhança",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3GoeKQh1bDj5LzenOoPGmI2rV9E/hf_20260729_210819_52aab7fe-c32d-4807-a5ec-822364fcc371.png",
+      "local": "finale-portrait.png",
+      "usedIn": "Ato 8 · Cena final (fechamento + CTA)",
+      "note": "Gerado a partir das 5 fotos reais enviadas pelo usuário (identity reference). Ainda não aprovado."
+    },
+    {
+      "id": "finale-video",
+      "kind": "video",
+      "model": "seedance_2_0",
+      "status": "completed",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3GoeKQh1bDj5LzenOoPGmI2rV9E/hf_20260729_214634_f37c5d69-98e3-4f09-9c32-fb2a428730d9.mp4",
+      "local": "finale-video.mp4",
+      "usedIn": "Ato 8 · Cena final (fechamento + CTA) — vídeo silencioso em loop, atrás do retrato estático",
+      "note": "6s, 1080p (1080x1440, 3:4), sem áudio. Gerado a partir do retrato aprovado (start_image) + 2 fotos de referência originais. Câmera travada, micro-movimentos naturais (respiração, piscar)."
+    }
+  ]
+}

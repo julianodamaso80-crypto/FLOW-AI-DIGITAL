@@ -1,16 +1,15 @@
 # ============================================================
-# FlowAI Digital — site-v9 (LP cinematográfica com rolagem 3D) — produção ativa
-# Anterior: Dockerfile.v7 (site-v7, guardado) / Dockerfile.v8 (site-v8, nunca
-# foi ao ar). Para reverter, renomeie o Dockerfile antigo de volta para
-# "Dockerfile".
+# FlowAI Digital — site-v9 (LP cinematográfica com rolagem 3D)
+# Next.js export estático + nginx, seguindo o mesmo padrão de
+# Dockerfile.v8: build em um estágio, serve em outro, sem backend.
 # ============================================================
 
 # ---- Estágio 1: build do site Next.js ----
 FROM node:20-alpine AS builder
 WORKDIR /build
-COPY site-v9/package.json site-v9/package-lock.json ./
+COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund
-COPY site-v9/ ./
+COPY . ./
 RUN npm run build
 # resultado: /build/out (site estático)
 
@@ -19,7 +18,7 @@ FROM nginx:alpine
 
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /build/out/ /usr/share/nginx/html/
-COPY site-v9/nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
