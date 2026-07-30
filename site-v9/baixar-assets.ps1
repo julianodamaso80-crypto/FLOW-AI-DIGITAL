@@ -1,4 +1,4 @@
-# baixar-assets.ps1
+﻿# baixar-assets.ps1
 # FlowAI Digital — site-v9
 #
 # Este ambiente de nuvem consegue GERAR as mídias no Higgsfield, mas não
