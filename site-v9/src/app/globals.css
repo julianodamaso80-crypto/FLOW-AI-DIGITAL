@@ -607,7 +607,7 @@ details p {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background-image: url("/scenes/finale-portrait.png");
+  background-image: url("/scenes/finale-portrait.webp");
   background-position: center 18%;
   background-size: cover;
   background-repeat: no-repeat;

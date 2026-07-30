@@ -7,9 +7,9 @@
       "model": "nano_banana_pro",
       "status": "aguardando aprovação de semelhança",
       "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3GoeKQh1bDj5LzenOoPGmI2rV9E/hf_20260729_210819_52aab7fe-c32d-4807-a5ec-822364fcc371.png",
-      "local": "finale-portrait.png",
+      "local": "finale-portrait.webp",
       "usedIn": "Ato 8 · Cena final (fechamento + CTA)",
-      "note": "Gerado a partir das 5 fotos reais enviadas pelo usuário (identity reference). Ainda não aprovado."
+      "note": "Gerado a partir das 5 fotos reais enviadas pelo usuário (identity reference). Ainda não aprovado. Recomprimido para WebP (900px, ~18KB) em 30/07/2026 — o PNG original (6,5MB, 1856x2304) travava o carregamento da página."
     },
     {
       "id": "finale-video",
@@ -19,7 +19,7 @@
       "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3GoeKQh1bDj5LzenOoPGmI2rV9E/hf_20260729_214634_f37c5d69-98e3-4f09-9c32-fb2a428730d9.mp4",
       "local": "finale-video.mp4",
       "usedIn": "Ato 8 · Cena final (fechamento + CTA) — vídeo silencioso em loop, atrás do retrato estático",
-      "note": "6s, 1080p (1080x1440, 3:4), sem áudio. Gerado a partir do retrato aprovado (start_image) + 2 fotos de referência originais. Câmera travada, micro-movimentos naturais (respiração, piscar)."
+      "note": "6s, 1080p (1080x1440, 3:4), sem áudio. Gerado a partir do retrato aprovado (start_image) + 2 fotos de referência originais. Câmera travada, micro-movimentos naturais (respiração, piscar). Recomprimido em 30/07/2026 (H.264 CRF 26, 936px de largura, ~268KB) — o original (8,1MB, bitrate ~10,7Mbps) travava o carregamento da página junto com o retrato."
     }
   ]
 }
