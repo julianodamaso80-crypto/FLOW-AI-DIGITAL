@@ -15,29 +15,35 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function SmoothScroll() {
   useEffect(() => {
+    /**
+     * "Reduzir animação" no sistema operacional desliga só a inércia da
+     * rolagem (Lenis) — o enquadramento dos atos e a cena 3D continuam
+     * funcionando, porque são a própria experiência do site, não enfeite.
+     */
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // Revelação dos blocos — funciona com ou sem movimento reduzido.
     const revealables = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
-    if (reduced) {
-      revealables.forEach((el) => el.classList.add("is-in"));
-      return;
-    }
+    revealables.forEach((el) => el.classList.add("is-in"));
 
     gsap.registerPlugin(ScrollTrigger);
 
-    const lenis = new Lenis({
-      duration: 1.05,
-      smoothWheel: true,
-      // O toque usa a rolagem nativa: é mais previsível e não briga com o navegador.
-      syncTouch: false,
-    });
+    let lenis: Lenis | null = null;
+    let raf: ((time: number) => void) | null = null;
 
-    lenis.on("scroll", ScrollTrigger.update);
+    if (!reduced) {
+      lenis = new Lenis({
+        duration: 1.05,
+        smoothWheel: true,
+        // O toque usa a rolagem nativa: é mais previsível e não briga com o navegador.
+        syncTouch: false,
+      });
 
-    const raf = (time: number) => lenis.raf(time * 1000);
-    gsap.ticker.add(raf);
-    gsap.ticker.lagSmoothing(0);
+      lenis.on("scroll", ScrollTrigger.update);
+
+      raf = (time: number) => lenis!.raf(time * 1000);
+      gsap.ticker.add(raf);
+      gsap.ticker.lagSmoothing(0);
+    }
 
     // Um ato por vez: o texto do ato entra e sai junto com a cena 3D dele,
     // para nunca haver dois blocos legíveis sobrepostos.
@@ -58,20 +64,8 @@ export default function SmoothScroll() {
       });
     });
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("is-in");
-            io.unobserve(e.target);
-          }
-        });
-      },
-      { rootMargin: "0px 0px -12% 0px", threshold: 0.15 },
-    );
-    revealables.forEach((el) => io.observe(el));
-
-    // Âncoras internas passam pelo Lenis para não brigar com a rolagem suave.
+    // Âncoras internas passam pelo Lenis quando ele existe, para não brigar
+    // com a rolagem suave; sem Lenis, a rolagem nativa do navegador resolve.
     const onClick = (ev: MouseEvent) => {
       const a = (ev.target as HTMLElement)?.closest?.('a[href^="#"]') as HTMLAnchorElement | null;
       if (!a) return;
@@ -79,15 +73,19 @@ export default function SmoothScroll() {
       const el = document.getElementById(id);
       if (!el) return;
       ev.preventDefault();
-      lenis.scrollTo(el, { offset: -64 });
+      if (lenis) {
+        lenis.scrollTo(el, { offset: -64 });
+      } else {
+        const top = el.getBoundingClientRect().top + window.scrollY - 64;
+        window.scrollTo({ top, behavior: "auto" });
+      }
     };
     document.addEventListener("click", onClick);
 
     return () => {
       document.removeEventListener("click", onClick);
-      io.disconnect();
-      gsap.ticker.remove(raf);
-      lenis.destroy();
+      if (raf) gsap.ticker.remove(raf);
+      lenis?.destroy();
       ScrollTrigger.getAll().forEach((t) => t.kill());
     };
   }, []);

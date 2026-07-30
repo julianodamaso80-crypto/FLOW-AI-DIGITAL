@@ -450,19 +450,13 @@ details p {
   transform: none;
 }
 
-/* ---------------- movimento reduzido ---------------- */
+/* ---------------- movimento reduzido ----------------
+ * A rolagem 3D é a experiência principal do site e continua ativa mesmo com
+ * "reduzir animação" ligado no sistema operacional (decisão do cliente — é
+ * uma configuração comum do Windows, nem sempre ligada de propósito). Só as
+ * transições de texto/botão, que são só polimento, respeitam a preferência.
+ */
 @media (prefers-reduced-motion: reduce) {
-  .stage {
-    display: none;
-  }
-  .act__sticky {
-    position: static;
-    min-height: 0;
-    padding-block: 3rem;
-  }
-  .act {
-    height: auto !important;
-  }
   [data-reveal] {
     opacity: 1;
     transform: none;
@@ -629,18 +623,5 @@ details p {
   .finale-portrait {
     opacity: 0.35;
     background-position: center 12%;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .finale-portrait {
-    position: static;
-    inset: auto;
-    height: 40vh;
-    margin-bottom: 1.5rem;
-    -webkit-mask-image: none;
-    mask-image: linear-gradient(to bottom, #000 70%, transparent);
-  }
-  .finale-portrait__video {
-    display: none;
   }
 }
