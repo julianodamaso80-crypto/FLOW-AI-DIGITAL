@@ -74,17 +74,50 @@ export default function Stage({
       return;
     }
 
+    /**
+     * `powerPreference: "high-performance"` força a troca para a GPU dedicada
+     * em notebooks com placa híbrida (Optimus/switchable graphics). Em várias
+     * combinações de driver no Windows isso trava a aba inteira (o processo de
+     * GPU do Chrome fica preso na troca). "default" deixa o navegador decidir
+     * — evita a troca forçada e o congelamento. `antialias` também é caro em
+     * GPUs integradas/software; desligamos e confiamos no `devicePixelRatio`
+     * para suavizar.
+     */
     let renderer: THREE.WebGLRenderer;
     try {
       renderer = new THREE.WebGLRenderer({
         canvas,
-        antialias: true,
+        antialias: false,
         alpha: true,
-        powerPreference: "high-performance",
+        powerPreference: "default",
+        failIfMajorPerformanceCaveat: false,
       });
     } catch {
       host.dataset.mode = "nowebgl";
       return;
+    }
+
+    // Renderer por software (SwiftShader/llvmpipe/Mesa) — muito lento pra essa
+    // cena (instancing + blending aditivo + fog). Cai pro modo reduzido em vez
+    // de travar a aba tentando renderizar 60x por segundo no processador.
+    try {
+      const gl = renderer.getContext();
+      const info = gl.getExtension("WEBGL_debug_renderer_info");
+      const rendererName = info
+        ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)).toLowerCase()
+        : "";
+      const isSoftware =
+        rendererName.includes("swiftshader") ||
+        rendererName.includes("llvmpipe") ||
+        rendererName.includes("software") ||
+        rendererName.includes("microsoft basic render");
+      if (isSoftware) {
+        renderer.dispose();
+        host.dataset.mode = "reduced";
+        return;
+      }
+    } catch {
+      // Se a detecção falhar, segue — o watchdog de frame-time abaixo cobre o resto.
     }
 
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
@@ -106,7 +139,7 @@ export default function Stage({
 
     /* ---------------- nós ---------------- */
     const nodeGeo = new THREE.SphereGeometry(0.3, isMobile ? 10 : 16, isMobile ? 8 : 12);
-    // Sem vertexColors: a cor vem de instanceColor, por nó.
+    // Sem vertexColors: a cor vem de instanceColor, por n̻.
     const nodeMat = new THREE.MeshBasicMaterial({ toneMapped: false });
     const nodes = new THREE.InstancedMesh(nodeGeo, nodeMat, NODE_COUNT);
     nodes.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
@@ -417,23 +450,9 @@ export default function Stage({
       }
     }
 
-    let raf = 0;
-    let last = performance.now();
-    const loop = (now: number) => {
-      const dt = Math.min((now - last) / 1000, 0.05);
-      last = now;
-      frame(dt);
-      raf = requestAnimationFrame(loop);
-    };
-    raf = requestAnimationFrame(loop);
-
     const ro = new ResizeObserver(resize);
-    ro.observe(host);
-    window.addEventListener("orientationchange", resize);
-    host.dataset.mode = "webgl";
-    host.dataset.ready = "1";
 
-    return () => {
+    function teardown() {
       cancelAnimationFrame(raf);
       ro.disconnect();
       window.removeEventListener("orientationchange", resize);
@@ -446,7 +465,49 @@ export default function Stage({
       haloTex.dispose();
       halos.forEach((s) => (s.material as THREE.SpriteMaterial).dispose());
       renderer.dispose();
+    }
+
+    /**
+     * Watchdog de desempenho: se os frames vierem consistentemente muito
+     * lentos (GPU fraca, driver com problema, aba em segundo plano jogando
+     * tudo pro processador), desliga a cena 3D em vez de deixar a página
+     * travada pra sempre. Precisa de várias amostras ruins seguidas pra não
+     * reagir a um soluço isolado (troca de aba, GC, etc.).
+     */
+    let slowFrames = 0;
+    const SLOW_FRAME_MS = 350;
+    const SLOW_FRAME_LIMIT = 6;
+    let raf = 0;
+    let last = performance.now();
+    const loop = (now: number) => {
+      const rawDt = now - last;
+      const dt = Math.min(rawDt / 1000, 0.05);
+      last = now;
+      frame(dt);
+
+      if (rawDt > SLOW_FRAME_MS) {
+        slowFrames++;
+        if (slowFrames >= SLOW_FRAME_LIMIT) {
+          host!.dataset.mode = "reduced";
+          host!.style.opacity = "0";
+          host!.style.visibility = "hidden";
+          teardown();
+          return;
+        }
+      } else {
+        slowFrames = 0;
+      }
+
+      raf = requestAnimationFrame(loop);
     };
+    raf = requestAnimationFrame(loop);
+
+    ro.observe(host);
+    window.addEventListener("orientationchange", resize);
+    host.dataset.mode = "webgl";
+    host.dataset.ready = "1";
+
+    return teardown;
   }, [labelSets, targetId]);
 
   return (
