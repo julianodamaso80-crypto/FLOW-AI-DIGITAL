@@ -134,8 +134,8 @@ function crumbs(items) {
 	return `<nav class="crumbs" aria-label="Você está aqui">${parts.join(" › ")}</nav>`;
 }
 
-/** Documento base. `head` recebe o JSON-LD já serializado. */
-export function layout({ title, description, canonical, bodyHtml, jsonLdHtml, robots }) {
+/** Documento base. `jsonLdHtml` e `analyticsHtml` já vêm serializados. */
+export function layout({ title, description, canonical, bodyHtml, jsonLdHtml, robots, analyticsHtml }) {
 	return `<!doctype html>
 <html lang="pt-BR">
 <head>
@@ -160,6 +160,7 @@ export function layout({ title, description, canonical, bodyHtml, jsonLdHtml, ro
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
 <style>${BASE_CSS}</style>
 ${jsonLdHtml || ""}
+${analyticsHtml || ""}
 </head>
 <body>
 ${header()}
@@ -169,7 +170,7 @@ ${bodyHtml}
 }
 
 /** Money page de serviço. */
-export function renderService(svc, services, jsonLdHtml) {
+export function renderService(svc, services, jsonLdHtml, analyticsHtml) {
 	const path = `/${svc.slug}/`;
 	const body = `<main class="wrap">
 ${crumbs([{ name: "Início", path: "/" }, { name: svc.breadcrumbLabel, path }])}
@@ -224,6 +225,7 @@ ${footer(services)}`;
 		canonical: `${SITE_URL}${path}`,
 		bodyHtml: body,
 		jsonLdHtml,
+		analyticsHtml,
 	});
 }
 
@@ -232,7 +234,7 @@ function pillarLabel(p) {
 }
 
 /** Índice do blog. Recebe só artigos publicados. */
-export function renderBlogIndex(posts, services, jsonLdHtml) {
+export function renderBlogIndex(posts, services, jsonLdHtml, analyticsHtml) {
 	const items = posts.length
 		? posts
 				.map(
@@ -266,11 +268,12 @@ ${footer(services)}`;
 		canonical: `${SITE_URL}/blog/`,
 		bodyHtml: body,
 		jsonLdHtml,
+		analyticsHtml,
 	});
 }
 
 /** Artigo. `contentHtml` já vem sanitizado pelo renderizador de Markdown. */
-export function renderArticle(post, contentHtml, services, jsonLdHtml) {
+export function renderArticle(post, contentHtml, services, jsonLdHtml, analyticsHtml) {
 	const path = `/blog/${post.slug}/`;
 	const sources = post.sources?.length
 		? `<section><h2>Fontes</h2><ul class="list">${post.sources
@@ -322,6 +325,7 @@ ${footer(services)}`;
 		canonical: `${SITE_URL}${path}`,
 		bodyHtml: body,
 		jsonLdHtml,
+		analyticsHtml,
 	});
 }
 

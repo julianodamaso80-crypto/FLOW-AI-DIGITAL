@@ -1,0 +1,25 @@
+{
+  "name": "flowai-organic-engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Motor de crescimento orgânico da FlowAI Digital — pesquisa, valida, prioriza, cria, revisa, publica, indexa, mede e aprende.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\"",
+    "health": "node src/cli.mjs health",
+    "migrate": "node src/cli.mjs migrate",
+    "worker": "node src/cli.mjs worker",
+    "gates": "node src/cli.mjs gates"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.44.7",
+    "pg": "^8.16.3",
+    "pg-boss": "^10.3.2"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.5"
+  }
+}

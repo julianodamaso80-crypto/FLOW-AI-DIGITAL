@@ -47,3 +47,6 @@ site-v9-entrega.zip
 
 # Saída do gerador do site canônico (rode: node site/build.mjs)
 site/dist/
+
+# Dependências do Organic Engine
+organic-engine/node_modules/

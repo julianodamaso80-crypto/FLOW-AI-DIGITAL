@@ -34,6 +34,7 @@ import {
 } from "./lib/render.mjs";
 import { renderMarkdown } from "./lib/markdown.mjs";
 import { loadPosts, publishedPosts, validatePost } from "./lib/content.mjs";
+import { ga4Snippet } from "./lib/analytics.mjs";
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC = path.join(ROOT, "public");
@@ -82,6 +83,11 @@ function writePage(routePath, html) {
 export function build({ quiet = false } = {}) {
 	const log = (...a) => !quiet && console.log(...a);
 
+	// Sem GA4_MEASUREMENT_ID o snippet sai vazio — nunca inventamos ID.
+	const GA4_ID = process.env.GA4_MEASUREMENT_ID ?? "";
+	const analytics = (pageType, slug) => ga4Snippet(GA4_ID, { pageType, pageSlug: slug });
+	if (GA4_ID) log("GA4 ativo"); else log("GA4 inativo (GA4_MEASUREMENT_ID ausente)");
+
 	fs.rmSync(DIST, { recursive: true, force: true });
 	fs.mkdirSync(DIST, { recursive: true });
 
@@ -117,7 +123,7 @@ export function build({ quiet = false } = {}) {
 			// mesma lista que é renderizada na página — schema e conteúdo casam
 			faqSchema(svc.faq),
 		);
-		writePage(route, renderService(svc, SERVICES, ld));
+		writePage(route, renderService(svc, SERVICES, ld, analytics("money", svc.slug)));
 		routes.push({
 			path: route,
 			lastmod: servicesLastmod,
@@ -162,7 +168,7 @@ export function build({ quiet = false } = {}) {
 				{ name: post.title, path: route },
 			]),
 		);
-		writePage(route, renderArticle(post, renderMarkdown(post.body), SERVICES, ld));
+		writePage(route, renderArticle(post, renderMarkdown(post.body), SERVICES, ld, analytics("blog_post", post.slug)));
 		routes.push({
 			path: route,
 			lastmod: (post.updatedAt || post.publishedAt || "").slice(0, 10) || null,
@@ -175,7 +181,7 @@ export function build({ quiet = false } = {}) {
 		{ name: "Início", path: "/" },
 		{ name: "Blog", path: "/blog/" },
 	]));
-	writePage("/blog/", renderBlogIndex(published, SERVICES, blogLd));
+	writePage("/blog/", renderBlogIndex(published, SERVICES, blogLd, analytics("blog_index", "blog")));
 	routes.push({
 		path: "/blog/",
 		// index do blog muda quando o artigo mais recente muda
