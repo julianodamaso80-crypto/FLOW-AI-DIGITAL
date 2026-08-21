@@ -14,6 +14,9 @@ import {
 	injectIntoHead,
 	visibleWordCount,
 	stripJsonLdTypes,
+	MARK_START,
+	MARK_END,
+	cssBeforeModules,
 } from "../prerender.mjs";
 import { organizationSchema, websiteSchema } from "../lib/schema.mjs";
 
@@ -178,4 +181,60 @@ test("stripJsonLdTypes remove só os tipos pedidos", () => {
 test("stripJsonLdTypes não quebra com JSON inválido", () => {
 	const html = '<script type="application/ld+json">{isso não é json}</script>';
 	assert.equal(stripJsonLdTypes(html), html);
+});
+
+test("injectIntoRoot é idempotente — segunda passada substitui, não acumula", () => {
+	const base = '<html><body><div id="root"></div></body></html>';
+	const um = injectIntoRoot(base, "<main><h1>A</h1></main>");
+	const dois = injectIntoRoot(um, "<main><h1>B</h1></main>");
+	assert.equal((dois.match(/<h1>/g) || []).length, 1, "duplicou ao rodar de novo");
+	assert.match(dois, /<h1>B<\/h1>/, "não atualizou o conteúdo");
+	assert.ok(!dois.includes("<h1>A</h1>"), "conteúdo antigo ficou para trás");
+});
+
+test("injectIntoRoot lida com conteúdo aninhado sem deixar div órfã", () => {
+	const base = '<html><body><div id="root"></div></body></html>';
+	const inner = "<div><div><p>fundo</p></div></div>";
+	const out = injectIntoRoot(base, inner);
+	// o mesmo número de <div> e </div> que colocamos, mais o próprio #root
+	const abre = (out.match(/<div/g) || []).length;
+	const fecha = (out.match(/<\/div>/g) || []).length;
+	assert.equal(abre, fecha, "abertura e fechamento de div desbalanceados");
+	assert.match(out, /<p>fundo<\/p>/);
+});
+
+test("injectIntoRoot recusa #root com conteúdo sem marcador", () => {
+	const html = '<html><body><div id="root"><p>algo</p></div></body></html>';
+	assert.throws(() => injectIntoRoot(html, "<p>novo</p>"), /sem marcador/);
+});
+
+test("cssBeforeModules move os stylesheets para antes do bundle", () => {
+	const html = `<html><head>
+    <script type="module" src="/app.js"></script>
+    <link rel="stylesheet" href="/a.css">
+    <link rel="stylesheet" href="/b.css">
+  </head><body></body></html>`;
+	const out = cssBeforeModules(html);
+	const posModulo = out.search(/<script[^>]*type="module"/);
+	const posA = out.indexOf("/a.css");
+	const posB = out.indexOf("/b.css");
+	assert.ok(posA < posModulo, "a.css continuou depois do módulo");
+	assert.ok(posB < posModulo, "b.css continuou depois do módulo");
+});
+
+test("cssBeforeModules não duplica nem perde stylesheet", () => {
+	const html = `<html><head><script type="module" src="/a.js"></script><link rel="stylesheet" href="/x.css"></head><body></body></html>`;
+	const out = cssBeforeModules(html);
+	assert.equal((out.match(/x\.css/g) || []).length, 1, "duplicou o stylesheet");
+	assert.equal((out.match(/type="module"/g) || []).length, 1, "duplicou o script");
+});
+
+test("cssBeforeModules é no-op quando o CSS já vem antes", () => {
+	const html = `<html><head><link rel="stylesheet" href="/x.css"><script type="module" src="/a.js"></script></head><body></body></html>`;
+	assert.equal(cssBeforeModules(html), html);
+});
+
+test("cssBeforeModules é no-op sem script module", () => {
+	const html = `<html><head><link rel="stylesheet" href="/x.css"></head><body></body></html>`;
+	assert.equal(cssBeforeModules(html), html);
 });

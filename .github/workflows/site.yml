@@ -1,10 +1,13 @@
 name: Site — testes, build e deploy no Cloudflare Pages
 
-# A plataforma real do flowaidigital.com.br é Cloudflare Pages, não EasyPanel.
-# O workflow antigo disparava um webhook do EasyPanel que NÃO servia este site —
-# e cujo token estava em texto claro num repositório público. Foi removido.
+# A plataforma real do flowaidigital.com.br é Cloudflare Pages, projeto
+# `flowai-ecossistema`, em modo Direct Upload. Não há Git Integration ativa e
+# não deve haver: este workflow é a ÚNICA fonte de deploy.
 #
-# Produção só recebe deploy depois que os testes e as checagens de SEO passam.
+# ATENÇÃO AO BUILD: `node site/build.mjs` sozinho NÃO basta. Ele gera a home
+# como casca de SPA (7 palavras). O passo de prerender é o que coloca o
+# conteúdo real no HTML — por isso o build oficial é `npm run build` dentro de
+# site/, que roda build + prerender, e por isso o Chromium é instalado aqui.
 
 on:
   push:
@@ -20,8 +23,8 @@ env:
   NODE_VERSION: "22"
 
 jobs:
-  test:
-    name: Testes e checagens de SEO
+  build:
+    name: Testes, build com prerender e checagens de SEO
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,22 +32,78 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: |
+            site/package-lock.json
+            organic-engine/package-lock.json
 
-      - name: Testes do site
-        run: node --test "site/test/*.test.mjs"
+      # ── dependências ──────────────────────────────────────────────────
+      - name: Instalar dependências do site
+        working-directory: site
+        run: npm ci --no-audit --no-fund
 
-      - name: Instalar o Organic Engine
+      - name: Instalar Chromium do Playwright
+        working-directory: site
+        # instalação determinística: não depende de Chrome pré-existente
+        run: npx playwright install --with-deps chromium
+
+      - name: Instalar dependências do Organic Engine
         working-directory: organic-engine
         run: npm ci --no-audit --no-fund
+
+      # ── testes ────────────────────────────────────────────────────────
+      - name: Testes do site
+        working-directory: site
+        run: npm test
 
       - name: Testes unitários do Engine
         working-directory: organic-engine
         run: npm test
 
-      - name: Build do site
+      # ── build oficial: build + prerender ──────────────────────────────
+      - name: Build do site (inclui prerender da home)
+        working-directory: site
         env:
           GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
-        run: node site/build.mjs
+        run: npm run build
+
+      # ── o gate que impede a volta da casca ────────────────────────────
+      - name: Provar que o prerender rodou
+        run: |
+          set -e
+          node - <<'JS'
+          const fs = require("node:fs");
+          const html = fs.readFileSync("site/dist/index.html", "utf8");
+
+          const palavras = html
+            .replace(/<script[\s\S]*?<\/script>/gi, " ")
+            .replace(/<style[\s\S]*?<\/style>/gi, " ")
+            .replace(/<[^>]*>/g, " ")
+            .split(/\s+/).filter(Boolean).length;
+
+          const falhas = [];
+
+          // 100 não é regra de SEO: é o piso que separa conteúdo real da
+          // casca de 7 palavras que a SPA entrega sem prerender.
+          if (palavras <= 100) falhas.push(`home tem ${palavras} palavras — o prerender não rodou`);
+
+          const h1 = (html.match(/<h1[\s>]/g) || []).length;
+          if (h1 !== 1) falhas.push(`home tem ${h1} H1, esperado 1`);
+
+          if (!/rel="canonical"/.test(html)) falhas.push("home sem canonical");
+
+          const tipos = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+            .map((m) => { try { return JSON.parse(m[1].replace(/\\u003c/g, "<"))["@type"]; } catch { return null; } });
+          if (!tipos.includes("Organization")) falhas.push("home sem Organization");
+          if (!tipos.includes("WebSite")) falhas.push("home sem WebSite");
+          if (tipos.filter(t => t === "Organization").length > 1) falhas.push("Organization duplicada na home");
+
+          if (falhas.length) {
+            for (const f of falhas) console.error(`::error::${f}`);
+            process.exit(1);
+          }
+          console.log(`prerender confirmado: ${palavras} palavras, 1 H1, canonical, Organization + WebSite`);
+          JS
 
       - name: Checagens de SEO no artefato gerado
         run: |
@@ -73,7 +132,7 @@ jobs:
               done
 
           echo "— robots libera busca e bloqueia treinamento"
-          for bot in Googlebot Bingbot OAI-SearchBot ChatGPT-User Claude-SearchBot PerplexityBot; do
+          for bot in Googlebot Bingbot OAI-SearchBot ChatGPT-User Claude-SearchBot Claude-User PerplexityBot Perplexity-User; do
             grep -A1 "^User-agent: $bot$" robots.txt | grep -q "^Allow: /" \
               || { echo "::error::$bot deveria estar liberado no robots"; exit 1; }
           done
@@ -96,6 +155,7 @@ jobs:
 
           echo "Todas as checagens de SEO passaram."
 
+      # dist NUNCA vem de cache: é sempre o artefato deste build
       - uses: actions/upload-artifact@v4
         with:
           name: site-dist
@@ -104,11 +164,10 @@ jobs:
 
   preview:
     name: Deploy de preview
-    needs: test
+    needs: build
     if: github.event_name == 'pull_request' || github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
           name: site-dist
@@ -126,12 +185,13 @@ jobs:
 
   production:
     name: Deploy de produção
-    needs: test
+    needs: build
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment: production
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/download-artifact@v4
         with:
           name: site-dist
@@ -150,6 +210,7 @@ jobs:
       - name: Smoke test pós-deploy
         run: |
           set -e
+          home=000
           for i in $(seq 1 20); do
             sleep 15
             home=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 https://flowaidigital.com.br/ || echo 000)
@@ -158,14 +219,27 @@ jobs:
           done
           [ "$home" = "200" ] || { echo "::error::home não voltou a responder 200"; exit 1; }
 
+          echo "— home serve conteúdo, não a casca da SPA"
+          palavras=$(curl -s --max-time 25 https://flowaidigital.com.br/ \
+            | sed 's/<script[^>]*>.*<\/script>//g; s/<[^>]*>/ /g' | wc -w)
+          if [ "$palavras" -lt 100 ]; then
+            echo "::error::home em produção com $palavras palavras — a casca voltou"
+            exit 1
+          fi
+          echo "home com $palavras palavras."
+
           echo "— 404 real em URL inexistente"
           codigo=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 \
             "https://flowaidigital.com.br/rota-inexistente-smoke-test-$(date +%s)/")
           [ "$codigo" = "404" ] || { echo "::error::URL inexistente devolveu $codigo, esperado 404"; exit 1; }
 
-          echo "— money page servindo conteúdo"
-          curl -s --max-time 20 https://flowaidigital.com.br/agentes-de-ia-para-empresas/ \
-            | grep -q "<h1" || { echo "::error::money page sem H1 em produção"; exit 1; }
+          echo "— www redireciona para o apex em um salto"
+          loc=$(curl -sI --max-time 20 https://www.flowaidigital.com.br/agentes-de-ia-para-empresas/ \
+            | grep -i '^location:' | sed 's/[Ll]ocation: *//; s/\r//')
+          case "$loc" in
+            https://flowaidigital.com.br/agentes-de-ia-para-empresas/) echo "www ok" ;;
+            *) echo "::error::www não redirecionou corretamente (Location: $loc)"; exit 1 ;;
+          esac
 
           echo "Smoke test passou."
 

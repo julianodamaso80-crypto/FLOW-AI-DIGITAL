@@ -82,11 +82,46 @@ export function visibleWordCount(html) {
 		.filter(Boolean).length;
 }
 
-/** Substitui o conteúdo de <div id="root"> preservando todo o resto. */
+export const MARK_START = "<!--prerender:start-->";
+export const MARK_END = "<!--prerender:end-->";
+
+/**
+ * Substitui o conteúdo de <div id="root"> preservando todo o resto.
+ *
+ * IDEMPOTENTE por marcadores. Duas armadilhas motivaram este desenho:
+ *
+ * 1. Um regex `(<div id="root">)([\s\S]*?)(</div>)` parece resolver, mas o
+ *    conteúdo prerenderizado tem divs aninhadas — o não-guloso casa até o
+ *    PRIMEIRO `</div>` e deixa o resto órfão.
+ * 2. Rodar o prerender duas vezes sobre o mesmo arquivo duplicava tudo:
+ *    2 H1, ids repetidos. Aconteceu de verdade na suíte de testes.
+ *
+ * Com os marcadores, uma segunda passada substitui a região anterior em vez
+ * de acumular.
+ */
 export function injectIntoRoot(html, inner) {
-	const re = /(<div id="root"[^>]*>)([\s\S]*?)(<\/div>)/;
-	if (!re.test(html)) throw new Error('não encontrei <div id="root"> no index.html');
-	return html.replace(re, (_m, open, _old, close) => `${open}\n${inner}\n${close}`);
+	const bloco = `${MARK_START}\n${inner}\n${MARK_END}`;
+
+	// já prerenderizado: troca o miolo entre os marcadores
+	const iStart = html.indexOf(MARK_START);
+	const iEnd = html.indexOf(MARK_END);
+	if (iStart !== -1 && iEnd !== -1 && iEnd > iStart) {
+		return html.slice(0, iStart) + bloco + html.slice(iEnd + MARK_END.length);
+	}
+
+	// primeira passada: o #root da SPA vem vazio
+	const vazio = /<div id="root"([^>]*)>\s*<\/div>/;
+	if (vazio.test(html)) {
+		return html.replace(vazio, (_m, attrs) => `<div id="root"${attrs}>\n${bloco}\n</div>`);
+	}
+
+	// #root com conteúdo mas sem marcador: recusa em vez de duplicar às cegas
+	if (/<div id="root"/.test(html)) {
+		throw new Error(
+			'<div id="root"> já tem conteúdo sem marcador de prerender — recuso sobrescrever às cegas',
+		);
+	}
+	throw new Error('não encontrei <div id="root"> no index.html');
 }
 
 /**
@@ -116,6 +151,39 @@ export function stripJsonLdTypes(html, tipos = ["Organization", "WebSite"]) {
 export function injectIntoHead(html, snippet) {
 	if (!snippet) return html;
 	return html.replace("</head>", `${snippet}\n</head>`);
+}
+
+/**
+ * Põe os stylesheets ANTES do primeiro `<script type="module">`.
+ *
+ * Diagnóstico que motivou isto: o LCP da home é o próprio H1, com render delay
+ * de 0ms — ou seja, o texto pinta assim que o CSS chega. O gargalo era a
+ * entrega do CSS, e o bundle de 112KB estava declarado ANTES dele. Módulos ES
+ * disputam prioridade de rede com o stylesheet, que é render-blocking.
+ *
+ * A mudança é só de ORDEM no <head>: nenhum recurso é removido, adiado ou
+ * alterado, e o resultado visual é idêntico — verificado por regressão de
+ * pixel.
+ */
+export function cssBeforeModules(html) {
+	const head = html.match(/<head>([\s\S]*?)<\/head>/i);
+	if (!head) return html;
+
+	const original = head[1];
+	const primeiroModulo = original.search(/<script[^>]*type="module"/i);
+	if (primeiroModulo === -1) return html;
+
+	const links = [...original.matchAll(/[ \t]*<link[^>]*rel="stylesheet"[^>]*>\n?/gi)];
+	// só reordena os stylesheets que hoje aparecem depois do primeiro módulo
+	const atrasados = links.filter((m) => m.index > primeiroModulo);
+	if (atrasados.length === 0) return html;
+
+	let novo = original;
+	for (const m of atrasados) novo = novo.replace(m[0], "");
+	const css = atrasados.map((m) => m[0].trim()).join("\n    ");
+	novo = novo.replace(/(<script[^>]*type="module"[^>]*>)/i, `${css}\n    $1`);
+
+	return html.replace(original, novo);
 }
 
 export async function prerenderHome({
@@ -164,6 +232,9 @@ export async function prerenderHome({
 		const palavrasReais = texto.trim().split(/\s+/).filter(Boolean).length;
 
 		let out = injectIntoRoot(original, inner);
+		// CSS antes do bundle: o LCP e o H1 e o render delay e zero, entao o
+		// que manda e a chegada do stylesheet
+		out = cssBeforeModules(out);
 		if (headSnippet) {
 			// tira o Organization inline da SPA antes de pôr o nosso, com @id
 			out = stripJsonLdTypes(out);
