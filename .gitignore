@@ -50,3 +50,6 @@ site/dist/
 
 # Dependências do Organic Engine
 organic-engine/node_modules/
+
+# Estado local do Wrangler
+.wrangler/
