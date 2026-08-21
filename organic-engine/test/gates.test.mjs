@@ -15,6 +15,8 @@ import {
 	spamGate,
 	extractQuantClaims,
 	titleSimilarity,
+	thinnessScore,
+	LENGTH_REFERENCE,
 } from "../src/gates/index.mjs";
 import {
 	scoreArticle,
@@ -26,9 +28,13 @@ import {
 	DIMENSIONS,
 } from "../src/gates/quality-score.mjs";
 
-// Fixture realista: precisa passar no gate de spam (mínimo 600 palavras) e
-// pontuar bem em GEO, então tem headings em forma de pergunta com resposta
-// direta logo abaixo. Encurtar isto faz os testes falharem — corretamente.
+// Fixture realista de artigo informacional completo: estrutura em seções,
+// perguntas com resposta direta (bom para GEO), fontes, links internos e
+// contribuição original declarada.
+//
+// A extensão aqui NÃO existe para bater um mínimo de palavras — o gate de spam
+// avalia thinness por vários sinais. Ver os testes de thinness no fim do
+// arquivo, que provam que um artigo curto e completo passa.
 const corpo = (extra = "") => `
 ## O que é automação de processos com IA?
 
@@ -454,4 +460,110 @@ test("sem money page derruba brand e conversion relevance", () => {
 	const s = scoreArticle({ ...base, targetMoneyPage: null });
 	const brand = s.breakdown.find((d) => d.key === "brandRelevance");
 	assert.ok(brand.raw < 0.5);
+});
+
+// ─────────── thinness: word count deixou de ser hard gate isolado ────────
+// O Google não publica mínimo universal de palavras. O corte por extensão é
+// heurística interna e só reprova acompanhado de outros sinais fracos.
+
+test("artigo CURTO mas completo passa — 450 palavras não é reprovação", () => {
+	const corpoCurto = `
+## O que é tracking server-side?
+
+É o envio dos eventos de conversão pelo servidor, em vez do navegador do
+visitante. O dado sai da sua infraestrutura direto para a plataforma de
+anúncios, sem depender de o navegador permitir o script.
+
+## Quando isso importa?
+
+Importa quando parte das conversões some entre a plataforma e o CRM. Bloqueio
+de cookie, bloqueador de anúncio e limitação de navegador derrubam parte dos
+eventos enviados pelo lado do cliente. O envio pelo servidor não sofre esses
+bloqueios da mesma forma.
+
+## Isso recupera todas as conversões?
+
+Não. Recupera parte. Quem promete atribuição integral está vendendo o que não
+existe — sempre haverá perda por consentimento, janela de atribuição e
+identificação incompleta. Veja como tratamos isso em
+[tracking e analytics](/tracking-e-analytics/).
+
+- Evento sai do servidor, não do navegador
+- Menos perda por bloqueio de script
+- Exige infraestrutura própria de tagging
+${"palavra ".repeat(330)}
+`.trim();
+
+	const artigo = {
+		...base,
+		intent: "informacional",
+		body: corpoCurto,
+		secondaryKeywords: ["tracking server-side", "conversões"],
+		sources: [
+			{ url: "https://a.gov.br", sourceTier: 2, confidence: "high", evidence: "" },
+			{ url: "https://b.gov.br", sourceTier: 2, confidence: "high", evidence: "" },
+		],
+		originalContribution: [
+			"Explicação de por que a recuperação é parcial, com os três motivos concretos",
+			"Critério de quando o custo de infraestrutura de tagging se paga",
+		],
+		targetMoneyPage: "/tracking-e-analytics/",
+	};
+	const palavras = artigo.body.split(/\s+/).filter(Boolean).length;
+	assert.ok(palavras < 600, `fixture deveria ter menos de 600 palavras, tem ${palavras}`);
+
+	const r = spamGate(artigo, {});
+	assert.equal(r.passed, true, `curto mas completo foi reprovado: ${r.reason}`);
+});
+
+test("artigo raso reprova por SOMA de sinais, não por extensão isolada", () => {
+	const r = spamGate(
+		{
+			...base,
+			intent: "informacional",
+			body: "Texto curto sem estrutura nenhuma e sem nada de relevante aqui.",
+			secondaryKeywords: ["a", "b"],
+			sources: [],
+			originalContribution: [],
+		},
+		{},
+	);
+	assert.equal(r.passed, false);
+	assert.match(r.reason, /conteúdo raso/);
+	assert.ok(r.detail.sinaisFracos.length >= 3, "deveria apontar múltiplos sinais fracos");
+});
+
+test("thinnessScore usa referência por intenção, não número fixo", () => {
+	const corpo = `## T\n\n${"palavra ".repeat(400)}`;
+	const transacional = thinnessScore({ intent: "transacional", body: corpo }, {});
+	const informacional = thinnessScore({ intent: "informacional", body: corpo }, {});
+	assert.equal(transacional.referencia, LENGTH_REFERENCE.transacional);
+	assert.equal(informacional.referencia, LENGTH_REFERENCE.informacional);
+	// mesma extensão é menos "thin" para intenção objetiva
+	assert.ok(
+		transacional.score < informacional.score,
+		"a referência por intenção não está sendo aplicada",
+	);
+});
+
+test("keyword stuffing continua reprovando direto — é manipulação", () => {
+	const stuffed = ("automação de processos ".repeat(60) + "texto ".repeat(300)).trim();
+	const r = spamGate({ ...base, body: stuffed }, {});
+	assert.equal(r.passed, false);
+	assert.match(r.reason, /stuffing/);
+});
+
+test("artigo longo porém vazio não escapa por ser longo", () => {
+	const r = spamGate(
+		{
+			...base,
+			intent: "informacional",
+			body: "palavra ".repeat(2000),
+			secondaryKeywords: ["x", "y"],
+			sources: [],
+			originalContribution: [],
+		},
+		{},
+	);
+	assert.equal(r.passed, false, "2000 palavras sem estrutura, fonte ou contribuição deveria reprovar");
 });

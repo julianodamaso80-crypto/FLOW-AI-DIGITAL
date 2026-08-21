@@ -257,29 +257,94 @@ export function internalLinkGate(article, ctx = {}) {
 }
 
 // ── 10. Spam ────────────────────────────────────────────────────────────
+//
+// IMPORTANTE: o Google NÃO publica mínimo universal de palavras. Contagem de
+// palavras aqui é HEURÍSTICA INTERNA contra thin content, nunca "regra do
+// Google" — e nunca reprova sozinha. Um texto de 450 palavras pode ser
+// excelente para uma intenção objetiva; um de 2.000 pode ser enchimento.
+//
+// A reprovação exige thinness confirmada por MAIS DE UM sinal.
+
+/** Referência de extensão por intenção. Sinal, não corte. */
+export const LENGTH_REFERENCE = {
+	transacional: 300,
+	navegacional: 300,
+	comercial: 500,
+	comparativo: 700,
+	informacional: 700,
+};
+
+/**
+ * Avalia thinness combinando extensão, cobertura semântica, completude da
+ * intenção, evidência e contribuição original. Devolve 0..1 (1 = muito thin).
+ */
+export function thinnessScore(article, ctx = {}) {
+	const body = article.body ?? "";
+	const words = body.split(/\s+/).filter(Boolean).length;
+	const referencia = ctx.lengthReference ?? LENGTH_REFERENCE[article.intent] ?? 500;
+
+	const sinais = [];
+
+	// 1. Extensão relativa à referência da intenção (não a um número fixo)
+	const razao = words / referencia;
+	sinais.push({ nome: "extensao", valor: razao >= 1 ? 0 : Math.min(1, 1 - razao), palavras: words, referencia });
+
+	// 2. Cobertura semântica das keywords secundárias
+	const sec = article.secondaryKeywords ?? [];
+	if (sec.length) {
+		const cobertas = sec.filter((k) => norm(body).includes(norm(k))).length;
+		sinais.push({ nome: "cobertura", valor: 1 - cobertas / sec.length });
+	}
+
+	// 3. Completude estrutural: um artigo raso costuma não ter seções
+	const headings = (body.match(/^#{2,4}\s/gm) ?? []).length;
+	sinais.push({ nome: "estrutura", valor: headings >= 3 ? 0 : headings >= 1 ? 0.5 : 1 });
+
+	// 4. Evidência
+	const fontes = (article.sources ?? []).length;
+	sinais.push({ nome: "evidencia", valor: fontes >= 2 ? 0 : fontes === 1 ? 0.5 : 1 });
+
+	// 5. Contribuição original declarada
+	const contrib = (article.originalContribution ?? []).filter((c) => String(c).trim().length >= 20).length;
+	sinais.push({ nome: "originalidade", valor: contrib >= 2 ? 0 : contrib === 1 ? 0.5 : 1 });
+
+	const media = sinais.reduce((s, x) => s + x.valor, 0) / sinais.length;
+	return { score: Number(media.toFixed(3)), sinais, words, referencia };
+}
+
 export function spamGate(article, ctx = {}) {
 	const body = article.body ?? "";
 	const words = body.split(/\s+/).filter(Boolean);
-	const min = ctx.minWordCount ?? 600;
-	if (words.length < min) {
-		return fail("spam", `conteúdo curto demais (${words.length} palavras, mínimo ${min})`);
-	}
-	// densidade da keyword principal
+
+	// keyword stuffing continua sendo reprovação direta — é manipulação, não extensão
 	const kw = norm(article.primaryKeyword ?? "");
-	if (kw) {
+	if (kw && words.length > 0) {
 		const occurrences = (norm(body).match(new RegExp(escapeRe(kw), "g")) ?? []).length;
-		const density = occurrences / Math.max(words.length, 1);
+		const density = occurrences / words.length;
 		if (density > (ctx.maxKeywordDensity ?? 0.03)) {
 			return fail("spam", `keyword stuffing: densidade de ${(density * 100).toFixed(1)}%`, { density });
 		}
 	}
-	// parágrafos repetidos
+
+	// parágrafos repetidos também é manipulação
 	const paras = body.split(/\n{2,}/).map((p) => norm(p)).filter((p) => p.length > 60);
-	const uniq = new Set(paras);
-	if (paras.length > 3 && uniq.size < paras.length * 0.8) {
+	if (paras.length > 3 && new Set(paras).size < paras.length * 0.8) {
 		return fail("spam", "parágrafos repetidos dentro do próprio artigo");
 	}
-	return pass("spam", { words: words.length });
+
+	// thinness: só reprova com vários sinais fracos ao mesmo tempo
+	const thin = thinnessScore(article, ctx);
+	const limite = ctx.thinnessLimit ?? 0.6;
+	if (thin.score >= limite) {
+		const fracos = thin.sinais.filter((s) => s.valor >= 0.5).map((s) => s.nome);
+		return fail(
+			"spam",
+			`conteúdo raso: ${fracos.join(", ")} (${thin.words} palavras para intenção "${article.intent ?? "não declarada"}", referência ${thin.referencia})`,
+			{ thinness: thin.score, sinaisFracos: fracos, words: thin.words },
+		);
+	}
+
+	return pass("spam", { words: words.length, thinness: thin.score });
 }
 
 // ── Orquestração ────────────────────────────────────────────────────────

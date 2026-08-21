@@ -8,11 +8,16 @@
     "node": ">=22"
   },
   "scripts": {
-    "test": "node --test \"test/*.test.mjs\"",
-    "health": "node src/cli.mjs health",
-    "migrate": "node src/cli.mjs migrate",
-    "worker": "node src/cli.mjs worker",
-    "gates": "node src/cli.mjs gates"
+    "test": "node --test \"test/!(integration).test.mjs\"",
+    "health": "node src/cli.mjs health --verify",
+    "gates": "node src/cli.mjs gates",
+    "test:integration": "node --test --test-force-exit test/integration.test.mjs",
+    "test:all": "npm test && npm run test:integration",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:generate": "drizzle-kit generate --config=drizzle.config.mjs",
+    "db:migrate": "drizzle-kit migrate --config=drizzle.config.mjs",
+    "crawlers": "node src/cli.mjs crawlers"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.7",

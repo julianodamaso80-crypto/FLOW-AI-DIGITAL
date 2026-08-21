@@ -11,7 +11,12 @@ import {
 	BudgetGuard,
 	Provider,
 } from "../src/providers/base.mjs";
-import { DataForSeoProvider, ENDPOINT_COST, mapIntent } from "../src/providers/dataforseo.mjs";
+import {
+	DataForSeoProvider,
+	ENDPOINT_COST,
+	estimateEndpointCost,
+	mapIntent,
+} from "../src/providers/dataforseo.mjs";
 import { IndexNowProvider } from "../src/providers/misc.mjs";
 import { SearchConsoleProvider, Ga4Provider } from "../src/providers/google.mjs";
 import { healthReport } from "../src/health.mjs";
@@ -270,10 +275,34 @@ test("DataForSEO usa location Brasil e português", async () => {
 	assert.equal(body.language_name, "Portuguese");
 });
 
-test("todo endpoint tem custo declarado", () => {
+test("todo endpoint declara custo base e por unidade", () => {
 	for (const [ep, cost] of Object.entries(ENDPOINT_COST)) {
-		assert.ok(typeof cost === "number" && cost >= 0, `custo inválido em ${ep}`);
+		assert.equal(typeof cost.base, "number", `base ausente em ${ep}`);
+		assert.equal(typeof cost.perUnit, "number", `perUnit ausente em ${ep}`);
+		assert.ok(cost.base >= 0 && cost.perUnit >= 0, `custo negativo em ${ep}`);
 	}
+});
+
+test("estimativa cresce com o número de keywords", () => {
+	const ep = "/v3/keywords_data/google_ads/search_volume/live";
+	const uma = estimateEndpointCost(ep, { units: 1 });
+	const muitas = estimateEndpointCost(ep, { units: 100 });
+	assert.ok(muitas > uma, "estimativa ignora o volume de keywords");
+});
+
+test("estimativa não subestima o gasto real observado", () => {
+	// Execução real de 21/08/2026: 39 keywords custaram US$ 0,1067.
+	// A estimativa precisa ficar >= isso, senão o BudgetGuard deixa estourar.
+	const volume = estimateEndpointCost("/v3/keywords_data/google_ads/search_volume/live", { units: 39 });
+	const intent = estimateEndpointCost("/v3/dataforseo_labs/google/search_intent/live", { units: 39 });
+	assert.ok(
+		volume + intent >= 0.1067,
+		`estimativa ${(volume + intent).toFixed(4)} abaixo do custo real observado 0.1067`,
+	);
+});
+
+test("endpoint desconhecido cai num custo padrão, não em zero", () => {
+	assert.ok(estimateEndpointCost("/v3/endpoint/que/nao/existe", { units: 10 }) > 0);
 });
 
 test("mapIntent traduz o vocabulário do provider", () => {
@@ -372,7 +401,7 @@ test("healthReport lista todos os providers sem vazar segredo", async () => {
 	const r = await healthReport({
 		env: { DATAFORSEO_LOGIN: "u", DATAFORSEO_PASSWORD: "senha-secreta" },
 	});
-	assert.equal(r.providers.length, 9);
+	assert.equal(r.providers.length, 10); // 9 + openrouter
 	assert.ok(!JSON.stringify(r).includes("senha-secreta"), "segredo vazou no health");
 	const dfs = r.providers.find((p) => p.provider === "dataforseo");
 	assert.equal(dfs.status, "CONFIGURED");

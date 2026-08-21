@@ -63,11 +63,24 @@ test("sobreposição no acervo vira MERGE", () => {
 	assert.equal(r.verdict, "MERGE");
 });
 
-test("post alinhado mas curto e sem fontes vira UPDATE", () => {
+test("post alinhado mas raso e sem fontes vira UPDATE", () => {
 	const p = parseLegacyPost(html("Automação de processos com IA", "curto"), "automacao");
 	const r = classifyPost(p);
 	assert.equal(r.verdict, "UPDATE");
-	assert.ok(r.debts.some((d) => d.includes("curto")));
+	// extensão entra como dívida entre outras, nunca como reprovação isolada
+	assert.ok(r.debts.some((d) => d.includes("extensão abaixo da referência")));
+	assert.ok(r.debts.length >= 2, "UPDATE exige mais de uma dívida, não só extensão");
+});
+
+test("extensão sozinha não decide — referência é configurável e é só um sinal", () => {
+	const corpo = `${"palavra ".repeat(430)} segundo a documentação oficial. Por Juliano Damaso.`;
+	const p = parseLegacyPost(html("Automação de processos com IA", corpo, { links: ["/a/", "/b/"] }), "auto-450");
+	// com referência 500, a extensão vira dívida, mas é a única -> KEEP
+	const comReferenciaAlta = classifyPost(p, { lengthReference: 500 });
+	assert.equal(comReferenciaAlta.verdict, "KEEP", JSON.stringify(comReferenciaAlta.debts));
+	// com referência menor, nem dívida existe
+	const comReferenciaBaixa = classifyPost(p, { lengthReference: 300 });
+	assert.equal(comReferenciaBaixa.debts.length, 0);
 });
 
 test("post alinhado, longo, com fontes e links vira KEEP", () => {

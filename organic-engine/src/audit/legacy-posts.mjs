@@ -72,7 +72,9 @@ export function parseLegacyPost(html, slug) {
 		internalLinks: [...t.matchAll(/href="(\/[a-z0-9/-]*)"/g)].map((m) => m[1]),
 		wordCount: visible.split(/\s+/).filter(Boolean).length,
 		hasSources: /fonte|refer[êe]ncia|segundo\s+(a|o)\s+/i.test(visible),
-		hasAuthor: /por\s+[A-ZÁÉÍÓÚ]/.test(visible),
+		// "Por Fulano" costuma abrir a linha de crédito, então o P vem maiúsculo:
+		// a checagem precisa ser insensível a caixa.
+		hasAuthor: /\bpor\s+[A-ZÁÉÍÓÚ][a-zà-ÿ]+/i.test(visible),
 	};
 }
 
@@ -126,7 +128,7 @@ export function findDuplicates(posts, { threshold = 0.6 } = {}) {
  * Classifica um post. Ordem das regras importa: primeiro o que descarta,
  * depois o que exige trabalho, por último o que se aproveita.
  */
-export function classifyPost(post, { duplicateGroups = [], minWordCount = 700 } = {}) {
+export function classifyPost(post, { duplicateGroups = [], lengthReference = 500 } = {}) {
 	const niche = detectNiche(post);
 	const align = detectAlignment(post);
 	const reasons = [];
@@ -160,8 +162,12 @@ export function classifyPost(post, { duplicateGroups = [], minWordCount = 700 } 
 	}
 
 	// 5. Alinhado, mas com dívida de qualidade
+	// Extensão é SINAL, não regra. O Google não publica mínimo universal de
+	// palavras; a referência abaixo é heurística interna contra thin content.
 	const debts = [];
-	if ((post.wordCount ?? 0) < minWordCount) debts.push(`curto (${post.wordCount} palavras)`);
+	if ((post.wordCount ?? 0) < lengthReference) {
+		debts.push(`extensão abaixo da referência (${post.wordCount} palavras, referência ${lengthReference})`);
+	}
 	if (!post.hasSources) debts.push("sem fontes");
 	if (!post.hasAuthor) debts.push("sem autor identificado");
 	if (!post.hasArticleSchema) debts.push("sem schema Article");

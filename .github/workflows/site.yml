@@ -1,0 +1,177 @@
+name: Site — testes, build e deploy no Cloudflare Pages
+
+# A plataforma real do flowaidigital.com.br é Cloudflare Pages, não EasyPanel.
+# O workflow antigo disparava um webhook do EasyPanel que NÃO servia este site —
+# e cujo token estava em texto claro num repositório público. Foi removido.
+#
+# Produção só recebe deploy depois que os testes e as checagens de SEO passam.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: site-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "22"
+
+jobs:
+  test:
+    name: Testes e checagens de SEO
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Testes do site
+        run: node --test "site/test/*.test.mjs"
+
+      - name: Instalar o Organic Engine
+        working-directory: organic-engine
+        run: npm ci --no-audit --no-fund
+
+      - name: Testes unitários do Engine
+        working-directory: organic-engine
+        run: npm test
+
+      - name: Build do site
+        env:
+          GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
+        run: node site/build.mjs
+
+      - name: Checagens de SEO no artefato gerado
+        run: |
+          set -e
+          cd site/dist
+
+          echo "— 404.html existe"
+          test -f 404.html
+
+          echo "— _redirects não reintroduziu o catch-all 200"
+          if grep -qE '^\s*/\*\s+/index\.html\s+200' _redirects; then
+            echo "::error::catch-all 200 voltou ao _redirects — isso recria o soft-404 universal"
+            exit 1
+          fi
+
+          echo "— toda URL do sitemap corresponde a um arquivo"
+          grep -oE '<loc>[^<]+</loc>' sitemap.xml \
+            | sed -E 's#</?loc>##g; s#https://flowaidigital.com.br##' \
+            | while read -r rota; do
+                alvo="${rota#/}index.html"
+                [ "$rota" = "/" ] && alvo="index.html"
+                if [ ! -f "$alvo" ]; then
+                  echo "::error::sitemap aponta para $rota, que não foi gerada"
+                  exit 1
+                fi
+              done
+
+          echo "— robots libera busca e bloqueia treinamento"
+          for bot in Googlebot Bingbot OAI-SearchBot ChatGPT-User Claude-SearchBot PerplexityBot; do
+            grep -A1 "^User-agent: $bot$" robots.txt | grep -q "^Allow: /" \
+              || { echo "::error::$bot deveria estar liberado no robots"; exit 1; }
+          done
+          for bot in GPTBot ClaudeBot Google-Extended; do
+            grep -A1 "^User-agent: $bot$" robots.txt | grep -q "^Disallow: /" \
+              || { echo "::error::$bot deveria estar bloqueado no robots"; exit 1; }
+          done
+
+          echo "— money pages têm conteúdo no HTML, sem depender de JavaScript"
+          for f in */index.html; do
+            [ "$f" = "blog/index.html" ] && continue
+            palavras=$(sed 's/<script[^>]*>.*<\/script>//g; s/<[^>]*>/ /g' "$f" | wc -w)
+            if [ "$palavras" -lt 250 ]; then
+              echo "::error::$f só tem $palavras palavras no HTML"
+              exit 1
+            fi
+            grep -q '<link rel="canonical"' "$f" || { echo "::error::$f sem canonical"; exit 1; }
+            grep -q '<h1' "$f" || { echo "::error::$f sem H1"; exit 1; }
+          done
+
+          echo "Todas as checagens de SEO passaram."
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site-dist
+          path: site/dist
+          retention-days: 7
+
+  preview:
+    name: Deploy de preview
+    needs: test
+    if: github.event_name == 'pull_request' || github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: site-dist
+          path: site/dist
+
+      - name: Publicar preview
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: >-
+            pages deploy site/dist
+            --project-name=${{ secrets.CLOUDFLARE_PAGES_PROJECT }}
+            --branch=${{ github.head_ref || github.ref_name }}
+
+  production:
+    name: Deploy de produção
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: site-dist
+          path: site/dist
+
+      - name: Publicar em produção
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: >-
+            pages deploy site/dist
+            --project-name=${{ secrets.CLOUDFLARE_PAGES_PROJECT }}
+            --branch=main
+
+      - name: Smoke test pós-deploy
+        run: |
+          set -e
+          for i in $(seq 1 20); do
+            sleep 15
+            home=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 https://flowaidigital.com.br/ || echo 000)
+            [ "$home" = "200" ] && break
+            echo "tentativa $i: home=$home"
+          done
+          [ "$home" = "200" ] || { echo "::error::home não voltou a responder 200"; exit 1; }
+
+          echo "— 404 real em URL inexistente"
+          codigo=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 \
+            "https://flowaidigital.com.br/rota-inexistente-smoke-test-$(date +%s)/")
+          [ "$codigo" = "404" ] || { echo "::error::URL inexistente devolveu $codigo, esperado 404"; exit 1; }
+
+          echo "— money page servindo conteúdo"
+          curl -s --max-time 20 https://flowaidigital.com.br/agentes-de-ia-para-empresas/ \
+            | grep -q "<h1" || { echo "::error::money page sem H1 em produção"; exit 1; }
+
+          echo "Smoke test passou."
+
+      - name: Verificar acesso dos crawlers
+        continue-on-error: true
+        working-directory: organic-engine
+        run: |
+          npm ci --no-audit --no-fund
+          node src/cli.mjs crawlers https://flowaidigital.com.br/

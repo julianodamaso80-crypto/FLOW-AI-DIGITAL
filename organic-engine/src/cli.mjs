@@ -8,17 +8,33 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { loadEnv, formatEnvReport } from "./env.mjs";
 import { healthReport, formatHealth } from "./health.mjs";
 import { checkAllCrawlers, formatMatrix } from "./crawler/ai-access.mjs";
 import { runGates } from "./gates/index.mjs";
 import { scoreArticle, weakestDimensions, decide } from "./gates/quality-score.mjs";
 
+// Carrega .env do Engine e o compartilhado da raiz. process.env sempre vence.
+const envReport = loadEnv();
+
 const [, , cmd, ...args] = process.argv;
+const hasFlag = (f) => args.includes(f);
 
 async function main() {
 	switch (cmd) {
 		case "health": {
-			console.log(formatHealth(await healthReport()));
+			if (hasFlag("--env")) {
+				console.log(formatEnvReport(envReport));
+				console.log("");
+			}
+			// --verify roda apenas as checagens GRATUITAS
+			const report = await healthReport({ verify: hasFlag("--verify") });
+			console.log(formatHealth(report));
+			break;
+		}
+
+		case "env": {
+			console.log(formatEnvReport(envReport));
 			break;
 		}
 
@@ -84,6 +100,32 @@ async function main() {
 			break;
 		}
 
+		case "baseline-keywords": {
+			const { runBaseline } = await import("./commands/baseline-keywords.mjs");
+			const { MONEY_PAGE_TARGETS } = await import("./commands/money-page-targets.mjs");
+			const capArg = args.find((a) => a.startsWith("--max-cost-usd="));
+			const maxCostUsd = capArg ? Number(capArg.split("=")[1]) : 1.0;
+			const dryRun = hasFlag("--dry-run");
+
+			const out = await runBaseline({ targets: MONEY_PAGE_TARGETS, maxCostUsd, dryRun });
+			if (out.aborted || out.dryRun) break;
+
+			console.log("");
+			for (const r of out.results) {
+				console.log(r.target);
+				console.log(
+					`  volume: ${r.targetVolume ?? "n/d"} | intenção: ${r.targetIntent ?? "n/d"} | ação: ${r.action}`,
+				);
+				for (const a of r.alternatives) {
+					console.log(`    alternativa "${a.keyword}": ${a.volume ?? "n/d"}`);
+				}
+				for (const n of r.notes) console.log(`    nota: ${n}`);
+			}
+			console.log("");
+			console.log(`custo total desta execução: US$ ${out.spentUsd.toFixed(4)}`);
+			break;
+		}
+
 		case "costs": {
 			console.log("Custos vivem em provider_costs no Postgres.");
 			console.log("Sem DATABASE_URL configurada não há o que somar — rode 'health' para conferir.");
@@ -93,9 +135,12 @@ async function main() {
 		default:
 			console.log(`Organic Engine — FlowAI Digital
 
-  health            estado dos providers e da infraestrutura
+  health [--verify] estado dos providers (--verify usa checagens gratuitas)
+  env               quais .env foram lidos e que variaveis vieram deles
   crawlers [url]    matriz de acesso dos crawlers de busca e de IA
   gates <file.md>   hard gates + quality score de um artigo
+  baseline-keywords [--max-cost-usd=1.00] [--dry-run]
+                    valida as keywords-alvo das money pages no DataForSEO
   costs             gasto por provider no mês
 `);
 	}

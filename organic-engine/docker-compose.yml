@@ -1,0 +1,32 @@
+# Postgres local para desenvolvimento e testes de integração do Organic Engine.
+#
+# Sem Redis de propósito: o pg-boss usa o próprio Postgres para fila, cron,
+# retry, lock e dead-letter. Um serviço a menos para subir e manter.
+#
+#   docker compose up -d
+#   DATABASE_URL="postgres://organic:organic@localhost:5433/organic" npm run migrate
+#
+# Porta 5433 para não colidir com um Postgres já instalado na máquina.
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: flowai-organic-pg
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: organic
+      POSTGRES_PASSWORD: organic
+      POSTGRES_DB: organic
+      # dados de dev; a senha real de produção nunca vive num compose
+    ports:
+      - "5433:5432"
+    volumes:
+      - organic-pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U organic -d organic"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  organic-pg-data:

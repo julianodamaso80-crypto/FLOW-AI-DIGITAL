@@ -13,18 +13,37 @@ import { Provider, ProviderError, fetchWithTimeout, isPermanent, withRetry, pars
 
 const BASE = "https://api.dataforseo.com";
 
-/** Custo estimado por chamada, em USD. Base do BudgetGuard. */
+/**
+ * Custo por endpoint, em USD.
+ *
+ * `base` é o custo fixo da task; `perUnit` é o custo por item consultado
+ * (keyword na entrada ou linha no resultado). Modelar só o custo fixo
+ * subestima brutalmente: uma execução real de 39 keywords custou US$ 0,1067
+ * contra US$ 0,0060 estimados pelo modelo antigo — 17x de erro.
+ *
+ * Os valores abaixo foram calibrados contra esse gasto observado, com margem
+ * de segurança para cima. O custo REAL sempre substitui a estimativa depois
+ * da resposta (o campo `cost` que a API devolve).
+ */
 export const ENDPOINT_COST = {
-	"/v3/on_page/instant_pages": 0.0001,
-	"/v3/dataforseo_labs/google/ranked_keywords/live": 0.01,
-	"/v3/dataforseo_labs/google/competitors_domain/live": 0.01,
-	"/v3/dataforseo_labs/google/keyword_ideas/live": 0.01,
-	"/v3/dataforseo_labs/google/keyword_suggestions/live": 0.01,
-	"/v3/dataforseo_labs/google/search_intent/live": 0.001,
-	"/v3/dataforseo_labs/google/domain_intersection/live": 0.01,
-	"/v3/keywords_data/google_ads/search_volume/live": 0.005,
-	"/v3/serp/google/organic/live/advanced": 0.002,
+	"/v3/on_page/instant_pages": { base: 0.0006, perUnit: 0 },
+	"/v3/dataforseo_labs/google/ranked_keywords/live": { base: 0.01, perUnit: 0.0001 },
+	"/v3/dataforseo_labs/google/competitors_domain/live": { base: 0.01, perUnit: 0.0001 },
+	"/v3/dataforseo_labs/google/keyword_ideas/live": { base: 0.01, perUnit: 0.0001 },
+	"/v3/dataforseo_labs/google/keyword_suggestions/live": { base: 0.01, perUnit: 0.0001 },
+	"/v3/dataforseo_labs/google/search_intent/live": { base: 0.006, perUnit: 0.0002 },
+	"/v3/dataforseo_labs/google/domain_intersection/live": { base: 0.01, perUnit: 0.0001 },
+	"/v3/keywords_data/google_ads/search_volume/live": { base: 0.08, perUnit: 0.0006 },
+	"/v3/serp/google/organic/live/advanced": { base: 0.002, perUnit: 0 },
 };
+
+const DEFAULT_COST = { base: 0.02, perUnit: 0.0005 };
+
+/** Custo estimado de uma chamada. `units` = keywords ou itens pedidos. */
+export function estimateEndpointCost(endpoint, { tasks = 1, units = 0 } = {}) {
+	const c = ENDPOINT_COST[endpoint] ?? DEFAULT_COST;
+	return Number((c.base * tasks + c.perUnit * units).toFixed(6));
+}
 
 export const BRAZIL = { location_code: 2076, language_name: "Portuguese", language_code: "pt" };
 
@@ -54,13 +73,64 @@ export class DataForSeoProvider extends Provider {
 		return `Basic ${Buffer.from(`${login}:${password}`).toString("base64")}`;
 	}
 
-	estimateCost(endpoint, tasks = 1) {
-		return (ENDPOINT_COST[endpoint] ?? 0.01) * tasks;
+	estimateCost(endpoint, tasks = 1, units = 0) {
+		return estimateEndpointCost(endpoint, { tasks, units });
+	}
+
+	/**
+	 * Verificação real da conta, SEM custo.
+	 * GET /v3/appendix/user_data é gratuito e devolve saldo, limites e uso —
+	 * é a única forma honesta de provar que a credencial funciona sem gastar.
+	 * Presença de variável de ambiente não prova nada.
+	 */
+	async verify() {
+		if (!this.configured) {
+			return { verified: false, reason: "credenciais ausentes", costUsd: 0 };
+		}
+		try {
+			const res = await fetchWithTimeout(
+				`${BASE}/v3/appendix/user_data`,
+				{ method: "GET", headers: { Authorization: this.authHeader() } },
+				15_000,
+				this.fetchImpl,
+			);
+			if (!res.ok) {
+				return { verified: false, reason: `HTTP ${res.status}`, costUsd: 0 };
+			}
+			const data = await res.json();
+			if (data.status_code !== 20000) {
+				return {
+					verified: false,
+					reason: `${data.status_code}: ${data.status_message}`,
+					costUsd: 0,
+				};
+			}
+			const r = data.tasks?.[0]?.result?.[0] ?? {};
+			const rates = r.rates ?? {};
+			return {
+				verified: true,
+				// login parcialmente mascarado — confirma a conta sem expor o e-mail
+				loginMasked: maskLogin(this.env.DATAFORSEO_LOGIN),
+				balanceUsd: r.money?.balance ?? null,
+				limitUsd: r.money?.limit ?? null,
+				spentTodayUsd: r.money?.total?.today ?? null,
+				rateLimitPerMinute: rates.limits?.minute ?? null,
+				tasksInQueue: r.tasks_in_queue ?? null,
+				costUsd: 0,
+			};
+		} catch (err) {
+			return { verified: false, reason: err.message, costUsd: 0 };
+		}
 	}
 
 	async call(endpoint, body, { critical = false, articleId = null } = {}) {
 		const tasks = Array.isArray(body) ? body.length : 1;
-		const estimated = this.estimateCost(endpoint, tasks);
+		// unidades = keywords enviadas ou limite pedido; sem isso a estimativa
+		// ignora o que mais pesa na conta.
+		const units = Array.isArray(body)
+			? body.reduce((s, t) => s + (t.keywords?.length ?? t.limit ?? 0), 0)
+			: 0;
+		const estimated = this.estimateCost(endpoint, tasks, units);
 
 		if (this.budget) {
 			const verdict = this.budget.check(estimated, { critical });
@@ -303,4 +373,14 @@ export function mapIntent(label) {
 		navigational: "navegacional",
 	};
 	return map[String(label ?? "").toLowerCase()] ?? null;
+}
+
+/** Mostra só o suficiente para conferir a conta: `jo***@do***.com`. */
+export function maskLogin(login) {
+	const s = String(login ?? "");
+	if (!s) return null;
+	const [user, domain] = s.split("@");
+	if (!domain) return `${s.slice(0, 2)}***`;
+	const d = domain.split(".");
+	return `${user.slice(0, 2)}***@${d[0].slice(0, 2)}***${d.length > 1 ? "." + d.slice(1).join(".") : ""}`;
 }
