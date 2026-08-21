@@ -1,5 +1,12 @@
 // Aplica a política granular de crawlers na zona.
 //
+// CORRECAO de uma conclusao anterior: o HTTP 400 ao gravar ai_search/ai_user/
+// ai_training NAO prova que o plano Free nao tem controle granular. Prova
+// apenas que esses campos nao sao um write path suportado NESTE endpoint para
+// esta zona. O AI Crawl Control existe em todos os planos; no Free ele
+// identifica AI crawlers por User-Agent e materializa bloqueios como WAF
+// custom rules — que e o mecanismo usado aqui.
+//
 // Estado encontrado em 21/08/2026:
 //   ai_bots_protection: "block"   -> bloqueia TODO AI bot, inclusive os de busca
 //   ai_search / ai_user / ai_training: "disabled"  -> granular desligado

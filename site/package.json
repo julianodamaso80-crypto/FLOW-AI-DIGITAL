@@ -1,0 +1,16 @@
+{
+  "name": "flowai-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Site canônico da FlowAI Digital — SPA preservada + páginas estáticas indexáveis.",
+  "scripts": {
+    "build": "node build.mjs && node prerender.mjs",
+    "build:nopre": "node build.mjs",
+    "prerender": "node prerender.mjs",
+    "test": "node --test --test-concurrency=1 \"test/*.test.mjs\""
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}

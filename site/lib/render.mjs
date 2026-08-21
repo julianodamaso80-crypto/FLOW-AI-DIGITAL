@@ -214,7 +214,9 @@ ${crumbs([{ name: "Início", path: "/" }, { name: svc.breadcrumbLabel, path }])}
 
   <section>
     <h2>Também pode interessar</h2>
-    <div class="rel">${svc.related.map((r) => `<a href="${esc(r.href)}">${esc(r.title)}</a>`).join("")}</div>
+    <div class="rel">${svc.related
+			.map((r, i) => `<a href="${esc(r.href)}">${esc(relatedAnchor(r, svc, services, i))}</a>`)
+			.join("")}</div>
   </section>
 </article>
 </main>
@@ -231,6 +233,35 @@ ${footer(services)}`;
 
 function pillarLabel(p) {
 	return { marketing: "Marketing", ia: "Inteligência artificial", sistemas: "Sistemas sob medida" }[p] || "";
+}
+
+/**
+ * Âncora do bloco "Também pode interessar".
+ *
+ * O rótulo fixo do `related` fazia todas as páginas apontarem para o mesmo
+ * destino com a MESMA âncora exata — 5/5 em alguns casos. Isso é padrão
+ * artificial: anchor text natural varia.
+ *
+ * A variação aqui não inventa texto: alterna entre o rótulo do `related` e o
+ * `breadcrumbLabel` que a própria página de destino já usa. A escolha é
+ * determinística (depende de quem linka), então o build segue reproduzível.
+ */
+function relatedAnchor(related, from, services, index) {
+	const destSlug = String(related.href ?? "").replace(/^\/|\/$/g, "");
+	const dest = services.find((s) => s.slug === destSlug);
+	const opcoes = [related.title];
+	if (dest?.breadcrumbLabel && dest.breadcrumbLabel !== related.title) {
+		opcoes.push(dest.breadcrumbLabel);
+	}
+	// terceira forma: a primeira oração do H1 da própria página de destino.
+	// É texto que já existe lá — não inventamos âncora.
+	const h1Curto = dest?.h1?.split(/[:,—]/)[0]?.trim();
+	if (h1Curto && h1Curto.length <= 60 && !opcoes.includes(h1Curto)) {
+		opcoes.push(h1Curto);
+	}
+	// soma dos códigos do slug de origem: estável entre builds, diferente por página
+	const seed = [...from.slug].reduce((s, c) => s + c.charCodeAt(0), 0) + index;
+	return opcoes[seed % opcoes.length];
 }
 
 /** Índice do blog. Recebe só artigos publicados. */
