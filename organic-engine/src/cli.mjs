@@ -126,6 +126,31 @@ async function main() {
 			break;
 		}
 
+		case "google-auth": {
+			const { authorize } = await import("./commands/google-oauth.mjs");
+			// a janela padrao de 5 min ja estourou uma vez esperando o consentimento
+			const minArg = args.find((a) => a.startsWith("--timeout-min="));
+			const timeoutMs = (minArg ? Number(minArg.split("=")[1]) : 45) * 60_000;
+			const r = await authorize({ timeoutMs });
+			console.log("");
+			console.log("Autorizado. Refresh token salvo em:", r.tokenPath);
+			console.log("Escopos concedidos:", r.scopes.map((s) => s.split("/auth/")[1]).join(", "));
+			break;
+		}
+
+		case "google-discover": {
+			const { discoverAll } = await import("./commands/google-discover.mjs");
+			try {
+				await discoverAll();
+			} catch (err) {
+				if (err.code === "GOOGLE_OAUTH_AUTHORIZATION_REQUIRED") {
+					console.log("GOOGLE_OAUTH_AUTHORIZATION_REQUIRED");
+					console.log("Rode primeiro: node src/cli.mjs google-auth");
+				} else throw err;
+			}
+			break;
+		}
+
 		case "costs": {
 			console.log("Custos vivem em provider_costs no Postgres.");
 			console.log("Sem DATABASE_URL configurada não há o que somar — rode 'health' para conferir.");
@@ -141,6 +166,9 @@ async function main() {
   gates <file.md>   hard gates + quality score de um artigo
   baseline-keywords [--max-cost-usd=1.00] [--dry-run]
                     valida as keywords-alvo das money pages no DataForSEO
+  google-auth [--timeout-min=45]
+                    autoriza uma vez o acesso de leitura as APIs do Google
+  google-discover   lista GA4, Search Console e GTM ja existentes
   costs             gasto por provider no mês
 `);
 	}
