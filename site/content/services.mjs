@@ -1,0 +1,638 @@
+// Portado de redesign-v8:site-v8/src/content/services.ts (branch preservada).
+// Conteudo editorial NAO foi alterado — apenas os tipos TS foram removidos para
+// o gerador consumir sem transpilacao. Politicas de origem: MAPA-SEO.md.
+
+/**
+ * Conteúdo único de cada página de serviço.
+ * Regra editorial (manual da marca): problema real + processo claro +
+ * solução personalizada + próximo passo. Sem números inventados,
+ * sem promessa de resultado garantido.
+ */
+
+
+export const SERVICES = [
+  // ================= PILAR MARKETING =================
+  {
+    slug: "agencia-de-marketing-digital",
+    pillar: "marketing",
+    waKey: "marketing",
+    metaTitle: "Agência de Marketing Digital Completa para Empresas",
+    metaDescription:
+      "Agência de marketing digital completa: estratégia, tráfego pago, SEO, conteúdo, landing pages e tracking integrados ao seu comercial. Sediada no Rio de Janeiro, atende todo o Brasil.",
+    h1: "Agência de marketing digital completa, conectada ao seu comercial",
+    heroText:
+      "Marketing que não conversa com vendas gera relatório, não receita. A FlowAI estrutura aquisição, conversão e dados como uma única operação: campanha, página, atendimento e CRM integrados, para você saber exatamente o que está funcionando — e escalar com segurança.",
+    problemTitle: "O que costuma travar o marketing das empresas",
+    problems: [
+      "Campanhas ativas sem rastreamento confiável de qual delas gera venda.",
+      "Verba dividida entre canais por intuição, não por dado.",
+      "Landing pages lentas ou genéricas que desperdiçam o clique pago.",
+      "Leads que chegam e esfriam sem atendimento rápido.",
+      "Relatórios de mídia desconectados do resultado comercial.",
+    ],
+    deliverablesTitle: "O que a FlowAI entrega no marketing",
+    deliverables: [
+      { title: "Estratégia digital", desc: "Posicionamento, funil, canais e metas definidos a partir do seu contexto — não de um template." },
+      { title: "Gestão de tráfego pago", desc: "Meta Ads e Google Ads com testes contínuos de criativo, público e oferta, otimizados por dados de venda." },
+      { title: "SEO e conteúdo", desc: "Presença orgânica em buscas tradicionais e em mecanismos de IA, com conteúdo útil e tecnicamente correto." },
+      { title: "Landing pages e CRO", desc: "Páginas rápidas e orientadas à conversão, com testes e melhoria contínua." },
+      { title: "Tracking e dashboards", desc: "Eventos, UTMs e atribuição configurados para conectar o investimento ao resultado." },
+      { title: "Integração com vendas", desc: "Lead entra no CRM com origem registrada e o comercial recebe contexto, não só um telefone." },
+    ],
+    process: [
+      { title: "Diagnóstico", desc: "Análise do funil atual: canais, páginas, dados e processo comercial." },
+      { title: "Arquitetura", desc: "Desenho da estrutura de aquisição e conversão, com prioridades claras." },
+      { title: "Implantação", desc: "Campanhas, páginas e tracking configurados e validados." },
+      { title: "Otimização contínua", desc: "Ciclos de análise e ajuste guiados por dado real de venda." },
+    ],
+    faq: [
+      { q: "Vocês trabalham com qualquer segmento?", a: "Trabalhamos com empresas que vendem para outras empresas e com negócios de serviço e varejo. No diagnóstico avaliamos juntos se o seu contexto tem aderência com o nosso método." },
+      { q: "Preciso já ter site e CRM?", a: "Não. Se a base ainda não existe, a FlowAI constrói: site, landing pages, tracking e CRM fazem parte do escopo possível do projeto." },
+      { q: "Qual o investimento mínimo em mídia?", a: "Não existe número mágico: depende do seu mercado, ticket e meta. Definimos a verba de mídia junto com você no planejamento, com transparência sobre o que é honorário e o que é investimento em plataforma." },
+      { q: "Vocês garantem resultado?", a: "Não prometemos números garantidos — desconfie de quem promete. Garantimos método, transparência nos dados e ajustes contínuos com base no que os números mostram." },
+    ],
+    related: [
+      { title: "Gestão de tráfego pago", href: "/gestao-de-trafego-pago/" },
+      { title: "SEO e conteúdo", href: "/seo-e-conteudo/" },
+      { title: "Tracking e analytics", href: "/tracking-e-analytics/" },
+    ],
+    ctaTitle: "Quer um marketing que conversa com o seu comercial?",
+    breadcrumbLabel: "Marketing digital",
+  },
+  {
+    slug: "gestao-de-trafego-pago",
+    pillar: "marketing",
+    waKey: "marketing",
+    metaTitle: "Gestão de Tráfego Pago — Meta Ads e Google Ads",
+    metaDescription:
+      "Gestão de tráfego pago com Meta Ads e Google Ads orientada a venda, não a clique: criativos testados, tracking configurado e integração com CRM e WhatsApp.",
+    h1: "Gestão de tráfego pago orientada a venda, não a clique",
+    heroText:
+      "Anúncio bom é o que vira cliente. A FlowAI gerencia suas campanhas em Meta e Google com o funil completo em vista: criativo, página, atendimento e CRM — para que cada real investido seja rastreável até a conversa comercial.",
+    problemTitle: "Por que o tráfego pago frustra tanta empresa",
+    problems: [
+      "Otimização por métrica de plataforma (clique, CPM) em vez de venda.",
+      "Criativos repetidos até a fadiga, sem rotina de teste.",
+      "Leads de campanha caindo em caixa de e-mail sem atendimento.",
+      "Impossível comparar canais porque cada um mede de um jeito.",
+      "Dependência de um único canal de aquisição.",
+    ],
+    deliverablesTitle: "Como a FlowAI gerencia o seu tráfego",
+    deliverables: [
+      { title: "Meta Ads", desc: "Campanhas de geração de demanda e remarketing com criativos e públicos em teste contínuo." },
+      { title: "Google Ads", desc: "Busca, Performance Max e YouTube alinhados à intenção real de compra do seu mercado." },
+      { title: "Criativos e copy", desc: "Anúncios produzidos com base em ângulos de comunicação testados, não em achismo." },
+      { title: "Páginas de destino", desc: "Landing pages rápidas e coerentes com o anúncio, para não desperdiçar o clique." },
+      { title: "Tracking de conversão", desc: "Eventos e UTMs configurados para atribuir vendas a campanhas com confiança." },
+      { title: "Remarketing estruturado", desc: "Sequências para quem visitou, interagiu ou iniciou conversa e não fechou." },
+    ],
+    process: [
+      { title: "Auditoria de contas", desc: "Análise do histórico, estrutura e dados existentes nas plataformas." },
+      { title: "Plano de mídia", desc: "Canais, verbas, públicos e mensagens definidos com meta clara." },
+      { title: "Lançamento", desc: "Campanhas no ar com tracking validado ponta a ponta." },
+      { title: "Ciclos de otimização", desc: "Testes semanais de criativo e ajuste de verba guiados por custo por oportunidade real." },
+    ],
+    faq: [
+      { q: "Vocês pegam contas do zero?", a: "Sim. Estruturamos contas novas com as boas práticas desde o início — pixel, conversões, públicos e organização de campanhas." },
+      { q: "O investimento em mídia é à parte?", a: "Sim. A verba de anúncio é paga por você diretamente às plataformas; nosso honorário é pela gestão, criação e otimização. Tudo transparente." },
+      { q: "Em quanto tempo as campanhas maturam?", a: "Plataformas precisam de volume de dados para otimizar, e cada mercado tem seu ritmo. Trabalhamos com ciclos de teste estruturados e mostramos a evolução em dados abertos, sem prometer prazo mágico." },
+      { q: "Vocês atendem quem já tem gestor interno?", a: "Sim — podemos atuar como retaguarda estratégica, em frente específica (ex.: Google) ou na estrutura de tracking e páginas." },
+    ],
+    related: [
+      { title: "Sites e landing pages", href: "/sites-e-landing-pages/" },
+      { title: "Tracking e analytics", href: "/tracking-e-analytics/" },
+      { title: "Chatbot com IA para WhatsApp", href: "/chatbot-com-ia-para-whatsapp/" },
+    ],
+    ctaTitle: "Quer saber o que seu tráfego está gerando de verdade?",
+    breadcrumbLabel: "Tráfego pago",
+  },
+  {
+    slug: "seo-e-conteudo",
+    pillar: "marketing",
+    waKey: "marketing",
+    metaTitle: "SEO e Conteúdo — Visibilidade no Google e em Mecanismos de IA",
+    metaDescription:
+      "SEO técnico, conteúdo útil e GEO: apareça no Google e nas respostas de mecanismos de IA com uma estratégia orgânica sólida e sem promessas vazias.",
+    h1: "SEO e conteúdo para ser encontrado no Google — e nas respostas de IA",
+    heroText:
+      "A busca mudou: além do Google, seus clientes perguntam a assistentes de IA. A FlowAI estrutura seu SEO técnico, seu conteúdo e sua presença em mecanismos generativos (GEO) para que sua empresa seja a resposta — de forma sustentável, sem truque.",
+    problemTitle: "Por que sua empresa não aparece",
+    problems: [
+      "Site sem estrutura técnica: títulos duplicados, páginas lentas, sem dados estruturados.",
+      "Conteúdo raso feito para robô, que não responde a pergunta de ninguém.",
+      "Páginas competindo entre si pela mesma palavra-chave.",
+      "Nenhuma presença nas respostas de assistentes de IA.",
+      "Blog abandonado ou inexistente.",
+    ],
+    deliverablesTitle: "O que o trabalho de SEO da FlowAI inclui",
+    deliverables: [
+      { title: "Auditoria técnica", desc: "Indexação, velocidade, semântica, canonicals, sitemap e dados estruturados revisados." },
+      { title: "Arquitetura de conteúdo", desc: "Mapa de palavras-chave por intenção de busca, sem canibalização entre páginas." },
+      { title: "Conteúdo editorial", desc: "Artigos e páginas profundas, úteis e baseados em experiência real do seu negócio." },
+      { title: "SEO local", desc: "Consistência entre site, Google Business Profile e redes — quando sua operação for local de verdade." },
+      { title: "GEO (visibilidade em IA)", desc: "Conteúdo e marcação preparados para mecanismos generativos citarem sua empresa." },
+      { title: "Medição", desc: "Search Console e analytics conectados para acompanhar evolução por página e intenção." },
+    ],
+    process: [
+      { title: "Auditoria e baseline", desc: "Situação atual documentada: posições, tráfego, problemas técnicos." },
+      { title: "Mapa de conteúdo", desc: "Priorização de temas por intenção, volume e proximidade com receita." },
+      { title: "Correções e produção", desc: "Ajustes técnicos e produção editorial em ritmo constante." },
+      { title: "Acompanhamento", desc: "Revisão mensal de posições, tráfego e conversões orgânicas." },
+    ],
+    faq: [
+      { q: "Vocês garantem primeira página no Google?", a: "Não — e ninguém sério garante. O ranking depende de fatores fora do controle de qualquer agência. O que entregamos é método, correção técnica e conteúdo com qualidade acima da média do seu mercado." },
+      { q: "Em quanto tempo o SEO dá resultado?", a: "SEO é construção de ativo: os efeitos são compostos e costumam aparecer ao longo de meses, variando por concorrência e ponto de partida. Mostramos a evolução mês a mês com dados abertos." },
+      { q: "O que é GEO?", a: "Generative Engine Optimization: o trabalho de tornar sua empresa citável e recomendável por mecanismos de IA (como assistentes de busca generativa), com conteúdo claro, factual e bem estruturado." },
+      { q: "Vocês escrevem o conteúdo ou a minha equipe?", a: "Os dois modelos funcionam. Podemos produzir integralmente, revisar a produção interna ou treinar sua equipe no método editorial." },
+    ],
+    related: [
+      { title: "Sites e landing pages", href: "/sites-e-landing-pages/" },
+      { title: "Marketing digital completo", href: "/agencia-de-marketing-digital/" },
+      { title: "Tracking e analytics", href: "/tracking-e-analytics/" },
+    ],
+    ctaTitle: "Quer construir presença orgânica que se acumula?",
+    breadcrumbLabel: "SEO e conteúdo",
+  },
+  {
+    slug: "sites-e-landing-pages",
+    pillar: "marketing",
+    waKey: "marketing",
+    metaTitle: "Criação de Sites e Landing Pages de Alta Conversão",
+    metaDescription:
+      "Desenvolvimento de sites profissionais e landing pages rápidas, acessíveis e orientadas à conversão, com SEO técnico e tracking desde o primeiro dia.",
+    h1: "Sites e landing pages construídos para converter",
+    heroText:
+      "Seu site é o vendedor que trabalha 24 horas — mas só se carregar rápido, explicar bem e conduzir à ação. A FlowAI desenvolve sites e landing pages com performance real, SEO técnico correto e medição de ponta a ponta.",
+    problemTitle: "O que faz um site desperdiçar visitas",
+    problems: [
+      "Carregamento lento, principalmente no celular.",
+      "Texto institucional que não responde à dúvida de quem chega.",
+      "Falta de chamada clara para a próxima ação.",
+      "Formulários longos que espantam o contato.",
+      "Nenhum dado sobre o que os visitantes fazem na página.",
+    ],
+    deliverablesTitle: "Como a FlowAI constrói páginas",
+    deliverables: [
+      { title: "Sites institucionais", desc: "Estrutura completa da presença digital, com arquitetura SEO e identidade consistente." },
+      { title: "Landing pages de campanha", desc: "Páginas coerentes com o anúncio, focadas em uma única conversão." },
+      { title: "Performance", desc: "Core Web Vitals como meta de engenharia: páginas leves, imagens otimizadas, código enxuto." },
+      { title: "Acessibilidade", desc: "Navegação por teclado, contraste, leitores de tela — páginas que funcionam para todos." },
+      { title: "SEO técnico", desc: "Metas, dados estruturados, sitemap e semântica corretos desde a publicação." },
+      { title: "Tracking integrado", desc: "Eventos de conversão e UTMs configurados junto com a página, não depois." },
+    ],
+    process: [
+      { title: "Descoberta", desc: "Público, oferta, objeções e objetivo da página definidos antes do layout." },
+      { title: "Estrutura e copy", desc: "Argumento e hierarquia da página escritos primeiro; o design serve à mensagem." },
+      { title: "Design e desenvolvimento", desc: "Interface na identidade da sua marca, implementada com performance." },
+      { title: "Testes e publicação", desc: "Validação em dispositivos reais, tracking conferido, página no ar." },
+    ],
+    faq: [
+      { q: "Vocês trabalham com qual tecnologia?", a: "Escolhemos a tecnologia pelo objetivo: sites estáticos ultrarrápidos para páginas de conversão, frameworks modernos quando há área logada ou integração. Sempre com código de qualidade e sem dependência de plugin frágil." },
+      { q: "O site fica meu?", a: "Sim — código, domínio, conteúdo e acessos ficam em nome da sua empresa, com documentação de tudo." },
+      { q: "Vocês fazem manutenção depois?", a: "Sim. Oferecemos evolução contínua: melhorias, testes A/B, novas páginas e atualizações de conteúdo." },
+      { q: "Landing page única ou site completo?", a: "Depende do momento. Para validar campanha, uma landing page basta; para construir presença orgânica, o site completo com blog é o caminho. O diagnóstico ajuda a decidir." },
+    ],
+    related: [
+      { title: "Gestão de tráfego pago", href: "/gestao-de-trafego-pago/" },
+      { title: "SEO e conteúdo", href: "/seo-e-conteudo/" },
+      { title: "Sistemas personalizados", href: "/desenvolvimento-de-sistemas-personalizados/" },
+    ],
+    ctaTitle: "Precisa de uma página que trabalhe pelo seu comercial?",
+    breadcrumbLabel: "Sites e landing pages",
+  },
+  {
+    slug: "tracking-e-analytics",
+    pillar: "marketing",
+    waKey: "marketing",
+    metaTitle: "Tracking, Analytics e Atribuição de Marketing",
+    metaDescription:
+      "Implantação de tracking, analytics, atribuição e dashboards: saiba de onde vêm suas vendas e decida verba com dado confiável, do clique ao contrato.",
+    h1: "Tracking e analytics: saiba de onde vêm suas vendas",
+    heroText:
+      "Sem medição confiável, toda decisão de marketing é aposta. A FlowAI implanta a camada de dados da sua aquisição — eventos, UTMs, atribuição e dashboards — conectando plataformas de mídia, site, WhatsApp e CRM em uma visão única.",
+    problemTitle: "Sinais de que seus dados não são confiáveis",
+    problems: [
+      "Cada plataforma reivindica a mesma venda e os números nunca fecham.",
+      "Leads chegam sem origem: ninguém sabe qual campanha os trouxe.",
+      "Eventos de conversão disparando duplicados ou não disparando.",
+      "Relatório de mídia separado do relatório comercial.",
+      "Decisões de verba tomadas por sensação.",
+    ],
+    deliverablesTitle: "A camada de dados que a FlowAI implanta",
+    deliverables: [
+      { title: "Plano de medição", desc: "Definição dos eventos que importam para o seu funil — do clique à venda." },
+      { title: "Implementação de tags", desc: "Google Tag Manager, GA4 e pixels configurados sem duplicação e com governança." },
+      { title: "Rastreio de origem", desc: "UTMs, GCLID e FBCLID capturados e carregados até o CRM em cada lead." },
+      { title: "Atribuição", desc: "Modelos de atribuição adequados ao seu ciclo de venda, com limitações explicadas com honestidade." },
+      { title: "Dashboards", desc: "Painéis que unem mídia, site e comercial em uma visão que a diretoria entende." },
+      { title: "Privacidade", desc: "Coleta em conformidade com a LGPD: consentimento, minimização e transparência." },
+    ],
+    process: [
+      { title: "Auditoria de dados", desc: "O que é medido hoje, o que está quebrado e o que falta." },
+      { title: "Plano de medição", desc: "Eventos, parâmetros e destinos documentados." },
+      { title: "Implementação", desc: "Tags, integrações e testes de disparo em ambiente real." },
+      { title: "Painéis e rotina", desc: "Dashboards publicados e rotina de leitura com o seu time." },
+    ],
+    faq: [
+      { q: "Vocês trabalham com tracking server-side?", a: "Sim, quando o volume e o contexto justificam. Explicamos custos e benefícios com transparência — server-side melhora a qualidade do dado, mas não é bala de prata nem 'imune' a tudo." },
+      { q: "É possível atribuir 100% das vendas?", a: "Não, e desconfie de quem promete isso. Sempre existe perda por bloqueadores, janelas de atribuição e jornadas offline. O objetivo é maximizar a confiabilidade e conhecer as limitações do dado." },
+      { q: "Que ferramentas vocês usam?", a: "GA4, Google Tag Manager, pixels das plataformas de mídia e dashboards em ferramentas como Looker Studio — além de integrações com seu CRM. A escolha final depende do seu stack." },
+      { q: "Isso funciona para quem vende pelo WhatsApp?", a: "Sim — é uma das nossas especialidades: registrar a origem da conversa e conectá-la ao fechamento no CRM." },
+    ],
+    related: [
+      { title: "Gestão de tráfego pago", href: "/gestao-de-trafego-pago/" },
+      { title: "CRM personalizado", href: "/crm-personalizado-e-automacao-de-vendas/" },
+      { title: "Integrações de sistemas e APIs", href: "/integracoes-de-sistemas-e-apis/" },
+    ],
+    ctaTitle: "Quer decidir verba com dado confiável?",
+    breadcrumbLabel: "Tracking e analytics",
+  },
+
+  // ================= PILAR IA =================
+  {
+    slug: "agencia-de-inteligencia-artificial",
+    pillar: "ia",
+    waKey: "ia",
+    metaTitle: "Agência de Inteligência Artificial para Empresas",
+    metaDescription:
+      "Agência de inteligência artificial para empresas: agentes de IA, automação de processos, atendimento inteligente e integração com suas ferramentas — com segurança e supervisão humana.",
+    h1: "Inteligência artificial aplicada ao seu negócio — sem hype, com processo",
+    heroText:
+      "IA não é mágica: é tecnologia que precisa ser aplicada ao processo certo, com dados organizados e supervisão adequada. A FlowAI identifica onde a IA gera impacto real na sua operação e implanta soluções que funcionam no dia a dia — do atendimento à gestão interna.",
+    problemTitle: "Por que projetos de IA falham nas empresas",
+    problems: [
+      "Começam pela ferramenta, não pelo processo que precisa melhorar.",
+      "Automatizam um fluxo desorganizado — e aceleram o caos.",
+      "Sem integração com CRM e sistemas, a IA vira ilha.",
+      "Sem supervisão humana, erros passam despercebidos.",
+      "Sem medição, ninguém sabe se valeu a pena.",
+    ],
+    deliverablesTitle: "Como a FlowAI aplica IA na sua empresa",
+    deliverables: [
+      { title: "Diagnóstico de oportunidades", desc: "Mapeamos seus processos e priorizamos onde a IA tem retorno mais claro." },
+      { title: "Agentes de IA", desc: "Assistentes configurados para tarefas específicas: atendimento, qualificação, resumo, organização." },
+      { title: "Automação de processos", desc: "Fluxos que conectam ferramentas e eliminam etapas manuais repetitivas." },
+      { title: "Assistentes internos", desc: "IA para a sua equipe: consulta a documentos, apoio a propostas, rotinas administrativas." },
+      { title: "Integração com seu stack", desc: "CRM, WhatsApp, planilhas, ERPs e APIs conectados aos fluxos de IA." },
+      { title: "Governança e segurança", desc: "Regras claras, aprovação humana em pontos críticos e cuidado com dados sensíveis." },
+    ],
+    process: [
+      { title: "Mapeamento", desc: "Processos, volumes, ferramentas e gargalos documentados." },
+      { title: "Prova de valor", desc: "Implantação em um processo delimitado, com critério de sucesso definido." },
+      { title: "Expansão", desc: "O que funcionou escala para outros fluxos, com integração crescente." },
+      { title: "Operação assistida", desc: "Monitoramento, ajuste de comportamento e evolução contínua dos agentes." },
+    ],
+    faq: [
+      { q: "IA serve para empresa do meu tamanho?", a: "Se existe tarefa repetitiva em volume — responder, classificar, copiar dado, conferir, resumir — existe caso de uso. O diagnóstico identifica se o retorno justifica o investimento no seu contexto." },
+      { q: "Meus dados ficam seguros?", a: "Tratamos segurança como requisito: acesso mínimo necessário, credenciais protegidas, dados sensíveis fora de prompts quando possível e conformidade com a LGPD." },
+      { q: "A IA vai responder errado para meus clientes?", a: "Todo agente é configurado com escopo, tom e limites — e testado antes de ir ao ar. Em temas críticos, a conversa é encaminhada para humanos. Monitoramos e ajustamos continuamente." },
+      { q: "Que tecnologias vocês usam?", a: "Trabalhamos com os principais modelos de linguagem do mercado e ferramentas de orquestração, escolhidos por caso de uso, custo e requisito de privacidade — não por moda." },
+    ],
+    related: [
+      { title: "Agentes de IA para empresas", href: "/agentes-de-ia-para-empresas/" },
+      { title: "Automação de processos com IA", href: "/automacao-de-processos-com-ia/" },
+      { title: "Chatbot com IA para WhatsApp", href: "/chatbot-com-ia-para-whatsapp/" },
+    ],
+    ctaTitle: "Quer descobrir onde a IA gera impacto real na sua operação?",
+    breadcrumbLabel: "Inteligência artificial",
+  },
+  {
+    slug: "automacao-de-processos-com-ia",
+    pillar: "ia",
+    waKey: "ia",
+    metaTitle: "Automação de Processos com Inteligência Artificial",
+    metaDescription:
+      "Automação de processos com IA: elimine tarefas manuais, conecte ferramentas e ganhe velocidade com fluxos automatizados, monitorados e com aprovação humana onde importa.",
+    h1: "Automação de processos com IA: menos tarefa manual, mais operação",
+    heroText:
+      "Toda empresa tem horas de trabalho presas em copiar, conferir, encaminhar e atualizar. A FlowAI mapeia esses fluxos e os transforma em automações confiáveis — com IA onde há interpretação envolvida e aprovação humana onde há risco.",
+    problemTitle: "Onde sua operação perde tempo hoje",
+    problems: [
+      "Dados digitados duas vezes em sistemas diferentes.",
+      "Documentos conferidos e renomeados manualmente.",
+      "Cobranças, lembretes e follow-ups dependendo de memória.",
+      "Relatórios montados à mão toda semana.",
+      "Solicitações internas viajando por e-mail sem rastreio.",
+    ],
+    deliverablesTitle: "Tipos de automação que implantamos",
+    deliverables: [
+      { title: "Automação comercial", desc: "Lead entra, é enriquecido, distribuído e acompanhado sem digitação manual." },
+      { title: "Automação de atendimento", desc: "Primeiras respostas, triagem e encaminhamento com contexto." },
+      { title: "Automação de documentos", desc: "Leitura, extração de dados, classificação e arquivamento de arquivos com IA." },
+      { title: "Automação de cobrança", desc: "Réguas de comunicação e conciliação conectadas ao financeiro." },
+      { title: "Automação de suporte", desc: "Respostas a perguntas frequentes e abertura organizada de chamados." },
+      { title: "RPA e integrações", desc: "Robôs de processo e conexões via API entre os sistemas que você já usa." },
+    ],
+    process: [
+      { title: "Mapeamento do fluxo", desc: "Como o processo roda hoje, passo a passo, com volumes e exceções." },
+      { title: "Desenho da automação", desc: "O fluxo futuro, com pontos de aprovação humana definidos." },
+      { title: "Construção e testes", desc: "Automação implementada e testada com casos reais e casos-limite." },
+      { title: "Monitoramento", desc: "Logs, alertas de falha e melhoria contínua do fluxo." },
+    ],
+    faq: [
+      { q: "Como sei se um processo vale a pena automatizar?", a: "Critérios simples: frequência, tempo gasto, taxa de erro e criticidade. No diagnóstico calculamos junto com você o custo atual do processo manual para comparar com o investimento." },
+      { q: "E quando o processo tem exceções?", a: "Exceções são mapeadas no desenho: o que a automação resolve sozinha, o que ela encaminha para uma pessoa decidir. Automação boa sabe quando parar." },
+      { q: "Que ferramentas vocês usam?", a: "Plataformas de orquestração e integração consolidadas, APIs oficiais e, quando necessário, código sob medida. A escolha depende do seu stack e do custo total." },
+      { q: "A automação quebra se o sistema mudar?", a: "Monitoramos os fluxos com alertas de falha e mantemos a automação em evolução. Mudanças de sistema entram como manutenção planejada." },
+    ],
+    related: [
+      { title: "Agentes de IA para empresas", href: "/agentes-de-ia-para-empresas/" },
+      { title: "Integrações de sistemas e APIs", href: "/integracoes-de-sistemas-e-apis/" },
+      { title: "Sistemas personalizados", href: "/desenvolvimento-de-sistemas-personalizados/" },
+    ],
+    ctaTitle: "Quantas horas por semana sua equipe perde em tarefa repetitiva?",
+    breadcrumbLabel: "Automação com IA",
+  },
+  {
+    slug: "agentes-de-ia-para-empresas",
+    pillar: "ia",
+    waKey: "ia",
+    metaTitle: "Agentes de IA para Empresas — Atendimento, Vendas e Operação",
+    metaDescription:
+      "Agentes de IA configurados para o processo da sua empresa: atendimento, qualificação de leads, follow-up, organização de dados e apoio interno, com supervisão humana.",
+    h1: "Agentes de IA que trabalham no seu processo, não em um roteiro genérico",
+    heroText:
+      "Um agente de IA é um assistente digital com função, contexto e limites definidos. A FlowAI projeta agentes para tarefas específicas da sua operação — atender, qualificar, acompanhar, organizar — integrados às suas ferramentas e supervisionados pela sua equipe.",
+    problemTitle: "A diferença entre chatbot genérico e agente bem projetado",
+    problems: [
+      "Chatbot de árvore que trava na primeira pergunta fora do script.",
+      "Respostas genéricas que ignoram o contexto do cliente.",
+      "Conversa que não vira registro: nada entra no CRM.",
+      "Falta de limite claro: o robô responde o que não devia.",
+      "Nenhuma métrica de qualidade das conversas.",
+    ],
+    deliverablesTitle: "Agentes que a FlowAI projeta",
+    deliverables: [
+      { title: "Agente de atendimento", desc: "Recebe o contato, entende a necessidade e responde com o tom da sua marca." },
+      { title: "Agente de qualificação", desc: "Coleta as informações que o comercial precisa e classifica a oportunidade." },
+      { title: "Agente de follow-up", desc: "Retoma conversas paradas com contexto e cadência adequada." },
+      { title: "Agente de organização", desc: "Atualiza CRM, gera resumos de conversas e mantém dados consistentes." },
+      { title: "Assistente interno", desc: "Apoia sua equipe com consulta a documentos, propostas e rotinas." },
+      { title: "Orquestração", desc: "Vários agentes cooperando no mesmo fluxo, com encaminhamento humano definido." },
+    ],
+    process: [
+      { title: "Definição de função", desc: "O que o agente faz, o que não faz e como mede sucesso." },
+      { title: "Configuração e contexto", desc: "Tom de voz, conhecimento do negócio, integrações e limites." },
+      { title: "Testes supervisionados", desc: "Conversas reais em ambiente controlado antes do lançamento." },
+      { title: "Operação e ajuste", desc: "Monitoramento de qualidade e evolução contínua do comportamento." },
+    ],
+    faq: [
+      { q: "Agente de IA substitui o chatbot que já tenho?", a: "Depende do que o atual faz. Muitas empresas mantêm fluxos simples de botão e adicionam o agente para os casos que exigem interpretação. Avaliamos na análise do seu cenário." },
+      { q: "O agente atende por quais canais?", a: "WhatsApp é o mais comum no Brasil, mas também site, Instagram e canais internos como e-mail — depende de onde seus clientes estão." },
+      { q: "Como o agente aprende sobre minha empresa?", a: "Estruturamos uma base de conhecimento com seus materiais reais (serviços, políticas, dúvidas frequentes) e configuramos o comportamento. O agente não inventa: quando não sabe, encaminha." },
+      { q: "E se o cliente pedir um humano?", a: "É regra básica de qualquer agente nosso: pedir humano transfere imediatamente, com o histórico da conversa junto." },
+    ],
+    related: [
+      { title: "Chatbot com IA para WhatsApp", href: "/chatbot-com-ia-para-whatsapp/" },
+      { title: "Automação de processos com IA", href: "/automacao-de-processos-com-ia/" },
+      { title: "CRM personalizado", href: "/crm-personalizado-e-automacao-de-vendas/" },
+    ],
+    ctaTitle: "Qual tarefa da sua operação um agente resolveria primeiro?",
+    breadcrumbLabel: "Agentes de IA",
+  },
+  {
+    slug: "chatbot-com-ia-para-whatsapp",
+    pillar: "ia",
+    waKey: "ia",
+    metaTitle: "Chatbot com IA para WhatsApp — Atendimento Inteligente",
+    metaDescription:
+      "Chatbot com inteligência artificial para WhatsApp: atendimento imediato, qualificação de leads e integração com CRM, com transferência para humano quando importa.",
+    h1: "Atendimento com IA no WhatsApp: rápido para o cliente, organizado para a equipe",
+    heroText:
+      "No Brasil, o negócio acontece no WhatsApp. A FlowAI implanta atendimento com IA no seu número: resposta imediata a qualquer hora, qualificação com as perguntas certas e registro automático no CRM — com transferência fluida para sua equipe quando a conversa precisa de gente.",
+    problemTitle: "O custo invisível do WhatsApp desorganizado",
+    problems: [
+      "Cliente esperando horas pela primeira resposta.",
+      "Conversas espalhadas em aparelhos pessoais, sem registro.",
+      "Atendente copiando dados da conversa para o CRM (quando copia).",
+      "Sem padrão de qualificação: cada um pergunta uma coisa.",
+      "Impossível medir tempo de resposta e taxa de conversão por atendente.",
+    ],
+    deliverablesTitle: "O que implantamos no seu WhatsApp",
+    deliverables: [
+      { title: "Atendimento imediato", desc: "Primeira resposta na hora, em qualquer horário, com o tom da sua marca." },
+      { title: "Qualificação inteligente", desc: "O agente entende a necessidade e coleta as informações que o comercial precisa." },
+      { title: "Integração com CRM", desc: "Cada conversa vira registro com origem, dados e etapa do funil." },
+      { title: "Transferência para humano", desc: "Regras claras de quando e para quem transferir, com histórico completo." },
+      { title: "Cadências de follow-up", desc: "Retomada automática de conversas paradas, sem parecer spam." },
+      { title: "Métricas de atendimento", desc: "Tempo de resposta, volume, motivos de contato e conversão visíveis." },
+    ],
+    process: [
+      { title: "Desenho do fluxo", desc: "Jornadas de atendimento mapeadas: comercial, suporte, pós-venda." },
+      { title: "Configuração", desc: "Agente treinado no seu contexto, integrado a número oficial e CRM." },
+      { title: "Piloto supervisionado", desc: "Operação assistida com ajustes de comportamento em conversas reais." },
+      { title: "Escala", desc: "Ampliação para mais fluxos e rotina de melhoria contínua." },
+    ],
+    faq: [
+      { q: "Funciona com WhatsApp Business normal ou precisa de API?", a: "Para automação profissional e estável, o caminho é a plataforma oficial (WhatsApp Business Platform). Orientamos todo o processo de configuração — e explicamos custos envolvidos com transparência." },
+      { q: "O robô vai parecer robô?", a: "O agente conversa com naturalidade e se identifica como assistente virtual — transparência que a política do WhatsApp e a boa experiência exigem. O objetivo não é enganar: é resolver rápido." },
+      { q: "Posso manter minha equipe atendendo junto?", a: "Sim — esse é o desenho recomendado: IA cuida de primeira resposta, triagem e repetição; sua equipe assume negociações e casos sensíveis." },
+      { q: "E a LGPD nas conversas?", a: "Implantamos coleta mínima, avisos adequados e processos para atender solicitações de titulares. Dados de conversa são tratados com o mesmo rigor de qualquer dado pessoal." },
+    ],
+    related: [
+      { title: "Agentes de IA para empresas", href: "/agentes-de-ia-para-empresas/" },
+      { title: "CRM personalizado", href: "/crm-personalizado-e-automacao-de-vendas/" },
+      { title: "Tracking e analytics", href: "/tracking-e-analytics/" },
+    ],
+    ctaTitle: "Quantos clientes esfriaram esperando resposta esta semana?",
+    breadcrumbLabel: "Chatbot para WhatsApp",
+  },
+
+  // ================= PILAR SISTEMAS =================
+  {
+    slug: "desenvolvimento-de-sistemas-personalizados",
+    pillar: "sistemas",
+    waKey: "sistemas",
+    metaTitle: "Desenvolvimento de Sistemas Personalizados e Software Sob Medida",
+    metaDescription:
+      "Desenvolvimento de sistemas personalizados e software sob medida: sistemas web, plataformas internas, portais e painéis construídos para o processo específico da sua empresa.",
+    h1: "Desenvolvimento de sistemas personalizados para o seu processo — não o contrário",
+    heroText:
+      "Software pronto obriga sua empresa a se adaptar à ferramenta. O sistema sob medida nasce do seu processo: cada tela, regra e integração construída para o jeito que sua operação realmente funciona — e preparada para evoluir junto com o negócio. Este é um dos pilares centrais da FlowAI.",
+    problemTitle: "Sinais de que sua empresa superou o software pronto",
+    problems: [
+      "Planilhas fazendo papel de sistema — com versões conflitantes.",
+      "Ferramenta genérica cheia de campos que ninguém usa e sem os que você precisa.",
+      "Processos importantes rodando fora de qualquer sistema.",
+      "Licenças caras para funcionalidades que não se encaixam.",
+      "Informação da operação espalhada, sem visão de controle.",
+    ],
+    deliverablesTitle: "Sistemas que a FlowAI desenvolve",
+    deliverables: [
+      { title: "Sistemas web personalizados", desc: "Aplicações completas acessadas pelo navegador, com controle de acesso por perfil." },
+      { title: "Plataformas internas", desc: "Gestão de operação, produção, projetos ou logística no fluxo da sua empresa." },
+      { title: "Portais de clientes e parceiros", desc: "Área logada para acompanhamento, documentos, solicitações e comunicação." },
+      { title: "Painéis administrativos", desc: "Gestão centralizada de dados, usuários e regras do negócio." },
+      { title: "Dashboards operacionais", desc: "Indicadores da operação em tempo real, conectados às fontes de dados." },
+      { title: "Modernização de sistemas", desc: "Substituição gradual de sistemas legados, sem parar a operação." },
+    ],
+    process: [
+      { title: "Descoberta", desc: "Imersão no processo real: quem faz o quê, com qual ferramenta, onde trava." },
+      { title: "Arquitetura", desc: "Desenho técnico e funcional da solução, com escopo de fases claro." },
+      { title: "Protótipo", desc: "Versão navegável para validar fluxos antes de investir em desenvolvimento pesado." },
+      { title: "Desenvolvimento", desc: "Construção em ciclos curtos, com entregas que você acompanha e testa." },
+      { title: "Integração e implantação", desc: "Conexão com seus sistemas, migração de dados e treinamento da equipe." },
+      { title: "Evolução", desc: "Manutenção, novos módulos e melhorias contínuas pós-lançamento." },
+    ],
+    faq: [
+      { q: "Quanto custa desenvolver um sistema personalizado?", a: "Depende do escopo: número de fluxos, integrações, perfis de usuário e complexidade das regras. Após o mapeamento, você recebe proposta com fases e investimento claros — geralmente começando por um MVP que ataca o gargalo principal." },
+      { q: "Quanto tempo leva?", a: "Projetos bem recortados entregam a primeira versão útil em semanas ou poucos meses, dependendo do escopo. O protótipo e o faseamento evitam o projeto interminável." },
+      { q: "O código-fonte é meu?", a: "Sim. O sistema desenvolvido para a sua empresa pertence a você — código, dados e documentação, com essa condição em contrato." },
+      { q: "E se minha equipe não for técnica?", a: "O sistema é desenhado para quem vai usá-lo, com treinamento incluído na implantação. Depois, a FlowAI segue como parceira de evolução e suporte." },
+      { q: "Sistema sob medida ou software pronto?", a: "Se um software pronto resolve 90% do seu processo, provavelmente é o melhor caminho — e falamos isso com franqueza. Sob medida vale quando o processo é diferencial competitivo ou quando as adaptações do pronto custam mais que construir certo." },
+    ],
+    related: [
+      { title: "SaaS, MVP e produtos digitais", href: "/desenvolvimento-de-saas-e-mvp/" },
+      { title: "CRM personalizado", href: "/crm-personalizado-e-automacao-de-vendas/" },
+      { title: "Integrações de sistemas e APIs", href: "/integracoes-de-sistemas-e-apis/" },
+    ],
+    ctaTitle: "Seu processo merece um sistema que trabalhe do seu jeito?",
+    breadcrumbLabel: "Sistemas personalizados",
+  },
+  {
+    slug: "desenvolvimento-de-saas-e-mvp",
+    pillar: "sistemas",
+    waKey: "sistemas",
+    metaTitle: "Desenvolvimento de SaaS, MVP e Produtos Digitais",
+    metaDescription:
+      "Desenvolvimento de SaaS, MVP e produtos digitais: da validação da ideia à plataforma escalável, com arquitetura sólida, cobrança recorrente e evolução contínua.",
+    h1: "Do MVP ao SaaS: construímos seu produto digital com método",
+    heroText:
+      "Toda plataforma grande começou pequena — mas com arquitetura certa. A FlowAI desenvolve produtos digitais em fases: MVP para validar com usuários reais, base técnica que aguenta crescer e evolução guiada pelo uso, não pelo palpite.",
+    problemTitle: "Onde produtos digitais morrem",
+    problems: [
+      "Meses de desenvolvimento antes do primeiro usuário real.",
+      "Escopo inicial gigante, cheio de funcionalidades que ninguém pediu.",
+      "Arquitetura frágil que trava quando o produto cresce.",
+      "Falta de visão de negócio: produto sem modelo de receita claro.",
+      "Fornecedor que some depois do lançamento.",
+    ],
+    deliverablesTitle: "O que entra no desenvolvimento do seu produto",
+    deliverables: [
+      { title: "Descoberta de produto", desc: "Proposta de valor, usuário-alvo e recorte do MVP definidos com critério." },
+      { title: "Prototipagem", desc: "Fluxos navegáveis para testar a experiência antes de codificar." },
+      { title: "MVP funcional", desc: "A menor versão que entrega valor real e permite aprender com usuários." },
+      { title: "Arquitetura escalável", desc: "Multi-tenant, autenticação, permissões e infraestrutura pensadas para crescer." },
+      { title: "Cobrança e assinaturas", desc: "Integração com meios de pagamento e gestão de planos recorrentes." },
+      { title: "Evolução orientada a uso", desc: "Métricas de produto e roadmap contínuo pós-lançamento." },
+    ],
+    process: [
+      { title: "Imersão e recorte", desc: "Entendemos a visão e recortamos o MVP que valida a hipótese central." },
+      { title: "Protótipo e validação", desc: "Interface navegável testada com usuários-alvo." },
+      { title: "Construção do MVP", desc: "Desenvolvimento em ciclos curtos com demonstrações frequentes." },
+      { title: "Lançamento", desc: "Produto no ar com monitoramento, analytics e suporte." },
+      { title: "Tração e evolução", desc: "Aprendizado do uso real vira roadmap das próximas versões." },
+    ],
+    faq: [
+      { q: "Tenho a ideia mas não sou técnico. Vocês assumem tudo?", a: "Sim — da arquitetura à infraestrutura. Você participa das decisões de produto; nós cuidamos da engenharia e explicamos as escolhas em linguagem de negócio." },
+      { q: "Quanto custa um MVP?", a: "Depende do recorte. Nossa função na descoberta é justamente encontrar o menor escopo que valida a ideia — o que costuma reduzir bastante o investimento inicial em relação ao 'produto completo'." },
+      { q: "O produto e o código são meus?", a: "Integralmente. Código, marca, dados e infraestrutura ficam em nome da sua empresa, com documentação e contrato claros." },
+      { q: "Vocês entram como sócios em projetos?", a: "Nosso modelo padrão é o desenvolvimento como serviço, o que mantém seu cap table limpo. Outras estruturas podem ser conversadas caso a caso." },
+    ],
+    related: [
+      { title: "Sistemas personalizados", href: "/desenvolvimento-de-sistemas-personalizados/" },
+      { title: "Integrações de sistemas e APIs", href: "/integracoes-de-sistemas-e-apis/" },
+      { title: "Marketing digital completo", href: "/agencia-de-marketing-digital/" },
+    ],
+    ctaTitle: "Tem um produto digital na cabeça? Vamos validar com método.",
+    breadcrumbLabel: "SaaS e MVP",
+  },
+  {
+    slug: "crm-personalizado-e-automacao-de-vendas",
+    pillar: "sistemas",
+    waKey: "sistemas",
+    metaTitle: "CRM Personalizado e Automação de Vendas",
+    metaDescription:
+      "CRM personalizado e automação comercial: funil desenhado para o seu processo de vendas, integração com WhatsApp e marketing, e automação de follow-up e tarefas.",
+    h1: "CRM do jeito que seu comercial vende — com automação de verdade",
+    heroText:
+      "CRM que a equipe não usa é cemitério de dados. A FlowAI implanta e desenvolve CRMs alinhados ao seu processo real de vendas: funil correto, campos que importam, integração com WhatsApp e marketing, e automações que tiram trabalho da equipe em vez de criar mais uma tela para preencher.",
+    problemTitle: "Por que a maioria dos CRMs fracassa",
+    problems: [
+      "Implantado como veio de fábrica, sem refletir o processo da empresa.",
+      "Vendedor precisa digitar tudo à mão — então não digita.",
+      "WhatsApp fora do CRM: a venda acontece, o registro não.",
+      "Funil desatualizado que a gestão não consegue ler.",
+      "Sem automação: follow-up, tarefa e passagem de etapa dependem de memória.",
+    ],
+    deliverablesTitle: "Como estruturamos seu comercial",
+    deliverables: [
+      { title: "Desenho do processo de vendas", desc: "Etapas, critérios de passagem e responsabilidades definidos antes da ferramenta." },
+      { title: "Implantação ou desenvolvimento", desc: "Configuramos um CRM de mercado sob medida — ou desenvolvemos o seu, quando o processo exige." },
+      { title: "Integração com WhatsApp", desc: "Conversas viram registros com origem e histórico, sem digitação." },
+      { title: "Integração com marketing", desc: "Lead de campanha entra no funil com UTM e contexto — atribuição de ponta a ponta." },
+      { title: "Automação comercial", desc: "Distribuição de leads, tarefas, follow-ups e alertas automáticos." },
+      { title: "Dashboards de vendas", desc: "Funil, conversão por etapa, motivos de perda e previsão em painéis claros." },
+    ],
+    process: [
+      { title: "Mapeamento comercial", desc: "Como sua empresa vende hoje: canais, etapas, gargalos e dados." },
+      { title: "Desenho do funil", desc: "Processo futuro documentado e validado com quem vende." },
+      { title: "Implantação e integrações", desc: "Ferramenta configurada, conectada e testada com dados reais." },
+      { title: "Adoção e rotina", desc: "Treinamento, acompanhamento das primeiras semanas e ajustes de uso." },
+    ],
+    faq: [
+      { q: "CRM pronto ou desenvolvido do zero?", a: "Avaliamo com franqueza: para muitos processos, um CRM de mercado bem configurado resolve. O desenvolvimento sob medida entra quando o seu processo tem particularidades que os prontos não acomodam — ou quando o custo de licenças supera o de construir." },
+      { q: "Minha equipe odeia CRM. Como fazer ela usar?", a: "Atacando a causa: CRM desenhado com quem vende, automação que elimina digitação e integração com o WhatsApp onde a venda já acontece. Adoção é critério de sucesso do projeto, não detalhe." },
+      { q: "Vocês migram os dados do sistema atual?", a: "Sim — planejamos a migração de contatos, histórico e negócios em andamento como parte da implantação." },
+      { q: "Dá para saber qual campanha gerou cada venda?", a: "Esse é exatamente o objetivo da integração marketing-CRM que implantamos: origem capturada no primeiro clique e carregada até o fechamento." },
+    ],
+    related: [
+      { title: "Chatbot com IA para WhatsApp", href: "/chatbot-com-ia-para-whatsapp/" },
+      { title: "Tracking e analytics", href: "/tracking-e-analytics/" },
+      { title: "Sistemas personalizados", href: "/desenvolvimento-de-sistemas-personalizados/" },
+    ],
+    ctaTitle: "Seu funil merece um CRM que a equipe realmente usa.",
+    breadcrumbLabel: "CRM e automação de vendas",
+  },
+  {
+    slug: "integracoes-de-sistemas-e-apis",
+    pillar: "sistemas",
+    waKey: "sistemas",
+    metaTitle: "Integração de Sistemas e APIs para Empresas",
+    metaDescription:
+      "Integração de sistemas, APIs, CRM e ferramentas: conecte o que sua empresa já usa, elimine redigitação e tenha dados consistentes fluindo entre as áreas.",
+    h1: "Integração de sistemas e APIs: faça suas ferramentas conversarem",
+    heroText:
+      "Sua empresa provavelmente já tem as ferramentas — o que falta é conexão entre elas. A FlowAI projeta e implementa integrações via API que eliminam redigitação, sincronizam dados e transformam sistemas isolados em uma operação contínua.",
+    problemTitle: "O custo dos sistemas isolados",
+    problems: [
+      "O mesmo dado digitado no ERP, no CRM e na planilha — três versões da verdade.",
+      "Pedidos, contratos e cadastros transferidos por copiar e colar.",
+      "Sistemas legados que 'não integram com nada' (quase sempre integram).",
+      "Relatórios que exigem exportar CSV de cinco lugares.",
+      "Erros silenciosos descobertos semanas depois.",
+    ],
+    deliverablesTitle: "Integrações que construímos",
+    deliverables: [
+      { title: "Integração entre sistemas", desc: "ERP, CRM, e-commerce, financeiro e logística sincronizados via API." },
+      { title: "Integrações com WhatsApp", desc: "Plataforma oficial conectada a CRM, sistemas e fluxos de automação." },
+      { title: "APIs sob medida", desc: "Desenvolvimento de APIs para expor dados dos seus sistemas com segurança." },
+      { title: "Middleware e orquestração", desc: "Camada central que roteia dados entre ferramentas com regras e logs." },
+      { title: "Integração com legados", desc: "Estratégias para sistemas antigos: API quando há, automação de interface quando não há." },
+      { title: "Sincronização de dados", desc: "Rotinas de consistência com deduplicação, validação e alerta de falha." },
+    ],
+    process: [
+      { title: "Inventário", desc: "Sistemas, dados e fluxos mapeados: o que precisa conversar com o quê." },
+      { title: "Desenho da integração", desc: "Arquitetura, direção dos dados, regras de conflito e segurança." },
+      { title: "Implementação", desc: "Conexões construídas e testadas com volumes reais." },
+      { title: "Monitoramento", desc: "Logs, alertas e manutenção contínua das integrações." },
+    ],
+    faq: [
+      { q: "Meu sistema é antigo e o fornecedor sumiu. Dá para integrar?", a: "Na maioria dos casos, sim: banco de dados acessível, exportações agendadas ou automação de interface são caminhos possíveis. Avaliamos tecnicamente antes de prometer." },
+      { q: "A integração é segura?", a: "Trabalhamos com autenticação adequada, credenciais protegidas, acesso mínimo necessário e trilha de logs. Segurança é requisito de arquitetura, não item opcional." },
+      { q: "E se uma das ferramentas mudar a API?", a: "Integrações têm monitoramento e manutenção: mudanças de API viram atualização planejada, com aviso — não descoberta em produção." },
+      { q: "Integração pontual ou projeto contínuo?", a: "Os dois existem. Uma conexão específica pode ser projeto fechado; ecossistemas maiores costumam evoluir por fases com manutenção contínua." },
+    ],
+    related: [
+      { title: "Automação de processos com IA", href: "/automacao-de-processos-com-ia/" },
+      { title: "Sistemas personalizados", href: "/desenvolvimento-de-sistemas-personalizados/" },
+      { title: "CRM personalizado", href: "/crm-personalizado-e-automacao-de-vendas/" },
+    ],
+    ctaTitle: "Quais dos seus sistemas ainda não se falam?",
+    breadcrumbLabel: "Integrações e APIs",
+  },
+];
+
+export function getService(slug) {
+  return SERVICES.find((s) => s.slug === slug);
+}

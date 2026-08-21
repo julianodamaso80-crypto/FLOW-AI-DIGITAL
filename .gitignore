@@ -44,3 +44,6 @@ site-v9/out/
 site-v9/.next/
 site-v9/tsconfig.tsbuildinfo
 site-v9-entrega.zip
+
+# Saída do gerador do site canônico (rode: node site/build.mjs)
+site/dist/

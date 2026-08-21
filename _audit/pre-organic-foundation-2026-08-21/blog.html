@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog | FlowAI Digital</title>
+    <meta name="description" content="Conteúdo da FlowAI Digital sobre arquitetura operacional, automação, agentes de IA e processos que sustentam o crescimento de uma empresa." />
+    <meta name="theme-color" content="#0F141B" />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://flowaidigital.com.br/blog/" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="FlowAI Digital" />
+    <meta property="og:title" content="Blog | FlowAI Digital" />
+    <meta property="og:description" content="Arquitetura operacional, automação e agentes de IA aplicados a operações reais." />
+    <meta property="og:url" content="https://flowaidigital.com.br/blog/" />
+    <meta property="og:image" content="https://flowaidigital.com.br/images/brand/flowai-logo.png" />
+    <link rel="icon" type="image/png" href="/images/brand/flowai-symbol.png" />
+    <style>
+      :root {
+        --orange: #ff6a00;
+        --amber: #ffb347;
+        --cream: #fff2e2;
+        --graphite: #2b313a;
+        --deep: #0f141b;
+        --black: #070a0f;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+        color: var(--cream);
+        background: var(--deep);
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: inherit; text-decoration: none; }
+
+      /* ---------- cabecalho fixo, igual ao do site ---------- */
+      .hd {
+        position: fixed;
+        inset: 0 0 auto 0;
+        z-index: 90;
+        height: 78px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding-inline: 5vw;
+        background: rgba(10, 14, 20, .82);
+        -webkit-backdrop-filter: blur(14px) saturate(140%);
+        backdrop-filter: blur(14px) saturate(140%);
+        border-bottom: 1px solid rgba(255, 179, 71, .18);
+      }
+      .hd__brand {
+        width: 172px;
+        height: 52px;
+        flex: none;
+        padding: 6px 12px;
+        border-radius: 12px;
+        background: linear-gradient(180deg, #fffaf3 0%, #fff2e2 100%);
+        border: 1px solid rgba(255, 179, 71, .55);
+        box-shadow: 0 2px 14px rgba(255, 106, 0, .28), 0 0 0 4px rgba(255, 106, 0, .07);
+      }
+      .hd__brand img { width: 100%; height: 100%; object-fit: contain; display: block; }
+      .hd__nav { display: flex; gap: 26px; margin-left: auto; font-size: 14px; }
+      .hd__nav a { color: rgba(255, 242, 226, .88); }
+      .hd__nav a:hover, .hd__nav a[aria-current] { color: var(--amber); }
+      .hd__cta {
+        flex: none;
+        padding: 11px 20px;
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--cream);
+        border: 1px solid rgba(255, 179, 71, .55);
+      }
+      .hd__cta:hover { color: var(--black); background: var(--orange); }
+
+      /* ---------- topo ---------- */
+      .hero { padding: 170px 5vw 70px; max-width: 1180px; }
+      .eyebrow {
+        color: var(--amber);
+        text-transform: uppercase;
+        letter-spacing: .18em;
+        font-size: 11px;
+        font-weight: 700;
+        margin: 0 0 18px;
+      }
+      .hero h1 {
+        margin: 0;
+        font-size: clamp(40px, 7vw, 76px);
+        line-height: 1.02;
+        letter-spacing: -.035em;
+        font-weight: 750;
+        text-wrap: balance;
+      }
+      .hero h1 em { color: var(--orange); font-style: normal; }
+      .hero p {
+        margin: 22px 0 0;
+        max-width: 620px;
+        font-size: clamp(15px, 2.2vw, 18px);
+        line-height: 1.6;
+        color: rgba(255, 242, 226, .72);
+      }
+
+      /* ---------- pautas ---------- */
+      .wrap { padding: 20px 5vw 90px; max-width: 1180px; }
+      .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 18px; }
+      .card {
+        padding: 30px 26px;
+        border-radius: 16px;
+        background: linear-gradient(150deg, var(--graphite), var(--deep));
+        border: 1px solid rgba(255, 255, 255, .09);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        min-height: 210px;
+        transition: border-color .25s ease, transform .25s ease;
+      }
+      .card:hover { border-color: rgba(255, 106, 0, .5); transform: translateY(-3px); }
+      .card span {
+        color: var(--amber);
+        text-transform: uppercase;
+        letter-spacing: .14em;
+        font-size: 10px;
+        font-weight: 700;
+      }
+      .card h2 { margin: 0; font-size: 21px; line-height: 1.22; letter-spacing: -.02em; font-weight: 700; }
+      .card p { margin: 0; font-size: 14px; line-height: 1.6; color: rgba(255, 242, 226, .68); }
+      .tag {
+        margin-top: auto;
+        align-self: flex-start;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--amber);
+        border: 1px solid rgba(255, 179, 71, .38);
+      }
+
+      /* ---------- chamada final ---------- */
+      .cta {
+        margin: 0 5vw 90px;
+        max-width: 1180px;
+        padding: clamp(34px, 5vw, 60px);
+        border-radius: 20px;
+        background: linear-gradient(135deg, var(--graphite), var(--deep));
+        border: 1px solid rgba(255, 106, 0, .4);
+      }
+      .cta h2 { margin: 0 0 14px; font-size: clamp(26px, 4vw, 38px); line-height: 1.1; letter-spacing: -.03em; }
+      .cta p { margin: 0 0 26px; max-width: 560px; color: rgba(255, 242, 226, .72); line-height: 1.6; }
+      .btn {
+        display: inline-block;
+        padding: 15px 30px;
+        border-radius: 999px;
+        font-weight: 700;
+        color: var(--black);
+        background: var(--orange);
+      }
+      .btn:hover { background: var(--amber); }
+
+      footer {
+        padding: 34px 5vw;
+        background: var(--black);
+        border-top: 1px solid rgba(255, 255, 255, .07);
+        font-size: 13px;
+        color: rgba(255, 242, 226, .55);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        justify-content: space-between;
+      }
+
+      /* ---------- celular ---------- */
+      @media (max-width: 900px) {
+        .grid { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (max-width: 760px) {
+        .hd { height: 64px; padding-inline: 20px; gap: 12px; background: rgba(10, 14, 20, .93); }
+        .hd__brand { width: 132px; height: 42px; padding: 5px 9px; }
+        .hd__nav { display: none; }
+        .hd__cta { margin-left: auto; padding: 9px 15px; font-size: 12px; }
+        .hero { padding: 108px 20px 46px; }
+        .wrap { padding: 12px 20px 64px; }
+        .grid { grid-template-columns: 1fr; gap: 14px; }
+        .card { min-height: 0; padding: 24px 20px; }
+        .cta { margin: 0 20px 64px; border-radius: 16px; }
+        .btn { display: block; text-align: center; }
+        footer { padding: 26px 20px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hd">
+      <a class="hd__brand" href="/" aria-label="FlowAI Digital — início">
+        <img src="/images/brand/flowai-logo.png" alt="FlowAI Digital" />
+      </a>
+      <nav class="hd__nav" aria-label="Navegação principal">
+        <a href="/#inicio">Ecossistema</a>
+        <a href="/#construimos">O que construímos</a>
+        <a href="/#como-funciona">Como funciona</a>
+        <a href="/#duvidas">Dúvidas</a>
+        <a href="/blog/" aria-current="page">Blog</a>
+      </nav>
+      <a class="hd__cta" href="/#diagnostico">Construir meu ecossistema</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <p class="eyebrow">Blog FlowAI</p>
+        <h1>Processo, dados e <em>IA aplicada</em> a operações reais.</h1>
+        <p>
+          Aqui a gente escreve sobre o que realmente sustenta o crescimento de uma
+          empresa: processo desenhado, dados confiáveis e automação que trabalha
+          junto com as pessoas — sem promessa fácil.
+        </p>
+      </section>
+
+      <section class="wrap">
+        <p class="eyebrow">Primeiras pautas</p>
+        <div class="grid">
+          <article class="card">
+            <span>Operação</span>
+            <h2>Por que mais ferramentas não resolvem o gargalo</h2>
+            <p>O custo escondido de empilhar sistemas que não conversam entre si — e como identificar onde a operação realmente trava.</p>
+            <em class="tag">Em breve</em>
+          </article>
+          <article class="card">
+            <span>Dados</span>
+            <h2>Tracking que sustenta decisão</h2>
+            <p>O que medir do primeiro clique ao fechamento para parar de decidir investimento por achismo.</p>
+            <em class="tag">Em breve</em>
+          </article>
+          <article class="card">
+            <span>Inteligência artificial</span>
+            <h2>Agentes de IA: onde fazem diferença de verdade</h2>
+            <p>Os pontos do comercial em que um agente entrega resultado — e aqueles em que ele só cria retrabalho.</p>
+            <em class="tag">Em breve</em>
+          </article>
+        </div>
+      </section>
+
+      <section class="cta">
+        <h2>Quer o diagnóstico antes do conteúdo?</h2>
+        <p>
+          Em 30 minutos a gente mapeia sua operação e aponta onde está o gargalo.
+          Gratuito, e você sai com um plano de ação.
+        </p>
+        <a class="btn" href="/#diagnostico">Construir meu ecossistema</a>
+      </section>
+    </main>
+
+    <footer>
+      <span>© FlowAI Digital — Rio de Janeiro</span>
+      <a href="/">Voltar para o site</a>
+    </footer>
+  </body>
+</html>

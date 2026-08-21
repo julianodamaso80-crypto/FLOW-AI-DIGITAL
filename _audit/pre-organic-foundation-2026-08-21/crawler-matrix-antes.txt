@@ -1,0 +1,12 @@
+CRAWLER              HTTP   BYTES      CONTENT-TYPE
+------------------------------------------------------------
+Googlebot            200    2240       text/html;
+bingbot              200    2240       text/html;
+OAI-SearchBot        403    25         text/plain
+ChatGPT-User         403    25         text/plain
+Claude-SearchBot     403    25         text/plain
+Claude-User          403    25         text/plain
+PerplexityBot        403    25         text/plain
+Perplexity-User      403    25         text/plain
+GPTBot               403    25         text/plain
+ClaudeBot            403    25         text/plain

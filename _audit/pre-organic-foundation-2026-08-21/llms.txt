@@ -1,0 +1,24 @@
+# FlowAI Digital
+
+> A FlowAI desenha processos e constrói ecossistemas operacionais personalizados com inteligência artificial.
+
+## Oferta principal
+
+- CRM personalizado
+- ERP personalizado
+- Automação de processos
+- Agentes de IA para empresas
+- Integração de sistemas e APIs
+- Dashboards e dados operacionais
+
+## Como trabalhamos
+
+1. Diagnóstico da operação
+2. Arquitetura de processos, dados, pessoas e sistemas
+3. Construção e integração dos módulos necessários
+4. Medição e evolução contínua
+
+## Contato
+
+- Site: https://flowaidigital.com.br/
+- WhatsApp: +55 21 99220-8062

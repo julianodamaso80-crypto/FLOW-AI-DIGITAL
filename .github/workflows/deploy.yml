@@ -1,15 +1,58 @@
 name: Deploy to EasyPanel
 
+# A URL de deploy contém um token e NUNCA pode voltar para este arquivo.
+# Ela vive em Settings > Secrets and variables > Actions > EASYPANEL_DEPLOY_URL.
+# O token anterior estava em texto claro aqui, em repositório público —
+# considerá-lo comprometido e rotacionar no EasyPanel antes de reusar.
+
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger EasyPanel deploy
+      - name: Verificar que o segredo está configurado
+        env:
+          DEPLOY_URL: ${{ secrets.EASYPANEL_DEPLOY_URL }}
         run: |
-          curl -s --max-time 300 -X GET "http://31.97.30.227:3000/api/deploy/67268b07e9d982f5c2b4e76c2c503dd020c80f17519c42ab"
-          echo "Deploy triggered"
+          if [ -z "$DEPLOY_URL" ]; then
+            echo "::error::EASYPANEL_DEPLOY_URL não está configurado."
+            echo "Cadastre o segredo em Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+          echo "Segredo presente."
+
+      - name: Disparar deploy
+        env:
+          DEPLOY_URL: ${{ secrets.EASYPANEL_DEPLOY_URL }}
+        run: |
+          # -o /dev/null para que nenhum eco da URL ou do corpo vaze no log.
+          status=$(curl -s -o /dev/null -w '%{http_code}' --max-time 300 "$DEPLOY_URL")
+          echo "EasyPanel respondeu HTTP $status"
+          case "$status" in
+            2*) echo "Deploy disparado." ;;
+            *)  echo "::error::EasyPanel respondeu HTTP $status — deploy não confirmado."; exit 1 ;;
+          esac
+
+      - name: Smoke test da produção
+        run: |
+          # O build do EasyPanel é assíncrono; espera o container voltar antes de checar.
+          for i in $(seq 1 30); do
+            sleep 20
+            home=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 https://flowaidigital.com.br/ || echo 000)
+            if [ "$home" = "200" ]; then
+              echo "Home respondeu 200 na tentativa $i."
+              exit 0
+            fi
+            echo "tentativa $i: home=$home"
+          done
+          echo "::error::A home não voltou a responder 200 após o deploy."
+          exit 1
