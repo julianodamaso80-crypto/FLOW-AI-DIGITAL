@@ -407,3 +407,29 @@ test("build é determinístico — rodar duas vezes dá o mesmo HTML", () => {
 	const depois = read("agentes-de-ia-para-empresas/index.html");
 	assert.equal(antes, depois, "build não é determinístico");
 });
+
+test("toda money page carrega o grafo de entidade (Organization + WebSite)", () => {
+	for (const s of SERVICES) {
+		const html = pageOf(`/${s.slug}/`);
+		const tipos = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+			.map((m) => JSON.parse(m[1].replace(/\u003c/g, "<"))["@type"]);
+		assert.ok(tipos.includes("Organization"), `${s.slug} sem Organization`);
+		assert.ok(tipos.includes("WebSite"), `${s.slug} sem WebSite`);
+	}
+});
+
+test("o blog index também carrega o grafo de entidade", () => {
+	const tipos = [...read("blog/index.html").matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+		.map((m) => JSON.parse(m[1].replace(/\u003c/g, "<"))["@type"]);
+	assert.ok(tipos.includes("Organization"));
+	assert.ok(tipos.includes("WebSite"));
+});
+
+test("WebSite referencia a Organization pelo mesmo @id", () => {
+	const html = pageOf(`/${SERVICES[0].slug}/`);
+	const blocos = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+		.map((m) => JSON.parse(m[1].replace(/\u003c/g, "<")));
+	const org = blocos.find((b) => b["@type"] === "Organization");
+	const site = blocos.find((b) => b["@type"] === "WebSite");
+	assert.equal(site.publisher["@id"], org["@id"], "WebSite aponta para outro @id");
+});

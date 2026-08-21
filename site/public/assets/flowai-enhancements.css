@@ -285,7 +285,7 @@ footer { color: var(--flow-cream); background: var(--flow-black) !important; }
   .flow-client-card { width: 136px; height: 68px; padding: 10px 14px; }
   .flow-client-card img { max-height: 41px; }
   .client-strip .flow-client-group { gap: 14px; padding-right: 14px; }
-  .flow-client-track { animation-duration: 15s; }
+  .flow-client-track { animation-duration: 26s !important; }
 
   .section,
   .comparison-section,
@@ -341,7 +341,96 @@ footer { color: var(--flow-cream); background: var(--flow-black) !important; }
   .experience-video-wrap { aspect-ratio: 4 / 5; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .flow-client-track { animation: none; transform: none; }
-  .flow-client-group[aria-hidden="true"] { display: none; }
+/* O carrossel de logos e conteudo essencial da pagina (prova social), nao
+   enfeite: continua girando mesmo com "reduzir animacao" ligado no sistema.
+   Antes ele parava e escondia a segunda leva de logos, o que deixava a faixa
+   estatica e com cara de "poucos clientes". */
+
+/* ============================================================
+   AJUSTES SOLICITADOS — cabecalho fixo, logo, carrossel, blog
+   ============================================================ */
+
+/* ---------- 1. Cabecalho fixo (antes sumia ao rolar) ----------
+   Era position:absolute, entao ficava preso no topo da pagina e
+   desaparecia assim que a rolagem comecava. Agora acompanha a
+   rolagem, com fundo translucido para o texto continuar legivel
+   por cima das cenas claras e escuras. */
+.site-header {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
+  background: rgba(10, 14, 20, .72);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid rgba(255, 179, 71, .18);
+  transition: background .25s ease, border-color .25s ease;
+}
+.site-header nav a { color: rgba(255, 242, 226, .88); }
+.site-header nav a:hover { color: var(--flow-amber); }
+
+/* ---------- 2. Logo com destaque ----------
+   Antes: retangulo branco duro, que lia como "mancha branca".
+   Agora: placa clara arredondada, com brilho quente sutil, para a
+   logo original (colorida) aparecer inteira sobre o fundo escuro. */
+.official-brand {
+  border-radius: 12px;
+  padding: 6px 12px;
+  background: linear-gradient(180deg, #fffaf3 0%, #fff2e2 100%);
+  border: 1px solid rgba(255, 179, 71, .55);
+  box-shadow: 0 2px 14px rgba(255, 106, 0, .28), 0 0 0 4px rgba(255, 106, 0, .07);
+  transition: box-shadow .25s ease, transform .25s ease;
+}
+.official-brand:hover {
+  box-shadow: 0 4px 20px rgba(255, 106, 0, .42), 0 0 0 5px rgba(255, 106, 0, .1);
+  transform: translateY(-1px);
+}
+
+/* ---------- 3. Carrossel de clientes com mais presenca ----------
+   Cartoes maiores, respiro maior e giro continuo mais suave. As
+   bordas recebem um esmaecimento para dar sensacao de fluxo
+   infinito, em vez de a faixa "cortar" nas laterais. */
+.flow-client-card {
+  width: 208px;
+  height: 104px;
+  padding: 16px 20px;
+  border-radius: 14px;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.flow-client-card img { max-height: 66px; }
+.flow-client-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .35);
+}
+.client-strip .flow-client-group { gap: 30px; padding-right: 30px; }
+.flow-client-track { animation: flow-clients-right 34s linear infinite !important; }
+.flow-client-viewport {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+
+/* ---------- 4. Botao do Blog no menu ---------- */
+.site-header nav a.flow-blog-link { white-space: nowrap; }
+
+/* ---------- 5. Celular ---------- */
+@media (max-width: 760px) {
+  .site-header {
+    height: 64px;
+    background: rgba(10, 14, 20, .9);
+  }
+  /* Cartoes proporcionais: grandes o bastante para o logo respirar,
+     pequenos o bastante para caber mais de um na tela. */
+  .flow-client-card { width: 154px; height: 82px; padding: 12px 16px; }
+  .flow-client-card img { max-height: 50px; }
+  .client-strip .flow-client-group { gap: 16px; padding-right: 16px; }
+  .flow-client-track { animation-duration: 26s !important; }
+  /* Sem hover em toque: efeito de elevacao so atrapalharia. */
+  .flow-client-card:hover { transform: none; box-shadow: none; }
+}
+
+@media (max-width: 420px) {
+  .flow-client-card { width: 138px; height: 74px; }
+  .flow-client-card img { max-height: 44px; }
+  .flow-client-track { animation-duration: 22s !important; }
 }

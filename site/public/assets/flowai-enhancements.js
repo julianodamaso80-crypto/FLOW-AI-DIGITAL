@@ -18,6 +18,21 @@ function clientCards(duplicate = false) {
   `).join("");
 }
 
+/**
+ * Insere o Blog no menu principal. Fica junto do applyOfficialBrand porque o
+ * cabecalho e renderizado pelo React e pode ser recriado: o MutationObserver
+ * chama de novo e o link volta, sem duplicar.
+ */
+function addBlogLink() {
+  const nav = document.querySelector(".site-header nav");
+  if (!nav || nav.querySelector(".flow-blog-link")) return;
+  const link = document.createElement("a");
+  link.href = "/blog/";
+  link.textContent = "Blog";
+  link.className = "flow-blog-link";
+  nav.appendChild(link);
+}
+
 function applyOfficialBrand() {
   document.querySelectorAll(".brand").forEach((brand) => {
     if (brand.dataset.officialBrand) return;
@@ -25,6 +40,8 @@ function applyOfficialBrand() {
     brand.classList.add("official-brand");
     brand.innerHTML = '<img src="/images/brand/flowai-logo.png" alt="FlowAI Digital">';
   });
+
+  addBlogLink();
 
   const strip = document.querySelector(".client-strip");
   if (strip && !strip.dataset.logoRail) {

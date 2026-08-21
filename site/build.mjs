@@ -70,6 +70,11 @@ function copyDir(src, dest) {
 	}
 }
 
+/** Concatena blocos de JSON-LD já serializados, um por linha. */
+function joinLd(...blocos) {
+	return blocos.filter(Boolean).join("\n");
+}
+
 function writePage(routePath, html) {
 	// "/x/" -> dist/x/index.html   |   "/404.html" -> dist/404.html
 	const rel = routePath.endsWith("/")
@@ -106,11 +111,14 @@ export function build({ quiet = false } = {}) {
 		changefreq: "weekly",
 	});
 
+	// Grafo de entidade: vai em toda página gerada, não só na home.
+	const entityLd = jsonLd(organizationSchema(), websiteSchema());
+
 	// 3. Money pages
 	const servicesLastmod = gitLastModified(path.join(ROOT, "content", "services.mjs"));
 	for (const svc of SERVICES) {
 		const route = `/${svc.slug}/`;
-		const ld = jsonLd(
+		const ld = joinLd(entityLd, jsonLd(
 			serviceSchema({
 				name: svc.breadcrumbLabel,
 				description: svc.metaDescription,
@@ -122,7 +130,7 @@ export function build({ quiet = false } = {}) {
 			]),
 			// mesma lista que é renderizada na página — schema e conteúdo casam
 			faqSchema(svc.faq),
-		);
+		));
 		writePage(route, renderService(svc, SERVICES, ld, analytics("money", svc.slug)));
 		routes.push({
 			path: route,
@@ -152,7 +160,7 @@ export function build({ quiet = false } = {}) {
 	const published = publishedPosts(all);
 	for (const post of published) {
 		const route = `/blog/${post.slug}/`;
-		const ld = jsonLd(
+		const ld = joinLd(entityLd, jsonLd(
 			articleSchema({
 				headline: post.title,
 				description: post.metaDescription,
@@ -167,7 +175,7 @@ export function build({ quiet = false } = {}) {
 				{ name: "Blog", path: "/blog/" },
 				{ name: post.title, path: route },
 			]),
-		);
+		));
 		writePage(route, renderArticle(post, renderMarkdown(post.body), SERVICES, ld, analytics("blog_post", post.slug)));
 		routes.push({
 			path: route,
@@ -177,10 +185,10 @@ export function build({ quiet = false } = {}) {
 		});
 	}
 
-	const blogLd = jsonLd(breadcrumbSchema([
+	const blogLd = joinLd(entityLd, jsonLd(breadcrumbSchema([
 		{ name: "Início", path: "/" },
 		{ name: "Blog", path: "/blog/" },
-	]));
+	])));
 	writePage("/blog/", renderBlogIndex(published, SERVICES, blogLd, analytics("blog_index", "blog")));
 	routes.push({
 		path: "/blog/",
