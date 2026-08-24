@@ -110,7 +110,7 @@ export const SERVICES = [
     slug: "seo-e-conteudo",
     pillar: "marketing",
     waKey: "marketing",
-    metaTitle: "SEO e Conteúdo — Visibilidade no Google e em Mecanismos de IA",
+    metaTitle: "Agência de SEO e Conteúdo para Google e IA",
     metaDescription:
       "SEO técnico, conteúdo útil e GEO: apareça no Google e nas respostas de mecanismos de IA com uma estratégia orgânica sólida e sem promessas vazias.",
     h1: "SEO e conteúdo para ser encontrado no Google — e nas respostas de IA",
@@ -204,10 +204,10 @@ export const SERVICES = [
     slug: "tracking-e-analytics",
     pillar: "marketing",
     waKey: "marketing",
-    metaTitle: "Tracking, Analytics e Atribuição de Marketing",
+    metaTitle: "Dashboard de Vendas, Tracking e Atribuição",
     metaDescription:
       "Implantação de tracking, analytics, atribuição e dashboards: saiba de onde vêm suas vendas e decida verba com dado confiável, do clique ao contrato.",
-    h1: "Tracking e analytics: saiba de onde vêm suas vendas",
+    h1: "Dashboard de vendas: saiba de onde vem cada venda",
     heroText:
       "Sem medição confiável, toda decisão de marketing é aposta. A FlowAI implanta a camada de dados da sua aquisição — eventos, UTMs, atribuição e dashboards — conectando plataformas de mídia, site, WhatsApp e CRM em uma visão única.",
     problemTitle: "Sinais de que seus dados não são confiáveis",
@@ -347,10 +347,10 @@ export const SERVICES = [
     slug: "agentes-de-ia-para-empresas",
     pillar: "ia",
     waKey: "ia",
-    metaTitle: "Agentes de IA para Empresas — Atendimento, Vendas e Operação",
+    metaTitle: "Agente de IA para Empresas — Atendimento e Vendas",
     metaDescription:
       "Agentes de IA configurados para o processo da sua empresa: atendimento, qualificação de leads, follow-up, organização de dados e apoio interno, com supervisão humana.",
-    h1: "Agentes de IA que trabalham no seu processo, não em um roteiro genérico",
+    h1: "Agente de IA que trabalha no seu processo, não em um roteiro genérico",
     heroText:
       "Um agente de IA é um assistente digital com função, contexto e limites definidos. A FlowAI projeta agentes para tarefas específicas da sua operação — atender, qualificar, acompanhar, organizar — integrados às suas ferramentas e supervisionados pela sua equipe.",
     problemTitle: "A diferença entre chatbot genérico e agente bem projetado",
@@ -394,10 +394,10 @@ export const SERVICES = [
     slug: "chatbot-com-ia-para-whatsapp",
     pillar: "ia",
     waKey: "ia",
-    metaTitle: "Chatbot com IA para WhatsApp — Atendimento Inteligente",
+    metaTitle: "Chatbot WhatsApp com IA para Atendimento e Vendas",
     metaDescription:
       "Chatbot com inteligência artificial para WhatsApp: atendimento imediato, qualificação de leads e integração com CRM, com transferência para humano quando importa.",
-    h1: "Atendimento com IA no WhatsApp: rápido para o cliente, organizado para a equipe",
+    h1: "Chatbot WhatsApp com IA: rápido para o cliente, organizado para a equipe",
     heroText:
       "No Brasil, o negócio acontece no WhatsApp. A FlowAI implanta atendimento com IA no seu número: resposta imediata a qualquer hora, qualificação com as perguntas certas e registro automático no CRM — com transferência fluida para sua equipe quando a conversa precisa de gente.",
     problemTitle: "O custo invisível do WhatsApp desorganizado",
@@ -443,7 +443,7 @@ export const SERVICES = [
     slug: "desenvolvimento-de-sistemas-personalizados",
     pillar: "sistemas",
     waKey: "sistemas",
-    metaTitle: "Desenvolvimento de Sistemas Personalizados e Software Sob Medida",
+    metaTitle: "Software Sob Medida e Sistemas Personalizados",
     metaDescription:
       "Desenvolvimento de sistemas personalizados e software sob medida: sistemas web, plataformas internas, portais e painéis construídos para o processo específico da sua empresa.",
     h1: "Desenvolvimento de sistemas personalizados para o seu processo — não o contrário",
@@ -541,10 +541,10 @@ export const SERVICES = [
     slug: "crm-personalizado-e-automacao-de-vendas",
     pillar: "sistemas",
     waKey: "sistemas",
-    metaTitle: "CRM Personalizado e Automação de Vendas",
+    metaTitle: "Sistema de CRM Personalizado e Automação de Vendas",
     metaDescription:
       "CRM personalizado e automação comercial: funil desenhado para o seu processo de vendas, integração com WhatsApp e marketing, e automação de follow-up e tarefas.",
-    h1: "CRM do jeito que seu comercial vende — com automação de verdade",
+    h1: "Sistema de CRM do jeito que seu comercial vende, com automação de verdade",
     heroText:
       "CRM que a equipe não usa é cemitério de dados. A FlowAI implanta e desenvolve CRMs alinhados ao seu processo real de vendas: funil correto, campos que importam, integração com WhatsApp e marketing, e automações que tiram trabalho da equipe em vez de criar mais uma tela para preencher.",
     problemTitle: "Por que a maioria dos CRMs fracassa",
