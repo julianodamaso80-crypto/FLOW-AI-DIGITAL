@@ -1,0 +1,8 @@
+# Assets da SPA são artefato de build: precisam ser byte a byte idênticos entre
+# Windows e o CI em Linux. Sem isto, o Git converte LF para CRLF na saída e o
+# bundle muda de tamanho — foi assim que `index-C-j3JIV1.js` passou de 334.445
+# para 334.453 bytes só por um `git checkout`, quebrando o teste que existe
+# justamente para detectar alteração do bundle.
+site/public/assets/**  -text
+site/public/**/*.js    -text
+site/public/**/*.css   -text

@@ -256,9 +256,26 @@ export async function prerenderHome({
 	}
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url))) {
+/**
+ * Tudo que a home recebe no <head>.
+ *
+ * A home NÃO passa pelo gerador de páginas — ela vem da SPA e só recebe o que
+ * este bloco injeta. Foi exatamente assim que ela ficou de fora do GA4: 14 de
+ * 15 páginas mediam e justamente a mais visitada não media.
+ *
+ * Qualquer coisa nova no <head> das money pages precisa passar por aqui de
+ * propósito, ou a home fica para trás de novo.
+ */
+export async function headSnippetFor(env = process.env) {
 	const { localBusinessSchema, websiteSchema, jsonLd } = await import("./lib/schema.mjs");
-	prerenderHome({ headSnippet: jsonLd(localBusinessSchema(), websiteSchema()) })
+	const { ga4Snippet } = await import("./lib/analytics.mjs");
+	// sem ID válido o snippet volta vazio — nunca inventamos Measurement ID
+	const ga4 = ga4Snippet(env.GA4_MEASUREMENT_ID, { pageType: "home", pageSlug: "/" });
+	return [jsonLd(localBusinessSchema(), websiteSchema()), ga4].filter(Boolean).join("\n");
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url))) {
+	prerenderHome({ headSnippet: await headSnippetFor(process.env) })
 		.then((r) => console.log(`\nPrerender concluído: ${r.antes} -> ${r.depois} palavras.`))
 		.catch((e) => {
 			console.error(`\nPrerender FALHOU: ${e.message}`);
