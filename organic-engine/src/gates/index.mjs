@@ -4,13 +4,27 @@
 // Puras de propósito: são a regra de negócio mais importante do Engine e
 // precisam ser testáveis sem banco, sem rede e sem LLM.
 
-/** Padrões que indicam número/afirmação sem fonte. */
+/**
+ * Padrões que indicam número/afirmação verificável.
+ *
+ * Serve a DOIS gates com propósitos opostos e complementares:
+ *   - `sourceGate` usa para EXIGIR fonte de todo número afirmado;
+ *   - `evidenceGate` usa para EXIGIR que exista número em conteúdo de topo.
+ *
+ * Por isso é um conjunto só. Se `evidenceGate` enxergasse mais coisas que
+ * `sourceGate`, daria para satisfazer a exigência de evidência com um número
+ * que ninguém obriga a fundamentar — exatamente o buraco que abre a porta para
+ * inventar dado.
+ */
 const QUANT_PATTERNS = [
 	/\b\d{1,3}\s?%/, // percentual
 	/\bR\$\s?[\d.,]+/, // valor
-	/\b\d+x\s+(mais|maior|melhor|rápido)/i, // multiplicador
+	/\b\d+\s?x\s+(mais|maior|menor|melhor|rápido)/i, // multiplicador "3x mais"
+	/\b\d+\s+vezes\s+(mais|maior|menor|melhor)/i, // multiplicador por extenso
 	/\b\d{2,}\s+(clientes|empresas|leads|vendas|agentes)/i,
 	/\b(aumenta|reduz|cresce|economiza)\s+(em\s+)?\d+/i,
+	/\b\d+\s+(minutos?|horas?|dias?|semanas?|meses|anos?)\b/i, // tempo medido
+	/\b\d+([.,]\d+)?\s+(mil|milh(ão|ões)|bilh(ão|ões))\b/i, // magnitude
 ];
 
 /** Linguagem que promete o que não se pode garantir. */
@@ -347,6 +361,120 @@ export function spamGate(article, ctx = {}) {
 	return pass("spam", { words: words.length, thinness: thin.score });
 }
 
+// ── 11. Evidência (alavancas de citação) ────────────────────────────────
+
+/** Quanta evidência cada intenção precisa carregar. 0 = isento. */
+const MIN_EVIDENCIA = {
+	informacional: { stats: 2, quotes: 1 },
+	comparativo: { stats: 3, quotes: 1 },
+	comercial: { stats: 1, quotes: 1 },
+	transacional: { stats: 0, quotes: 0 },
+	navegacional: { stats: 0, quotes: 0 },
+};
+
+const VERBOS_ATRIBUICAO = "diz|afirma|aponta|explica|escreve|conclui|estima|revela|segundo|conforme";
+const TEM_MAIUSCULA = /[A-ZÀ-Ú]/;
+
+/**
+ * Aspas com fonte atribuída.
+ *
+ * Citação flutuante ("algo importante") não é sinal de autoridade — é enfeite,
+ * e um LLM produz aos montes. O que o motor generativo reconhece é a
+ * atribuição: quem disse. Por isso exige nome próprio junto.
+ */
+export function namedQuotations(body) {
+	const texto = String(body ?? "");
+	const out = [];
+
+	// atribuição ANTES: Segundo a McKinsey, "…"
+	const antes = new RegExp(
+		`(?:segundo|conforme|de acordo com)\\s+([^,"“”]{2,60}?),\\s*["“]([^"”]{10,})["”]`,
+		"gi",
+	);
+	for (const m of texto.matchAll(antes)) {
+		if (TEM_MAIUSCULA.test(m[1])) out.push({ source: m[1].trim(), quote: m[2].trim() });
+	}
+
+	// atribuição DEPOIS: "…", afirma o relatório da Salesforce
+	const depois = new RegExp(
+		`["“]([^"”]{10,})["”],?\\s*(?:${VERBOS_ATRIBUICAO})\\s+([^.\\n]{2,60})`,
+		"gi",
+	);
+	for (const m of texto.matchAll(depois)) {
+		if (TEM_MAIUSCULA.test(m[2])) out.push({ source: m[2].trim(), quote: m[1].trim() });
+	}
+
+	return out;
+}
+
+export function evidenceGate(article, ctx = {}) {
+	const intent = article.intent ?? "informacional";
+	const base = MIN_EVIDENCIA[intent] ?? MIN_EVIDENCIA.informacional;
+	const minStats = ctx.minStats?.[intent] ?? base.stats;
+	const minQuotes = ctx.minQuotes?.[intent] ?? base.quotes;
+
+	if (minStats === 0 && minQuotes === 0) {
+		return pass("evidence", { exempt: true, intent });
+	}
+
+	const body = article.body ?? "";
+	const stats = extractQuantClaims(body).length;
+	const quotes = namedQuotations(body).length;
+
+	if (stats < minStats) {
+		return fail(
+			"evidence",
+			`${stats} estatística(s) para intenção ${intent} — o mínimo é ${minStats}`,
+			{ stats, quotes },
+		);
+	}
+	if (quotes < minQuotes) {
+		return fail(
+			"evidence",
+			`sem aspas de fonte nomeada — citação atribuída é o que o motor generativo reconhece`,
+			{ stats, quotes },
+		);
+	}
+	return pass("evidence", { stats, quotes, intent });
+}
+
+// ── 12. Front-load ──────────────────────────────────────────────────────
+
+/** Primeiro terço do texto, medido em palavras e não em marcação. */
+export function firstThird(body) {
+	const palavras = String(body ?? "").split(/\s+/).filter(Boolean);
+	return palavras.slice(0, Math.max(1, Math.ceil(palavras.length / 3))).join(" ");
+}
+
+/**
+ * 44,2% das citações saem do primeiro terço da página. Enrolar antes de
+ * responder desperdiça a parte do documento que mais é lida por máquina.
+ */
+export function frontLoadGate(article) {
+	const body = article.body ?? "";
+	const terco = firstThird(body);
+
+	// substância primeiro: o terço inicial precisa trazer número ou citação
+	if (extractQuantClaims(terco).length === 0 && namedQuotations(terco).length === 0) {
+		return fail(
+			"front-load",
+			"o primeiro terço não traz nenhum número nem citação — a resposta chega tarde demais",
+		);
+	}
+
+	// a palavra-alvo tem que aparecer na abertura: primeiro terço ou 150 palavras
+	const kw = norm(article.primaryKeyword ?? "");
+	if (kw) {
+		const palavras = body.split(/\s+/).filter(Boolean);
+		const janela = Math.max(palavras.length / 3, 150);
+		const abertura = norm(palavras.slice(0, Math.ceil(janela)).join(" "));
+		if (!abertura.includes(kw)) {
+			return fail("front-load", `palavra-alvo "${article.primaryKeyword}" ausente da abertura`);
+		}
+	}
+	return pass("front-load", { words: body.split(/\s+/).filter(Boolean).length });
+}
+
 // ── Orquestração ────────────────────────────────────────────────────────
 export const ALL_GATES = [
 	demandGate,
@@ -359,6 +487,8 @@ export const ALL_GATES = [
 	technicalGate,
 	internalLinkGate,
 	spamGate,
+	evidenceGate,
+	frontLoadGate,
 ];
 
 /** Roda todos os gates. Nunca para no primeiro erro — o relatório é completo. */

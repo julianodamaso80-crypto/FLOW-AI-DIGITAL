@@ -151,6 +151,70 @@ async function main() {
 			break;
 		}
 
+		case "ai-visibility": {
+			const { runProbe } = await import("./measure/ai-visibility.mjs");
+			const { PROBE_QUERIES, PROBE_MODELS, TARGET } = await import("./measure/probe-config.mjs");
+			const capArg = args.find((a) => a.startsWith("--max-cost-usd="));
+			const out = await runProbe({
+				queries: PROBE_QUERIES,
+				models: PROBE_MODELS,
+				target: TARGET,
+				maxCostUsd: capArg ? Number(capArg.split("=")[1]) : 0.25,
+				dryRun: hasFlag("--dry-run"),
+			});
+			if (out.dryRun) {
+				console.log(`dry-run: ${PROBE_QUERIES.length} perguntas x ${PROBE_MODELS.length} modelos`);
+				console.log(`custo estimado: US$ ${out.estimatedCostUsd.toFixed(4)}`);
+				break;
+			}
+			// score null = nenhuma sondagem respondeu. Imprimir "0/100" aqui seria
+			// apresentar falha de infraestrutura como diagnóstico de marca.
+			if (out.score === null) {
+				console.log(`NAO FOI POSSIVEL MEDIR — ${out.failed} de ${out.results.length} sondagens falharam`);
+				const motivos = [...new Set(out.results.map((r) => r.error).filter(Boolean))];
+				for (const m of motivos.slice(0, 3)) console.log(`  motivo: ${m}`);
+				process.exitCode = 1;
+				break;
+			}
+			console.log(
+				`VISIBILIDADE EM IA: ${out.score}/100  (${out.measured} medidas, ${out.failed} falharam)`,
+			);
+			console.log("");
+			for (const r of out.results) {
+				const marca = r.error ? "erro" : r.cited ? "CITADO" : r.mentioned ? "mencionado" : "ausente";
+				console.log(`  ${marca.padEnd(11)} ${r.model.padEnd(28)} ${r.query.slice(0, 46)}`);
+			}
+			console.log("");
+			console.log("share of voice:");
+			for (const [marca, n] of Object.entries(out.shareOfVoice).sort((a, b) => b[1] - a[1])) {
+				console.log(`  ${String(n).padStart(3)}x ${marca}`);
+			}
+			if (out.aborted) console.log("");
+			if (out.aborted) console.log("abortado no teto de custo");
+			console.log(`gasto: US$ ${out.spentUsd.toFixed(4)}`);
+			break;
+		}
+
+		case "refresh-plan": {
+			const { planRefresh } = await import("./content/freshness.mjs");
+			const { loadCorpus } = await import("./content/corpus.mjs");
+			const corpus = loadCorpus();
+			if (corpus.length === 0) {
+				console.log("nenhum conteudo publicado encontrado — nada a atualizar");
+				break;
+			}
+			const plano = planRefresh(corpus, { limit: 5 });
+			console.log(`corpus: ${corpus.length} publicacoes`);
+			if (plano.length === 0) {
+				console.log("tudo dentro da janela fresca de 30 dias");
+				break;
+			}
+			console.log("");
+			for (const p of plano) console.log(`  ${p.slug}
+     ${p.reason}`);
+			break;
+		}
+
 		case "costs": {
 			console.log("Custos vivem em provider_costs no Postgres.");
 			console.log("Sem DATABASE_URL configurada não há o que somar — rode 'health' para conferir.");
@@ -169,6 +233,9 @@ async function main() {
   google-auth [--timeout-min=45]
                     autoriza uma vez o acesso de leitura as APIs do Google
   google-discover   lista GA4, Search Console e GTM ja existentes
+  ai-visibility [--dry-run] [--max-cost-usd=0.25]
+                    mede se a FlowAI e citada por ChatGPT, Claude e afins
+  refresh-plan      o que reescrever agora (decaimento x audiencia)
   costs             gasto por provider no mês
 `);
 	}

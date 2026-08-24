@@ -48,3 +48,25 @@ export function canonicalFor(path) {
 	if (!p.endsWith("/")) p += "/";
 	return `${SITE_URL}${p}`;
 }
+
+// ── IndexNow ────────────────────────────────────────────────────────────
+//
+// O índice do Bing ainda alimenta parte das citações do ChatGPT, e IndexNow
+// avisa Bing e parceiros em minutos em vez de esperar rastreamento. O Google
+// não usa — descobre por sitemap — então isto cobre o outro lado, não substitui.
+//
+// A chave é PÚBLICA por desenho: o protocolo prova posse do host servindo o
+// próprio valor em /{chave}.txt. O que ela impede é terceiro submeter URL em
+// nome do host.
+
+/** 8 a 128 caracteres hexadecimais, como o protocolo exige. */
+export function isValidIndexNowKey(key) {
+	return /^[a-f0-9]{8,128}$/i.test(String(key ?? ""));
+}
+
+/** Arquivo de verificação, ou null quando não há chave — nunca inventamos uma. */
+export function indexNowKeyFile(key) {
+	if (!isValidIndexNowKey(key)) return null;
+	const k = String(key);
+	return { name: `${k}.txt`, content: k };
+}

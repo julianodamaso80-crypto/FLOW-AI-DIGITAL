@@ -35,11 +35,18 @@ import {
 // A extensão aqui NÃO existe para bater um mínimo de palavras — o gate de spam
 // avalia thinness por vários sinais. Ver os testes de thinness no fim do
 // arquivo, que provam que um artigo curto e completo passa.
+// Desde os gates de evidência e front-load, "bem formado" passou a incluir
+// número fundamentado e citação atribuída logo na abertura — 44,2% das
+// citações de motor generativo saem do primeiro terço da página.
 const corpo = (extra = "") => `
 ## O que é automação de processos com IA?
 
 Automação de processos com IA é a substituição de etapas manuais e repetitivas
-por fluxos que rodam sozinhos, com decisão assistida por modelo. Não é o mesmo
+por fluxos que rodam sozinhos, com decisão assistida por modelo. Segundo o
+relatório de produtividade da McKinsey, "a automação de tarefas repetitivas
+libera entre 20% e 30% do tempo de equipes operacionais". O mesmo relatório
+aponta ganho 2 vezes maior em equipes que medem a linha de base antes de
+automatizar. Não é o mesmo
 que macro de planilha: o sistema lê contexto, escolhe caminho e registra o que
 fez, o que permite auditar depois por que cada decisão foi tomada.
 
@@ -131,7 +138,15 @@ const base = {
 		"Exemplo de sequência de implantação em quatro etapas usada nos projetos da FlowAI",
 	],
 	sources: [
-		{ url: "https://example.gov.br/doc", title: "Doc oficial", sourceTier: 2, confidence: "high", evidence: "" },
+		{
+			url: "https://example.gov.br/doc",
+			title: "Doc oficial",
+			sourceTier: 2,
+			confidence: "high",
+			// lastro dos numeros afirmados no corpo — hallucinationGate confere
+			evidence:
+				"libera entre 20% e 30% do tempo de equipes operacionais; ganho 2 vezes maior com linha de base medida",
+		},
 	],
 	body: corpo(),
 };
@@ -149,12 +164,12 @@ const ctx = {
 
 // ─────────────────────────── caso feliz ─────────────────────────────────
 
-test("artigo bem formado passa em todos os 10 gates", () => {
+test("artigo bem formado passa em todos os 12 gates", () => {
 	const r = runGates(base, ctx);
 	const falhas = r.failed.map((f) => `${f.id}: ${f.reason}`);
 	assert.deepEqual(falhas, [], `gates reprovaram: ${falhas.join(" | ")}`);
 	assert.equal(r.passed, true);
-	assert.equal(r.results.length, 10);
+	assert.equal(r.results.length, 12);
 });
 
 // ─────────────────────────── demanda ────────────────────────────────────
@@ -239,7 +254,9 @@ test("fontes: número no texto sem fonte reprova", () => {
 });
 
 test("fontes: texto sem afirmação quantitativa não exige fonte", () => {
-	const r = sourceGate({ ...base, sources: [] }, {});
+	// corpo proprio, sem numero — o `base` carrega estatistica desde o gate de evidencia
+	const semNumero = "Automação é a substituição de etapas manuais por fluxos que rodam sozinhos.";
+	const r = sourceGate({ ...base, body: semNumero, sources: [] }, {});
 	assert.equal(r.passed, true);
 	assert.equal(r.detail.quantClaims, 0);
 });
@@ -274,7 +291,10 @@ test("alucinação: número presente na evidência passa", () => {
 	const a = {
 		...base,
 		body: base.body + "\n\nEmpresas economizam 62% do tempo com isso.",
-		sources: [{ url: "https://x.gov.br", sourceTier: 2, confidence: "high", evidence: "reducao media de 62% no tempo" }],
+		sources: [
+			...base.sources,
+			{ url: "https://x.gov.br", sourceTier: 2, confidence: "high", evidence: "reducao media de 62% no tempo" },
+		],
 	};
 	assert.equal(hallucinationGate(a, {}).passed, true);
 });
@@ -392,13 +412,13 @@ test("runGates não para no primeiro erro — reporta todos", () => {
 	const r = runGates(ruim, ctx);
 	assert.equal(r.passed, false);
 	assert.ok(r.failed.length >= 3, `esperava 3+ falhas, veio ${r.failed.length}`);
-	assert.equal(r.results.length, 10);
+	assert.equal(r.results.length, 12);
 });
 
 test("runGates captura exceção de gate sem derrubar o pipeline", () => {
 	const r = runGates({}, {});
 	assert.equal(r.passed, false);
-	assert.equal(r.results.length, 10);
+	assert.equal(r.results.length, 12);
 });
 
 // ─────────────────────────── quality score ──────────────────────────────

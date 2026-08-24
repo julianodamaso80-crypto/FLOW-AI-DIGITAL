@@ -78,12 +78,18 @@ test("o build do CI entrega canonical na home", opts, () => {
 	assert.match(home(), /rel="canonical" href="https:\/\/flowaidigital\.com\.br\/"/);
 });
 
-test("o build do CI entrega Organization e WebSite na home", opts, () => {
-	const tipos = [...home().matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
-		.map((m) => JSON.parse(m[1].replace(/\\u003c/g, "<"))["@type"]);
-	assert.ok(tipos.includes("Organization"), "home sem Organization");
-	assert.ok(tipos.includes("WebSite"), "home sem WebSite");
-	assert.equal(tipos.filter((t) => t === "Organization").length, 1, "Organization duplicada");
+test("o build do CI entrega a organização e o WebSite na home", opts, () => {
+	// A organização sai como ProfessionalService — subtipo de Organization, mesma
+	// entidade. O que identifica é o @id; e ele tem que aparecer UMA vez, senão o
+	// Organization inline da SPA voltou junto com o nosso.
+	const nos = [...home().matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+		.map((m) => JSON.parse(m[1].replace(/\\u003c/g, "<")));
+	assert.ok(nos.some((n) => n["@type"] === "WebSite"), "home sem WebSite");
+
+	const orgs = nos.filter((n) => String(n["@id"] ?? "").endsWith("/#organization"));
+	assert.equal(orgs.length, 1, `a organização aparece ${orgs.length} vezes na home`);
+	assert.match(orgs[0]["@type"], /Organization|LocalBusiness|ProfessionalService/);
+	assert.equal(orgs[0].address?.addressLocality, "Rio de Janeiro", "home sem a praça declarada");
 });
 
 test("o build do CI mantém as 13 money pages e o 404", opts, () => {

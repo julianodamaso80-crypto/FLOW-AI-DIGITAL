@@ -408,28 +408,44 @@ test("build é determinístico — rodar duas vezes dá o mesmo HTML", () => {
 	assert.equal(antes, depois, "build não é determinístico");
 });
 
-test("toda money page carrega o grafo de entidade (Organization + WebSite)", () => {
+// A organização é emitida como ProfessionalService — subtipo de LocalBusiness,
+// que por sua vez é subtipo de Organization. É a MESMA entidade, mais
+// específica. Por isso o que identifica aqui é o `@id`, não o rótulo do tipo:
+// checar o rótulo prenderia o teste a uma escolha de granularidade em vez da
+// identidade da entidade no grafo.
+const blocosLd = (html) =>
+	[...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) =>
+		JSON.parse(m[1].replace(/\u003c/g, "<")),
+	);
+const achaOrg = (blocos) => blocos.find((b) => String(b["@id"] ?? "").endsWith("/#organization"));
+const temTipo = (blocos, t) => blocos.some((b) => b["@type"] === t);
+
+test("toda money page carrega o grafo de entidade (organização + WebSite)", () => {
 	for (const s of SERVICES) {
-		const html = pageOf(`/${s.slug}/`);
-		const tipos = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
-			.map((m) => JSON.parse(m[1].replace(/\u003c/g, "<"))["@type"]);
-		assert.ok(tipos.includes("Organization"), `${s.slug} sem Organization`);
-		assert.ok(tipos.includes("WebSite"), `${s.slug} sem WebSite`);
+		const blocos = blocosLd(pageOf(`/${s.slug}/`));
+		assert.ok(achaOrg(blocos), `${s.slug} sem a organização no grafo`);
+		assert.ok(temTipo(blocos, "WebSite"), `${s.slug} sem WebSite`);
 	}
 });
 
 test("o blog index também carrega o grafo de entidade", () => {
-	const tipos = [...read("blog/index.html").matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
-		.map((m) => JSON.parse(m[1].replace(/\u003c/g, "<"))["@type"]);
-	assert.ok(tipos.includes("Organization"));
-	assert.ok(tipos.includes("WebSite"));
+	const blocos = blocosLd(read("blog/index.html"));
+	assert.ok(achaOrg(blocos));
+	assert.ok(temTipo(blocos, "WebSite"));
 });
 
-test("WebSite referencia a Organization pelo mesmo @id", () => {
-	const html = pageOf(`/${SERVICES[0].slug}/`);
-	const blocos = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
-		.map((m) => JSON.parse(m[1].replace(/\u003c/g, "<")));
-	const org = blocos.find((b) => b["@type"] === "Organization");
+test("WebSite referencia a organização pelo mesmo @id", () => {
+	const blocos = blocosLd(pageOf(`/${SERVICES[0].slug}/`));
 	const site = blocos.find((b) => b["@type"] === "WebSite");
-	assert.equal(site.publisher["@id"], org["@id"], "WebSite aponta para outro @id");
+	assert.equal(site.publisher["@id"], achaOrg(blocos)["@id"], "WebSite aponta para outro @id");
+});
+
+test("a organização aparece uma vez só por página", () => {
+	// duas organizações no mesmo documento é exatamente o que @id existe para evitar
+	for (const s of SERVICES) {
+		const n = blocosLd(pageOf(`/${s.slug}/`)).filter((b) =>
+			String(b["@id"] ?? "").endsWith("/#organization"),
+		).length;
+		assert.equal(n, 1, `${s.slug} tem ${n} nós de organização`);
+	}
 });

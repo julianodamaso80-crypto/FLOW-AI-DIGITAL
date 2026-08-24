@@ -16,9 +16,10 @@ import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 import { SERVICES } from "./content/services.mjs";
-import { SITE_URL } from "./lib/site.mjs";
+import { SITE_URL, indexNowKeyFile } from "./lib/site.mjs";
 import {
-	organizationSchema,
+	localBusinessSchema,
+	personSchema,
 	websiteSchema,
 	serviceSchema,
 	breadcrumbSchema,
@@ -112,7 +113,9 @@ export function build({ quiet = false } = {}) {
 	});
 
 	// Grafo de entidade: vai em toda página gerada, não só na home.
-	const entityLd = jsonLd(organizationSchema(), websiteSchema());
+	// ProfessionalService no lugar de Organization: subtipo mais especifico, mesmo
+	// @id — a FlowAI atende do Rio e o guia do Google trata negocio local a parte.
+	const entityLd = jsonLd(localBusinessSchema(), websiteSchema());
 
 	// 3. Money pages
 	const servicesLastmod = gitLastModified(path.join(ROOT, "content", "services.mjs"));
@@ -161,6 +164,7 @@ export function build({ quiet = false } = {}) {
 	for (const post of published) {
 		const route = `/blog/${post.slug}/`;
 		const ld = joinLd(entityLd, jsonLd(
+			...(post.author ? [personSchema({ name: post.author })] : []),
 			articleSchema({
 				headline: post.title,
 				description: post.metaDescription,
@@ -213,6 +217,17 @@ export function build({ quiet = false } = {}) {
 
 	// 9. _headers
 	fs.writeFileSync(path.join(DIST, "_headers"), buildHeaders(), "utf8");
+
+	// Verificação do IndexNow. Sem chave, nada é escrito — o protocolo recusa
+	// submissão de host que não serve /{chave}.txt, e chave inventada seria pior
+	// que chave nenhuma.
+	const indexNow = indexNowKeyFile(process.env.INDEXNOW_KEY);
+	if (indexNow) {
+		fs.writeFileSync(path.join(DIST, indexNow.name), indexNow.content, "utf8");
+		log(`IndexNow ativo (${indexNow.name})`);
+	} else {
+		log("IndexNow inativo (INDEXNOW_KEY ausente)");
+	}
 
 	log(`sitemap com ${routes.length} URLs`);
 	return { routes, published, all };

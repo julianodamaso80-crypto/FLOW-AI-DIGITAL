@@ -105,12 +105,71 @@ export function articleSchema({
 		mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}${path}` },
 		datePublished,
 		dateModified: dateModified || datePublished,
-		author: { "@type": "Person", name: authorName },
+		// referência por @id: o nó completo do autor é emitido uma vez na página
+		author: { "@type": "Person", "@id": personId(authorName), name: authorName },
 		publisher: { "@id": `${SITE_URL}/#organization` },
 		inLanguage: "pt-BR",
 	};
 	if (image) a.image = `${SITE_URL}${image}`;
 	return a;
+}
+
+
+// ── Autor como entidade ─────────────────────────────────────────────────
+//
+// Autor como string ("author": "Fulano") não é entidade: a máquina não
+// consegue ligar o mesmo autor entre dois artigos, nem saber que ele trabalha
+// na organização que assina o site. Com `@id` estável, consegue.
+
+const slugify = (s) =>
+	String(s ?? "")
+		.normalize("NFD")
+		.replace(/[̀-ͯ]/g, "")
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, "-")
+		.replace(/^-|-$/g, "");
+
+export function personId(name) {
+	return `${SITE_URL}/#person-${slugify(name)}`;
+}
+
+export function personSchema({ name, jobTitle, sameAs } = {}) {
+	const p = {
+		"@context": "https://schema.org",
+		"@type": "Person",
+		"@id": personId(name),
+		name,
+		worksFor: { "@id": `${SITE_URL}/#organization` },
+	};
+	if (jobTitle) p.jobTitle = jobTitle;
+	// Perfil externo inventado é pior que ausente: aponta para outra pessoa.
+	if (Array.isArray(sameAs) && sameAs.length > 0) p.sameAs = sameAs;
+	return p;
+}
+
+// ── Negócio local ───────────────────────────────────────────────────────
+//
+// O guia do Google manda usar Google Business Profile para negócio local, e a
+// FlowAI atende do Rio. Este nó SUBSTITUI o Organization na página onde é
+// usado — nunca convive com ele. Mesmo `@id` de propósito: `ProfessionalService`
+// é subtipo de `LocalBusiness`, que é subtipo de `Organization`, então é a
+// MESMA entidade, mais específica.
+//
+// Sem `streetAddress`: endereço de rua inventado é dado falso em markup, e o
+// Google cruza isso com o Business Profile.
+
+export function localBusinessSchema() {
+	const org = organizationSchema();
+	return {
+		...org,
+		"@type": "ProfessionalService",
+		address: {
+			"@type": "PostalAddress",
+			addressLocality: "Rio de Janeiro",
+			addressRegion: "RJ",
+			addressCountry: "BR",
+		},
+	};
 }
 
 /** Serializa com escape de `<` para não fechar o <script> por engano. */

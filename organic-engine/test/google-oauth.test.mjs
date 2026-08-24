@@ -156,9 +156,14 @@ test("porta ocupada vira OAUTH_PORT_IN_USE, nunca outra porta", async () => {
 	const { authorize } = await import("../src/commands/google-oauth.mjs");
 	const http = await import("node:http");
 
-	// ocupa a 8765 de propósito
+	// Ocupa a 8765 de propósito. Mas ela pode JÁ estar ocupada — por um
+	// `google-auth` rodando de verdade, que foi como este teste quebrou uma vez.
+	// Nesse caso o cenário sob teste já existe e não há o que simular.
 	const bloqueio = http.createServer(() => {});
-	await new Promise((r) => bloqueio.listen(OAUTH_PORT, OAUTH_HOST, r));
+	const ocupeiEu = await new Promise((r) => {
+		bloqueio.once("error", () => r(false));
+		bloqueio.listen(OAUTH_PORT, OAUTH_HOST, () => r(true));
+	});
 	try {
 		await assert.rejects(
 			() =>
@@ -170,6 +175,6 @@ test("porta ocupada vira OAUTH_PORT_IN_USE, nunca outra porta", async () => {
 			(e) => e.code === "OAUTH_PORT_IN_USE",
 		);
 	} finally {
-		await new Promise((r) => bloqueio.close(r));
+		if (ocupeiEu) await new Promise((r) => bloqueio.close(r));
 	}
 });

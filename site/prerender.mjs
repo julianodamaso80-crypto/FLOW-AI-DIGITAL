@@ -257,8 +257,8 @@ export async function prerenderHome({
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url))) {
-	const { organizationSchema, websiteSchema, jsonLd } = await import("./lib/schema.mjs");
-	prerenderHome({ headSnippet: jsonLd(organizationSchema(), websiteSchema()) })
+	const { localBusinessSchema, websiteSchema, jsonLd } = await import("./lib/schema.mjs");
+	prerenderHome({ headSnippet: jsonLd(localBusinessSchema(), websiteSchema()) })
 		.then((r) => console.log(`\nPrerender concluído: ${r.antes} -> ${r.depois} palavras.`))
 		.catch((e) => {
 			console.error(`\nPrerender FALHOU: ${e.message}`);
