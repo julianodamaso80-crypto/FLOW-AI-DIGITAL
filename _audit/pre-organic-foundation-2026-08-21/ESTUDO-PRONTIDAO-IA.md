@@ -86,3 +86,20 @@ estudo valor de citação recorrente.
 
 - [[GA4-INVESTIGACAO]]
 - [[CLOUDFLARE-BOT-POLICY]]
+
+---
+
+## Adendo — a FlowAI saiu da categoria `EMPTY_SHELL`
+
+Medida de novo pelo critério deste estudo, logo após a publicação da fundação:
+
+| | Antes | Depois |
+|---|---|---|
+| Veredito | `EMPTY_SHELL` | **`OK`** |
+| Palavras entregues ao `OAI-SearchBot` | 7 | **1.035** |
+| JSON-LD próprio | não | **sim** (`ProfessionalService` + `WebSite`, com `@id`) |
+| URLs no sitemap | 2 | **15** |
+| Caminho inexistente | HTTP 200 (soft-404 universal) | **HTTP 404** |
+
+Isso a coloca nos 81,8% que entregam conteúdo real, e fora dos 6,1% de casca
+vazia. A home ainda não publica `FAQPage` — as money pages publicam.
