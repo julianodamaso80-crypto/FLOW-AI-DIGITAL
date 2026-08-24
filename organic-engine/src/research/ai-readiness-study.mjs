@@ -91,7 +91,11 @@ export function aggregate(sites = []) {
  */
 export function formatFindings(a, { date, query, engine = "Google Brasil" } = {}) {
 	return [
-		`Medição de ${date}: ${a.n} domínios brasileiros que aparecem no ${engine} para "${query}".`,
+		// "domínios que aparecem no Google Brasil" e NÃO "domínios brasileiros":
+		// a amostra da primeira execução trouxe youtube.com, lenovo.com e ibm.com.
+		// Chamar isso de brasileiro seria imprecisão fácil de desmentir, e um
+		// estudo desmentido custa mais do que a citação que ele traria.
+		`Medição de ${date}: ${a.n} domínios que rankeiam no ${engine} para "${query}".`,
 		a.excluded ? `${a.excluded} site(s) fora do ar foram excluídos do cálculo.` : null,
 		`${a.blockedPct}% bloqueiam crawlers de busca generativa por completo.`,
 		`${a.emptyShellPct}% respondem HTTP 200 mas entregam menos de ${MIN_WORDS_REAL_CONTENT} palavras ao crawler — casca de aplicação sem conteúdo renderizado.`,
@@ -100,4 +104,56 @@ export function formatFindings(a, { date, query, engine = "Google Brasil" } = {}
 	]
 		.filter(Boolean)
 		.join(" ");
+}
+
+/**
+ * User-agent da medição.
+ *
+ * Medir com UA de navegador não responde a pergunta nenhuma. O objeto do estudo
+ * é o que o site entrega para um crawler de busca generativa — e vários sites
+ * tratam esse UA de forma diferente da que tratam o Chrome.
+ *
+ * OAI-SearchBot é o crawler de RESPOSTA da OpenAI (o que alimenta citação), não
+ * o GPTBot de treino. É o agente cujo acesso realmente importa medir.
+ */
+export const PROBE_UA =
+	"Mozilla/5.0 (compatible; OAI-SearchBot/1.0; +https://openai.com/searchbot)";
+
+const contaPalavras = (html) =>
+	String(html ?? "")
+		.replace(/<script[\s\S]*?<\/script>/gi, " ")
+		.replace(/<style[\s\S]*?<\/style>/gi, " ")
+		.replace(/<[^>]*>/g, " ")
+		.split(/\s+/)
+		.filter(Boolean).length;
+
+/** Mede a home de cada domínio. Uma falha vira ERROR e não derruba o estudo. */
+export async function measureDomains(domains = [], { fetchImpl = globalThis.fetch, timeoutMs = 20_000 } = {}) {
+	const out = [];
+	for (const domain of domains) {
+		const url = `https://${domain}/`;
+		try {
+			const ctrl = new AbortController();
+			const t = setTimeout(() => ctrl.abort(), timeoutMs);
+			const res = await fetchImpl(url, {
+				headers: { "User-Agent": PROBE_UA, Accept: "text/html" },
+				redirect: "follow",
+				signal: ctrl.signal,
+			});
+			clearTimeout(t);
+			const html = await res.text();
+			out.push({
+				domain,
+				...classifySite({
+					status: res.status,
+					words: contaPalavras(html),
+					hasSchema: /application\/ld\+json/i.test(html),
+					hasFaq: /"@type"\s*:\s*"FAQPage"/i.test(html),
+				}),
+			});
+		} catch (err) {
+			out.push({ domain, verdict: "ERROR", reachable: false, error: err.message });
+		}
+	}
+	return out;
 }

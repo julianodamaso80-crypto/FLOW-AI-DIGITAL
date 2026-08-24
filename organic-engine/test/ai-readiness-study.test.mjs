@@ -23,6 +23,7 @@ import {
 	aggregate,
 	formatFindings,
 	MIN_WORDS_REAL_CONTENT,
+	measureDomains,
 } from "../src/research/ai-readiness-study.mjs";
 
 // ── amostra ──────────────────────────────────────────────────────────────
@@ -130,4 +131,49 @@ test("o relatório não arredonda para número redondo bonito", () => {
 	]);
 	// 1/3 = 33,3% e não "cerca de 30%"
 	assert.equal(a.blockedPct, 33.3);
+});
+
+// ── execução ─────────────────────────────────────────────────────────────
+
+test("mede cada domínio com user-agent de crawler de IA, não de navegador", async () => {
+	// medir com UA de Chrome não responde a pergunta nenhuma: o que interessa é
+	// o que o site entrega para OAI-SearchBot e PerplexityBot
+	const vistos = [];
+	await measureDomains(["a.com.br"], {
+		fetchImpl: async (url, opts) => {
+			vistos.push(opts.headers["User-Agent"]);
+			return { status: 200, text: async () => "<h1>x</h1>" + "palavra ".repeat(300) };
+		},
+	});
+	assert.match(vistos[0], /SearchBot|PerplexityBot|GPTBot/i);
+});
+
+test("detecta schema e FAQ no HTML medido", async () => {
+	const html = `<html><script type="application/ld+json">{"@type":"FAQPage"}</script>
+		<body>${"palavra ".repeat(300)}</body></html>`;
+	const [r] = await measureDomains(["a.com.br"], {
+		fetchImpl: async () => ({ status: 200, text: async () => html }),
+	});
+	assert.equal(r.hasSchema, true);
+	assert.equal(r.hasFaq, true);
+	assert.equal(r.verdict, "OK");
+});
+
+test("site que recusa o crawler entra como BLOCKED", async () => {
+	const [r] = await measureDomains(["a.com.br"], {
+		fetchImpl: async () => ({ status: 403, text: async () => "forbidden" }),
+	});
+	assert.equal(r.verdict, "BLOCKED");
+});
+
+test("timeout de um domínio não derruba o estudo", async () => {
+	const rs = await measureDomains(["a.com.br", "b.com.br"], {
+		fetchImpl: async (u) => {
+			if (u.includes("a.com.br")) throw new Error("ETIMEDOUT");
+			return { status: 200, text: async () => "palavra ".repeat(300) };
+		},
+	});
+	assert.equal(rs.length, 2);
+	assert.equal(rs[0].verdict, "ERROR");
+	assert.equal(rs[1].verdict, "OK");
 });

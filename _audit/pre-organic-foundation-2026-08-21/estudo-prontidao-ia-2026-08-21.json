@@ -1,0 +1,319 @@
+{
+  "sites": [
+    {
+      "domain": "agenciarollin.com",
+      "status": 200,
+      "words": 2267,
+      "hasSchema": true,
+      "hasFaq": true,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "intelecta.digital",
+      "status": 200,
+      "words": 2511,
+      "hasSchema": true,
+      "hasFaq": false,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "gabrielcunha.com",
+      "status": 200,
+      "words": 2685,
+      "hasSchema": true,
+      "hasFaq": true,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "trilion.com.br",
+      "status": 200,
+      "words": 1641,
+      "hasSchema": true,
+      "hasFaq": false,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "jarbis.com.br",
+      "status": 200,
+      "words": 229,
+      "hasSchema": false,
+      "hasFaq": false,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "gptmaker.ai",
+      "status": 200,
+      "words": 3050,
+      "hasSchema": true,
+      "hasFaq": true,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "brabaflow.ai",
+      "status": 200,
+      "words": 58,
+      "hasSchema": true,
+      "hasFaq": false,
+      "verdict": "EMPTY_SHELL",
+      "reachable": true
+    },
+    {
+      "domain": "accenture.com",
+      "status": 200,
+      "words": 1106,
+      "hasSchema": true,
+      "hasFaq": false,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "youtube.com",
+      "status": 200,
+      "words": 30,
+      "hasSchema": false,
+      "hasFaq": false,
+      "verdict": "EMPTY_SHELL",
+      "reachable": true
+    },
+    {
+      "domain": "agenciabowie.com.br",
+      "status": 200,
+      "words": 715,
+      "hasSchema": true,
+      "hasFaq": false,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "gov.br",
+      "status": 200,
+      "words": 1199,
+      "hasSchema": true,
+      "hasFaq": false,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "niara.ai",
+      "status": 200,
+      "words": 1643,
+      "hasSchema": true,
+      "hasFaq": false,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "lenovo.com",
+      "status": 403,
+      "words": 16,
+      "hasSchema": false,
+      "hasFaq": false,
+      "verdict": "BLOCKED",
+      "reachable": false
+    },
+    {
+      "domain": "botpress.com",
+      "status": 200,
+      "words": 782,
+      "hasSchema": true,
+      "hasFaq": false,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "forme.technology",
+      "status": 200,
+      "words": 1662,
+      "hasSchema": true,
+      "hasFaq": true,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "stainen.com.br",
+      "status": 200,
+      "words": 1328,
+      "hasSchema": true,
+      "hasFaq": false,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "agenciaia.ai",
+      "status": 200,
+      "words": 1784,
+      "hasSchema": true,
+      "hasFaq": false,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "agenciamural.org.br",
+      "status": 403,
+      "words": 4,
+      "hasSchema": false,
+      "hasFaq": false,
+      "verdict": "BLOCKED",
+      "reachable": false
+    },
+    {
+      "domain": "rdstation.com",
+      "status": 200,
+      "words": 2830,
+      "hasSchema": true,
+      "hasFaq": true,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "sweda.com.br",
+      "status": 200,
+      "words": 1045,
+      "hasSchema": true,
+      "hasFaq": false,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "d4business.com.br",
+      "status": 200,
+      "words": 1274,
+      "hasSchema": true,
+      "hasFaq": false,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "monday.com",
+      "status": 200,
+      "words": 2502,
+      "hasSchema": true,
+      "hasFaq": false,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "br.hubspot.com",
+      "status": 200,
+      "words": 2691,
+      "hasSchema": true,
+      "hasFaq": true,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "totvs.com",
+      "status": 402,
+      "words": 7,
+      "hasSchema": false,
+      "hasFaq": false,
+      "verdict": "ERROR",
+      "reachable": false
+    },
+    {
+      "domain": "ibm.com",
+      "status": 403,
+      "words": 99,
+      "hasSchema": false,
+      "hasFaq": false,
+      "verdict": "BLOCKED",
+      "reachable": false
+    },
+    {
+      "domain": "nuvemshop.com.br",
+      "status": 200,
+      "words": 1620,
+      "hasSchema": true,
+      "hasFaq": false,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "go2flow.com.br",
+      "status": 200,
+      "words": 3926,
+      "hasSchema": true,
+      "hasFaq": true,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "braze.com",
+      "status": 200,
+      "words": 1178,
+      "hasSchema": true,
+      "hasFaq": false,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "alura.com.br",
+      "status": 200,
+      "words": 3601,
+      "hasSchema": true,
+      "hasFaq": false,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "edm2.com.br",
+      "status": 200,
+      "words": 376,
+      "hasSchema": true,
+      "hasFaq": true,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "gulp.digital",
+      "status": 200,
+      "words": 667,
+      "hasSchema": true,
+      "hasFaq": false,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "salesengine.com.br",
+      "status": 200,
+      "words": 1415,
+      "hasSchema": true,
+      "hasFaq": false,
+      "verdict": "OK",
+      "reachable": true
+    },
+    {
+      "domain": "v4company.com",
+      "status": 403,
+      "words": 127,
+      "hasSchema": false,
+      "hasFaq": false,
+      "verdict": "BLOCKED",
+      "reachable": false
+    },
+    {
+      "domain": "ecossistema.elevenmind.com.br",
+      "status": 200,
+      "words": 1238,
+      "hasSchema": true,
+      "hasFaq": false,
+      "verdict": "OK",
+      "reachable": true
+    }
+  ],
+  "aggregate": {
+    "n": 33,
+    "excluded": 1,
+    "blockedPct": 12.1,
+    "emptyShellPct": 6.1,
+    "okPct": 81.8,
+    "schemaPct": 81.8,
+    "faqPct": 24.2
+  }
+}
